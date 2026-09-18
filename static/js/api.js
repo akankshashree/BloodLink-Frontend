@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://bloodlink-60zw.onrender.com/api";
+const API_BASE_URL = "https://bloodlink-backend-4htr.onrender.com/api";
 
 async function apiRequest(endpoint, options = {}) {
     const token = localStorage.getItem("bloodlink_token");
