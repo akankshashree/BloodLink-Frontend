@@ -14,6 +14,15 @@
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
+
+<script>
+(function(){
+    const saved = localStorage.getItem("bloodlink_theme");
+    const theme = saved === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+})();
+</script>
+
 <script src="/static/js/api.js"></script>
 
 <style>
@@ -522,6 +531,183 @@ display:none
 
 }
 
+
+/* =========================
+   BLOODLINK DARK MODE
+========================= */
+
+:root{
+    --card:#ffffff;
+    --surface:#ffffff;
+    --text:#171717;
+    --text-soft:#555555;
+    --line:#eeeeee;
+    --input:#ffffff;
+}
+
+html[data-theme="dark"]{
+    --background:#0f1115;
+    --dark:#f5f5f5;
+    --muted:#aeb4bf;
+    --border:#292d35;
+    --card:#171a20;
+    --surface:#1c2027;
+    --text:#f5f5f5;
+    --text-soft:#c5cad3;
+    --input:#14171c;
+    --soft-red:#35171b;
+    --soft-green:#10281b;
+    --soft-orange:#2b2115;
+    --soft-blue:#142039;
+}
+
+html[data-theme="dark"] body{
+    background:var(--background);
+    color:var(--text);
+}
+
+html[data-theme="dark"] .navbar,
+html[data-theme="dark"] footer,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .status-card,
+html[data-theme="dark"] .action-card,
+html[data-theme="dark"] .status-panel,
+html[data-theme="dark"] .help-card{
+    background:var(--card);
+    border-color:var(--border);
+    color:var(--text);
+}
+
+html[data-theme="dark"] .brand,
+html[data-theme="dark"] .nav-link-custom,
+html[data-theme="dark"] .logout-btn,
+html[data-theme="dark"] .action-card{
+    color:var(--text);
+}
+
+html[data-theme="dark"] .nav-link-custom:hover,
+html[data-theme="dark"] .logout-btn:hover,
+html[data-theme="dark"] .action-card:hover{
+    color:#ff6870;
+}
+
+html[data-theme="dark"] .nav-btn{
+    background:var(--surface);
+    border-color:var(--border);
+    color:var(--text);
+}
+
+html[data-theme="dark"] .nav-btn:hover{
+    border-color:var(--red);
+    color:#ff7a80;
+}
+
+html[data-theme="dark"] .section-subtitle,
+html[data-theme="dark"] .stat-label,
+html[data-theme="dark"] .action-card p,
+html[data-theme="dark"] .action-card small,
+html[data-theme="dark"] .help-item small,
+html[data-theme="dark"] .status-row small{
+    color:var(--muted) !important;
+}
+
+html[data-theme="dark"] .status-row,
+html[data-theme="dark"] .help-item,
+html[data-theme="dark"] .border-top{
+    border-color:var(--border) !important;
+}
+
+html[data-theme="dark"] .status-row-icon,
+html[data-theme="dark"] .help-icon,
+html[data-theme="dark"] .flow-item{
+    background:#232730;
+    color:#c9ced7;
+}
+
+html[data-theme="dark"] .flow-item.active{
+    background:var(--soft-red);
+    color:#ff7a80;
+}
+
+html[data-theme="dark"] .bg-light{
+    background:#232730 !important;
+}
+
+html[data-theme="dark"] .text-muted{
+    color:var(--muted) !important;
+}
+
+html[data-theme="dark"] .btn-light{
+    background:#232730 !important;
+    border-color:#363b45 !important;
+    color:#f5f5f5 !important;
+}
+
+html[data-theme="dark"] .btn-light:hover{
+    background:#2b3039 !important;
+}
+
+html[data-theme="dark"] .info-card,
+html[data-theme="dark"] .privacy-card{
+    background:#090a0c;
+}
+
+html[data-theme="dark"] footer{
+    color:#9da3ae;
+}
+
+html[data-theme="dark"] .notification-item{
+    background:#1c2027 !important;
+    border-color:#2d323b !important;
+}
+
+html[data-theme="dark"] .notification-item.unread{
+    background:#2a171a !important;
+    border-color:#5b252b !important;
+}
+
+html[data-theme="dark"] .notification-item p,
+html[data-theme="dark"] .notification-item small{
+    color:#c7ccd5 !important;
+}
+
+/* Theme toggle */
+.theme-toggle{
+    border:1px solid #e5e5e5;
+    background:white;
+    color:#444;
+    border-radius:10px;
+    padding:9px 12px;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-weight:700;
+    font-size:.85rem;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.theme-toggle:hover{
+    border-color:var(--red);
+    color:var(--red);
+}
+
+html[data-theme="dark"] .theme-toggle{
+    background:#1c2027;
+    border-color:#343943;
+    color:#f5f5f5;
+}
+
+html[data-theme="dark"] .theme-toggle:hover{
+    color:#ff7a80;
+    border-color:#c81d25;
+}
+
+@media(max-width:575px){
+    .theme-label{display:none;}
+    .theme-toggle{padding:9px 10px;}
+}
+
 </style>
 </head>
 
@@ -548,7 +734,12 @@ Blood<span style="color:var(--red)">Link</span>
 </a>
 
 
-<div class="d-flex align-items-center gap-3">
+<div class="d-flex align-items-center gap-2 gap-md-3">
+<button type="button" id="themeToggle" class="theme-toggle" aria-label="Toggle dark mode" title="Toggle dark mode">
+    <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+    <span class="theme-label" id="themeLabel">Dark</span>
+</button>
+
 
 <a
 href="/notifications.html"
@@ -1326,6 +1517,136 @@ if (user) {
 
     loadDashboard();
 }
+
+/* =========================
+   DARK MODE
+========================= */
+(function(){
+    const toggle = document.getElementById("themeToggle");
+    const icon = document.getElementById("themeIcon");
+    const label = document.getElementById("themeLabel");
+
+    function applyTheme(theme){
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("bloodlink_theme", theme);
+
+        if(icon){
+            icon.className = theme === "dark"
+                ? "bi bi-sun-fill"
+                : "bi bi-moon-stars-fill";
+        }
+
+        if(label){
+            label.textContent = theme === "dark" ? "Light" : "Dark";
+        }
+
+        if(toggle){
+            toggle.setAttribute(
+                "aria-label",
+                theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            );
+        }
+    }
+
+    applyTheme(
+        localStorage.getItem("bloodlink_theme") === "dark"
+            ? "dark"
+            : "light"
+    );
+
+    if(toggle){
+        toggle.addEventListener("click", function(){
+            const current = document.documentElement.getAttribute("data-theme");
+            applyTheme(current === "dark" ? "light" : "dark");
+        });
+    }
+})();
+
+
+/* =========================
+   RECENT NOTIFICATIONS
+========================= */
+async function loadRecentNotifications(){
+    const container = document.getElementById("recentNotifications");
+    if(!container || typeof getNotifications !== "function") return;
+
+    try{
+        const data = await getNotifications();
+        const notifications = Array.isArray(data)
+            ? data
+            : (data.notifications || data.results || []);
+
+        if(!notifications.length){
+            container.innerHTML = `
+                <div class="col-12">
+                    <div class="notification-item p-4 rounded-3 border bg-white text-center">
+                        <div class="mb-2" style="font-size:1.4rem;">🔔</div>
+                        <strong>No notifications yet</strong>
+                        <p class="text-muted small mb-0 mt-1">
+                            New BloodLink updates will appear here.
+                        </p>
+                    </div>
+                </div>`;
+            return;
+        }
+
+        container.innerHTML = notifications.slice(0, 3).map(function(n){
+            const title = n.title || n.notification_type || "BloodLink update";
+            const message = n.message || n.text || n.body || "You have a new BloodLink notification.";
+            const created = n.created_at || n.timestamp || n.date || "";
+            const unread = n.is_read === false || n.read === false || n.status === "UNREAD";
+
+            return `
+                <div class="col-md-4">
+                    <div class="notification-item ${unread ? "unread" : ""} p-3 rounded-3 border bg-white h-100">
+                        <div class="d-flex align-items-start gap-2">
+                            <div class="stat-icon mb-0 flex-shrink-0">
+                                <i class="bi bi-bell-fill"></i>
+                            </div>
+                            <div class="min-w-0">
+                                <strong class="d-block">${escapeHtml(title)}</strong>
+                                <p class="small mb-1 mt-1">${escapeHtml(message)}</p>
+                                ${created ? `<small class="text-muted">${escapeHtml(formatNotificationDate(created))}</small>` : ""}
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+        }).join("");
+
+    }catch(error){
+        console.error("Notification preview error:", error);
+        container.innerHTML = `
+            <div class="col-12">
+                <div class="notification-item p-3 rounded-3 border bg-white">
+                    <small class="text-muted">Notifications could not be loaded right now.</small>
+                </div>
+            </div>`;
+    }
+}
+
+function escapeHtml(value){
+    return String(value ?? "").replace(/[&<>"']/g, function(char){
+        return {
+            "&":"&amp;",
+            "<":"&lt;",
+            ">":"&gt;",
+            '"':"&quot;",
+            "'":"&#039;"
+        }[char];
+    });
+}
+
+function formatNotificationDate(value){
+    const d = new Date(value);
+    if(Number.isNaN(d.getTime())) return value;
+    return d.toLocaleString([], {
+        dateStyle:"medium",
+        timeStyle:"short"
+    });
+}
+
+loadRecentNotifications();
+
 </script>
 
 <!-- BloodLink Assistant -->
