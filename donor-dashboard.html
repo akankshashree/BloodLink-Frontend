@@ -45,6 +45,9 @@ h1,h2,h3,h4,h5 {
 }
 
 .brand {
+    display:flex;
+    align-items:center;
+    gap:10px;
     text-decoration:none;
     color:var(--dark);
     font-family:"Manrope",sans-serif;
@@ -52,8 +55,36 @@ h1,h2,h3,h4,h5 {
     font-weight:800;
 }
 
-.brand span {
-    color:var(--red);
+.brand-icon {
+    width:42px;
+    height:42px;
+    border-radius:11px;
+    background:var(--red);
+    position:relative;
+    flex-shrink:0;
+    box-shadow:0 5px 15px rgba(200,29,37,.20);
+}
+
+.brand-icon::before {
+    content:"";
+    position:absolute;
+    width:9px;
+    height:27px;
+    background:white;
+    border-radius:3px;
+    left:16.5px;
+    top:7.5px;
+}
+
+.brand-icon::after {
+    content:"";
+    position:absolute;
+    width:27px;
+    height:9px;
+    background:white;
+    border-radius:3px;
+    left:7.5px;
+    top:16.5px;
 }
 
 .nav-link-custom {
@@ -71,15 +102,8 @@ h1,h2,h3,h4,h5 {
     padding:45px 0 70px;
 }
 
-/* HERO */
-
 .welcome-card {
-    background:linear-gradient(
-        120deg,
-        #9f1239,
-        #c81d25 55%,
-        #e33b44
-    );
+    background:linear-gradient(120deg,#9f1239,#c81d25 55%,#e33b44);
     border-radius:25px;
     color:white;
     padding:42px;
@@ -90,12 +114,14 @@ h1,h2,h3,h4,h5 {
 }
 
 .welcome-card::after {
-    content:"🩸";
+    content:"+";
     position:absolute;
-    right:35px;
-    bottom:-25px;
-    font-size:12rem;
-    opacity:.10;
+    right:55px;
+    bottom:-55px;
+    font-size:15rem;
+    font-weight:800;
+    line-height:1;
+    opacity:.08;
     transform:rotate(-12deg);
 }
 
@@ -132,6 +158,8 @@ h1,h2,h3,h4,h5 {
 }
 
 .blood-pill {
+    display:inline-flex;
+    align-items:center;
     background:white;
     color:var(--red);
     padding:10px 16px;
@@ -139,8 +167,6 @@ h1,h2,h3,h4,h5 {
     font-weight:800;
     margin-left:8px;
 }
-
-/* BUTTONS */
 
 .primary-btn {
     display:inline-flex;
@@ -179,8 +205,6 @@ h1,h2,h3,h4,h5 {
     color:white;
     background:rgba(255,255,255,.08);
 }
-
-/* STATS */
 
 .stat-card {
     background:white;
@@ -221,8 +245,6 @@ h1,h2,h3,h4,h5 {
     margin-top:2px;
 }
 
-/* SECTIONS */
-
 .section-title {
     font-size:1.45rem;
     font-weight:800;
@@ -234,8 +256,6 @@ h1,h2,h3,h4,h5 {
     font-size:.9rem;
     margin-bottom:25px;
 }
-
-/* STATUS */
 
 .status-card {
     background:white;
@@ -309,8 +329,6 @@ h1,h2,h3,h4,h5 {
     color:var(--muted);
 }
 
-/* QUICK ACTIONS */
-
 .action-card {
     display:flex;
     align-items:center;
@@ -358,8 +376,6 @@ h1,h2,h3,h4,h5 {
     color:#aaa;
 }
 
-/* INFO */
-
 .info-card {
     background:#181818;
     color:white;
@@ -377,18 +393,6 @@ h1,h2,h3,h4,h5 {
     line-height:1.7;
 }
 
-.info-item {
-    display:flex;
-    gap:11px;
-    margin-top:17px;
-}
-
-.info-item i {
-    color:#ff6870;
-}
-
-/* FOOTER */
-
 footer {
     border-top:1px solid var(--border);
     background:white;
@@ -397,33 +401,18 @@ footer {
     font-size:.85rem;
 }
 
-/* MOBILE */
-
 @media(max-width:767px) {
+    .dashboard { padding:25px 0 50px; }
 
-    .dashboard {
-        padding:25px 0 50px;
-    }
+    .welcome-card { padding:30px 25px; }
 
-    .welcome-card {
-        padding:30px 25px;
-    }
+    .welcome-card h1 { font-size:2.15rem; }
 
-    .welcome-card h1 {
-        font-size:2.15rem;
-    }
-
-    .welcome-card::after {
-        font-size:8rem;
-    }
+    .welcome-card::after { font-size:8rem; }
 
     .blood-pill {
         margin-left:0;
         margin-top:8px;
-    }
-
-    .profile-pill {
-        flex-wrap:wrap;
     }
 }
 </style>
@@ -436,16 +425,18 @@ footer {
 <div class="d-flex justify-content-between align-items-center w-100">
 
 <a href="/donor-dashboard.html" class="brand">
-<span>🩸</span> BloodLink
+    <span class="brand-icon"></span>
+    <span>Blood<span style="color:var(--red)">Link</span></span>
 </a>
 
-<div class="d-flex gap-3">
+<div class="d-flex gap-3 align-items-center">
 <a href="/notifications.html" class="nav-link-custom">
-Notifications <span id="notifBadge"></span>
+    <i class="bi bi-bell"></i>
+    Notifications <span id="notifBadge"></span>
 </a>
 
 <a href="#" id="logoutLink" class="nav-link-custom">
-Logout
+    Logout
 </a>
 </div>
 
@@ -463,18 +454,25 @@ DONOR DASHBOARD
 </div>
 
 <h1>
-Ready to help, when it matters.
+Ready to help save a life?
 </h1>
 
 <p>
-Stay ready to help. BloodLink shows you relevant blood requests based on your blood group, location and availability.
+Your blood can make a real difference. BloodLink matches you with relevant requests based on your blood group, location and availability.
 </p>
 
-<div class="profile-pill">
+<div>
+<span class="profile-pill">
 <i class="bi bi-person-fill"></i>
 <span id="username">Donor</span>
+</span>
+
+<span class="blood-pill" id="bloodGroup">
+— 
+</span>
 </div>
 
+<div>
 <a href="/donor-profile.html" class="primary-btn">
 <i class="bi bi-person-vcard"></i>
 Update Donor Profile
@@ -484,75 +482,59 @@ Update Donor Profile
 <i class="bi bi-heart-pulse"></i>
 View Blood Matches
 </a>
+</div>
 
 </div>
 
 <div id="errorMessage"
      class="alert alert-danger mb-4"
-     style="display:none">
-</div>
+     style="display:none"></div>
 
 <div class="row g-4 mb-5">
 
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="stat-card">
-
 <div class="stat-icon">
 <i class="bi bi-hourglass-split"></i>
 </div>
-
-<div class="stat-number" id="pendingMatches">
-0
-</div>
-
-<div class="stat-label">
-Pending matches
-</div>
-
+<div class="stat-number" id="pendingMatches">0</div>
+<div class="stat-label">Pending matches</div>
 </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="stat-card">
-
 <div class="stat-icon">
 <i class="bi bi-people"></i>
 </div>
-
-<div class="stat-number" id="totalMatches">
-0
-</div>
-
-<div class="stat-label">
-Total matches
-</div>
-
+<div class="stat-number" id="totalMatches">0</div>
+<div class="stat-label">Total matches</div>
 </div>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-3">
 <div class="stat-card">
-
 <div class="stat-icon">
 <i class="bi bi-check-circle"></i>
 </div>
-
-<div class="stat-number" id="acceptedMatches">
-0
-</div>
-
-<div class="stat-label">
-Accepted
-</div>
-
+<div class="stat-number" id="acceptedMatches">0</div>
+<div class="stat-label">Accepted</div>
 </div>
 </div>
 
+<div class="col-md-3">
+<div class="stat-card">
+<div class="stat-icon">
+<i class="bi bi-bell"></i>
+</div>
+<div class="stat-number" id="unreadNotifications">0</div>
+<div class="stat-label">Unread notifications</div>
+</div>
 </div>
 
-<h2 class="section-title">
-Your donor profile
-</h2>
+</div>
+
+<h2 class="section-title">Your donor profile</h2>
 
 <p class="section-subtitle">
 Keep your information current so BloodLink can match you correctly.
@@ -567,13 +549,8 @@ Keep your information current so BloodLink can match you correctly.
 <div class="status-header">
 
 <div>
-<h4 class="mb-1">
-Your donor status
-</h4>
-
-<small class="text-muted">
-Current matching profile
-</small>
+<h4 class="mb-1">Your donor status</h4>
+<small class="text-muted">Current matching profile</small>
 </div>
 
 <span id="statusBadge"
@@ -598,28 +575,6 @@ Loading
 
 </div>
 
-<div class="d-flex gap-2 flex-wrap mt-4">
-
-<a href="/donor-profile.html"
-   class="action-card"
-   style="padding:11px 15px;">
-
-<i class="bi bi-pencil"></i>
-<span>Update donor profile</span>
-
-</a>
-
-<a href="/matches.html"
-   class="action-card"
-   style="padding:11px 15px;">
-
-<i class="bi bi-heart"></i>
-<span>View blood matches</span>
-
-</a>
-
-</div>
-
 </div>
 
 </div>
@@ -632,9 +587,7 @@ Loading
 QUICK ACTIONS
 </div>
 
-<h4 class="mt-2">
-Ready to help?
-</h4>
+<h4 class="mt-2">Ready to help?</h4>
 
 <p>
 Review matched blood requests and keep your donor information updated.
@@ -692,139 +645,146 @@ Review matched blood requests and keep your donor information updated.
 </div>
 </main>
 
-<script>
+<footer>
+<div class="container text-center">
+BloodLink — Connecting donors with people who need them.
+</div>
+</footer>
 
+<script>
 const user = requireAuth("DONOR");
 
 if (user) {
 
-document.getElementById("username").textContent =
-    user.username;
+    document.getElementById("username").textContent = user.username;
 
-document.getElementById("logoutLink").onclick =
-async function(e) {
+    document.getElementById("logoutLink").onclick =
+    async function(e) {
+        e.preventDefault();
+        await logoutUser();
+        window.location.href = "/";
+    };
 
-    e.preventDefault();
+    (async function() {
 
-    await logoutUser();
+        try {
 
-    window.location.href = "/";
+            const d = await getDashboard();
 
-};
+            document.getElementById("pendingMatches").textContent =
+                d.pending_matches ?? 0;
 
-(async function() {
+            document.getElementById("totalMatches").textContent =
+                d.total_matches ?? 0;
 
-    try {
+            document.getElementById("acceptedMatches").textContent =
+                d.accepted_matches ?? 0;
 
-        const d = await getDashboard();
+            document.getElementById("unreadNotifications").textContent =
+                d.unread_notifications ?? 0;
 
-        document.getElementById("pendingMatches").textContent =
-            d.pending_matches ?? 0;
+            if (d.unread_notifications) {
+                document.getElementById("notifBadge").textContent =
+                    `(${d.unread_notifications})`;
+            }
 
-        document.getElementById("totalMatches").textContent =
-            d.total_matches ?? 0;
+            const statusBadge =
+                document.getElementById("statusBadge");
 
-        document.getElementById("acceptedMatches").textContent =
-            d.accepted_matches ?? 0;
+            const profileStatus =
+                document.getElementById("profileStatus");
 
-        const profileStatus =
-            document.getElementById("profileStatus");
+            if (d.donor_profile) {
 
-        const statusBadge =
-            document.getElementById("statusBadge");
+                const profile = d.donor_profile;
+                const available = profile.is_available;
 
-        if (d.donor_profile) {
+                document.getElementById("bloodGroup").textContent =
+                    profile.blood_group || "—";
 
-            const available =
-                d.donor_profile.is_available;
+                statusBadge.textContent =
+                    available ? "Available" : "Unavailable";
 
-            statusBadge.textContent =
-                available ? "Available" : "Unavailable";
+                statusBadge.className =
+                    available
+                    ? "status-badge status-ready"
+                    : "status-badge status-neutral";
 
-            statusBadge.className =
-                available
-                ? "status-badge status-ready"
-                : "status-badge status-neutral";
+                profileStatus.innerHTML = `
 
-            profileStatus.innerHTML = `
-
-                <div class="status-row">
-                    <div class="status-row-icon">
-                        <i class="bi bi-droplet-fill"></i>
-                    </div>
-                    <div>
-                        <strong>Blood group</strong>
-                        <small>${d.donor_profile.blood_group}</small>
-                    </div>
-                </div>
-
-                <div class="status-row">
-                    <div class="status-row-icon">
-                        <i class="bi bi-geo-alt-fill"></i>
-                    </div>
-                    <div>
-                        <strong>Location</strong>
-                        <small>${d.donor_profile.address || "Location saved"}</small>
-                    </div>
-                </div>
-
-                <div class="status-row">
-                    <div class="status-row-icon">
-                        <i class="bi bi-check-circle"></i>
-                    </div>
-                    <div>
-                        <strong>Availability</strong>
-                        <small>${available ? "Ready to receive blood requests" : "Currently unavailable"}</small>
-                    </div>
-                </div>
-
-            `;
-
-        } else {
-
-            statusBadge.textContent = "Setup required";
-            statusBadge.className =
-                "status-badge status-pending";
-
-            profileStatus.innerHTML = `
-
-                <div class="status-row">
-                    <div class="status-row-icon">
-                        <i class="bi bi-exclamation-circle"></i>
+                    <div class="status-row">
+                        <div class="status-row-icon">
+                            <i class="bi bi-droplet-fill"></i>
+                        </div>
+                        <div>
+                            <strong>Blood group</strong>
+                            <small>${profile.blood_group || "Not set"}</small>
+                        </div>
                     </div>
 
-                    <div>
-                        <strong>Donor profile not completed</strong>
-
-                        <small>
-                            Complete your profile to receive blood matches.
-                        </small>
+                    <div class="status-row">
+                        <div class="status-row-icon">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+                        <div>
+                            <strong>Location</strong>
+                            <small>${profile.address || "Location saved"}</small>
+                        </div>
                     </div>
-                </div>
 
-            `;
+                    <div class="status-row">
+                        <div class="status-row-icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+                        <div>
+                            <strong>Availability</strong>
+                            <small>
+                                ${available
+                                ? "Ready to receive blood requests"
+                                : "Currently unavailable"}
+                            </small>
+                        </div>
+                    </div>
+
+                `;
+
+            } else {
+
+                document.getElementById("bloodGroup").textContent = "Setup required";
+
+                statusBadge.textContent = "Setup required";
+                statusBadge.className =
+                    "status-badge status-pending";
+
+                profileStatus.innerHTML = `
+
+                    <div class="status-row">
+                        <div class="status-row-icon">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
+
+                        <div>
+                            <strong>Donor profile not completed</strong>
+                            <small>
+                                Complete your profile to receive blood matches.
+                            </small>
+                        </div>
+                    </div>
+
+                `;
+            }
+
+        } catch (e) {
+
+            showMessage(
+                "errorMessage",
+                e.message
+            );
+
         }
 
-        if (d.unread_notifications) {
-
-            document.getElementById("notifBadge").textContent =
-                `(${d.unread_notifications} new)`;
-
-        }
-
-    } catch (e) {
-
-        showMessage(
-            "errorMessage",
-            e.message
-        );
-
-    }
-
-})();
-
+    })();
 }
-
 </script>
 
 </body>

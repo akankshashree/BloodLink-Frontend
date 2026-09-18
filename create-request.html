@@ -4,572 +4,354 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Create Blood Request | BloodLink</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+
+<script src="/static/js/api.js"></script>
+
 <style>
-
-        :root {
-            --red: #c81d25;
-            --red-dark: #a9151d;
-            --soft-red: #fff1f2;
-            --dark: #171717;
-            --muted: #6b7280;
-            --border: #eeeeee;
-            --background: #f8f8f8;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: var(--background);
-            color: var(--dark);
-            font-family: "DM Sans", sans-serif;
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: "Manrope", sans-serif;
-        }
-
-        .navbar {
-            background: white;
-            border-bottom: 1px solid var(--border);
-            padding: 14px 0;
-        }
-
-        .brand {
-            text-decoration: none;
-            color: var(--dark);
-            font-family: "Manrope", sans-serif;
-            font-size: 1.4rem;
-            font-weight: 800;
-        }
-
-        .brand span {
-            color: var(--red);
-        }
-
-        .nav-link-custom {
-            color: #555;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: .9rem;
-        }
-
-        .nav-link-custom:hover {
-            color: var(--red);
-        }
-
-        .page {
-            padding: 42px 0 70px;
-        }
-
-        .eyebrow {
-            color: var(--red);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: .73rem;
-            font-weight: 800;
-        }
-
-        .page-header h1 {
-            font-size: 2.55rem;
-            font-weight: 800;
-            margin: 6px 0 8px;
-            letter-spacing: -.8px;
-        }
-
-        .page-header p {
-            color: var(--muted);
-            max-width: 700px;
-            line-height: 1.7;
-        }
-
-        .card-custom {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-        }
-
-        .section-title {
-            font-family: "Manrope", sans-serif;
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-
-        .section-subtitle {
-            color: var(--muted);
-            font-size: .82rem;
-            margin-bottom: 22px;
-        }
-
-        .form-label {
-            font-size: .86rem;
-            font-weight: 700;
-            margin-bottom: 7px;
-        }
-
-        .form-control,
-        .form-select {
-            border-color: #ddd;
-            border-radius: 10px;
-            padding: 12px 13px;
-        }
-
-        textarea.form-control {
-            min-height: 115px;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(200,29,37,.08);
-        }
-
-        .field-help {
-            color: #888;
-            font-size: .75rem;
-            margin-top: 5px;
-        }
-
-        .location-box {
-            background: #f8f8f8;
-            border-radius: 15px;
-            padding: 18px;
-            margin-top: 5px;
-        }
-
-        .location-box-title {
-            font-weight: 800;
-            font-size: .9rem;
-        }
-
-        .location-box p {
-            color: var(--muted);
-            font-size: .78rem;
-            margin: 4px 0 13px;
-        }
-
-        .location-btn {
-            border: 1px solid #ddd;
-            background: white;
-            border-radius: 9px;
-            padding: 9px 13px;
-            font-size: .82rem;
-            font-weight: 700;
-        }
-
-        .location-btn:hover {
-            border-color: var(--red);
-            color: var(--red);
-        }
-
-        #locationStatus {
-            font-size: .77rem;
-            margin-top: 9px;
-        }
-
-        .urgency-card {
-            background: var(--soft-red);
-            border-radius: 15px;
-            padding: 17px;
-            margin-bottom: 25px;
-        }
-
-        .urgency-card-title {
-            color: var(--red);
-            font-weight: 800;
-            font-size: .86rem;
-        }
-
-        .urgency-card p {
-            color: #777;
-            font-size: .77rem;
-            margin: 4px 0 0;
-        }
-
-        .submit-btn {
-            width: 100%;
-            border: none;
-            background: var(--red);
-            color: white;
-            border-radius: 11px;
-            padding: 14px;
-            font-weight: 800;
-            transition: .2s;
-        }
-
-        .submit-btn:hover {
-            background: var(--red-dark);
-            transform: translateY(-1px);
-        }
-
-        .info-card {
-            background: #181818;
-            color: white;
-            border-radius: 20px;
-            padding: 28px;
-        }
-
-        .info-card h4 {
-            font-weight: 800;
-        }
-
-        .info-card p {
-            color: #bbb;
-            font-size: .86rem;
-            line-height: 1.7;
-        }
-
-        .info-point {
-            display: flex;
-            gap: 11px;
-            margin-top: 18px;
-        }
-
-        .info-point i {
-            color: #ff6870;
-        }
-
-        .info-point span {
-            color: #ddd;
-            font-size: .82rem;
-        }
-
-        .alert {
-            border: none;
-            border-radius: 12px;
-        }
-
-        .errorlist {
-            list-style: none;
-            padding: 0;
-            margin: 5px 0 0;
-            color: #dc3545;
-            font-size: .78rem;
-        }
-
-        @media (max-width: 767px) {
-
-            .page {
-                padding: 28px 0 50px;
-            }
-
-            .page-header h1 {
-                font-size: 2.15rem;
-            }
-
-            .card-custom {
-                padding: 23px;
-            }
-
-        }
-
-    </style>
-<style>
-
-
-        :root {
-            --red: #c81d25;
-            --red-dark: #a9151d;
-            --soft-red: #fff1f2;
-            --dark: #171717;
-            --muted: #6b7280;
-            --border: #eeeeee;
-            --background: #f8f8f8;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: var(--background);
-            color: var(--dark);
-            font-family: "DM Sans", sans-serif;
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: "Manrope", sans-serif;
-        }
-
-        .navbar {
-            background: white;
-            border-bottom: 1px solid var(--border);
-            padding: 14px 0;
-        }
-
-        .brand {
-            text-decoration: none;
-            color: var(--dark);
-            font-family: "Manrope", sans-serif;
-            font-size: 1.4rem;
-            font-weight: 800;
-        }
-
-        .brand span {
-            color: var(--red);
-        }
-
-        .nav-link-custom {
-            color: #555;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: .9rem;
-        }
-
-        .nav-link-custom:hover {
-            color: var(--red);
-        }
-
-        .page {
-            padding: 42px 0 70px;
-        }
-
-        .eyebrow {
-            color: var(--red);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: .73rem;
-            font-weight: 800;
-        }
-
-        .page-header h1 {
-            font-size: 2.55rem;
-            font-weight: 800;
-            margin: 6px 0 8px;
-            letter-spacing: -.8px;
-        }
-
-        .page-header p {
-            color: var(--muted);
-            max-width: 700px;
-            line-height: 1.7;
-        }
-
-        .card-custom {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-        }
-
-        .section-title {
-            font-family: "Manrope", sans-serif;
-            font-size: 1.1rem;
-            font-weight: 800;
-            margin-bottom: 4px;
-        }
-
-        .section-subtitle {
-            color: var(--muted);
-            font-size: .82rem;
-            margin-bottom: 22px;
-        }
-
-        .form-label {
-            font-size: .86rem;
-            font-weight: 700;
-            margin-bottom: 7px;
-        }
-
-        .form-control,
-        .form-select {
-            border-color: #ddd;
-            border-radius: 10px;
-            padding: 12px 13px;
-        }
-
-        textarea.form-control {
-            min-height: 115px;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(200,29,37,.08);
-        }
-
-        .field-help {
-            color: #888;
-            font-size: .75rem;
-            margin-top: 5px;
-        }
-
-        .location-box {
-            background: #f8f8f8;
-            border-radius: 15px;
-            padding: 18px;
-            margin-top: 5px;
-        }
-
-        .location-box-title {
-            font-weight: 800;
-            font-size: .9rem;
-        }
-
-        .location-box p {
-            color: var(--muted);
-            font-size: .78rem;
-            margin: 4px 0 13px;
-        }
-
-        .location-btn {
-            border: 1px solid #ddd;
-            background: white;
-            border-radius: 9px;
-            padding: 9px 13px;
-            font-size: .82rem;
-            font-weight: 700;
-        }
-
-        .location-btn:hover {
-            border-color: var(--red);
-            color: var(--red);
-        }
-
-        #locationStatus {
-            font-size: .77rem;
-            margin-top: 9px;
-        }
-
-        .urgency-card {
-            background: var(--soft-red);
-            border-radius: 15px;
-            padding: 17px;
-            margin-bottom: 25px;
-        }
-
-        .urgency-card-title {
-            color: var(--red);
-            font-weight: 800;
-            font-size: .86rem;
-        }
-
-        .urgency-card p {
-            color: #777;
-            font-size: .77rem;
-            margin: 4px 0 0;
-        }
-
-        .submit-btn {
-            width: 100%;
-            border: none;
-            background: var(--red);
-            color: white;
-            border-radius: 11px;
-            padding: 14px;
-            font-weight: 800;
-            transition: .2s;
-        }
-
-        .submit-btn:hover {
-            background: var(--red-dark);
-            transform: translateY(-1px);
-        }
-
-        .info-card {
-            background: #181818;
-            color: white;
-            border-radius: 20px;
-            padding: 28px;
-        }
-
-        .info-card h4 {
-            font-weight: 800;
-        }
-
-        .info-card p {
-            color: #bbb;
-            font-size: .86rem;
-            line-height: 1.7;
-        }
-
-        .info-point {
-            display: flex;
-            gap: 11px;
-            margin-top: 18px;
-        }
-
-        .info-point i {
-            color: #ff6870;
-        }
-
-        .info-point span {
-            color: #ddd;
-            font-size: .82rem;
-        }
-
-        .alert {
-            border: none;
-            border-radius: 12px;
-        }
-
-        .errorlist {
-            list-style: none;
-            padding: 0;
-            margin: 5px 0 0;
-            color: #dc3545;
-            font-size: .78rem;
-        }
-
-        @media (max-width: 767px) {
-
-            .page {
-                padding: 28px 0 50px;
-            }
-
-            .page-header h1 {
-                font-size: 2.15rem;
-            }
-
-            .card-custom {
-                padding: 23px;
-            }
-
-        }
-
-    
+:root{
+--red:#c81d25;--red-dark:#a9151d;--soft-red:#fff1f2;
+--dark:#171717;--muted:#6b7280;--border:#eeeeee;
+--background:#f8f8f8
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--background);color:var(--dark);font-family:"DM Sans",sans-serif}
+h1,h2,h3,h4,h5{font-family:"Manrope",sans-serif}
+
+.navbar{background:white;border-bottom:1px solid var(--border);padding:14px 0}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--dark);font-family:"Manrope";font-size:1.4rem;font-weight:800}
+.brand-icon{width:42px;height:42px;border-radius:11px;background:var(--red);position:relative;display:inline-block}
+.brand-icon:before{content:"";position:absolute;width:9px;height:27px;background:#fff;border-radius:3px;left:16.5px;top:7.5px}
+.brand-icon:after{content:"";position:absolute;width:27px;height:9px;background:#fff;border-radius:3px;left:7.5px;top:16.5px}
+.nav-link-custom{color:#555;text-decoration:none;font-weight:600;font-size:.9rem}
+.nav-link-custom:hover{color:var(--red)}
+
+.page{padding:45px 0 70px}
+.eyebrow{color:var(--red);text-transform:uppercase;letter-spacing:1.5px;font-size:.73rem;font-weight:800}
+.page-header h1{font-size:2.55rem;font-weight:800;margin:6px 0 8px}
+.page-header p{color:var(--muted);max-width:650px;line-height:1.7}
+
+.form-card{background:white;border:1px solid var(--border);border-radius:20px;padding:32px}
+.form-label{font-size:.88rem;font-weight:700;margin-bottom:8px}
+.form-control,.form-select{border-color:#ddd;border-radius:10px;padding:12px 13px}
+.form-control:focus,.form-select:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(200,29,37,.08)}
+
+.section-title{font-size:1.15rem;font-weight:800;margin-bottom:20px}
+.help{color:#888;font-size:.78rem;margin-top:6px}
+
+.urgency-wrapper{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
+.urgency-option input{display:none}
+.urgency-option label{
+display:block;text-align:center;border:2px solid #eee;
+border-radius:12px;padding:13px 8px;font-weight:800;
+cursor:pointer;font-size:.8rem
+}
+.urgency-option label:hover{border-color:#f0a0a4}
+.urgency-option input:checked+label{
+border-color:var(--red);background:var(--soft-red);color:var(--red)
+}
+
+.submit-btn{
+width:100%;border:0;background:var(--red);color:white;
+border-radius:11px;padding:14px;font-weight:800;margin-top:25px
+}
+.submit-btn:hover{background:var(--red-dark)}
+
+.info-card{background:#181818;color:white;border-radius:20px;padding:30px}
+.info-card h4{font-weight:800}
+.info-card p{color:#bbb;line-height:1.7}
+.info-point{display:flex;gap:11px;margin-top:18px}
+.info-point i{color:#ff6870}
+.info-point span{font-size:.85rem;color:#ddd}
+
+@media(max-width:767px){
+.page{padding:28px 0 50px}
+.page-header h1{font-size:2.15rem}
+.form-card{padding:23px}
+.urgency-wrapper{grid-template-columns:1fr 1fr}
+}
 </style>
 </head>
+
 <body>
 
-<nav class="navbar sticky-top"><div class="container"><div class="d-flex justify-content-between align-items-center w-100">
-<a href="/requester-dashboard.html" class="brand"><span>🩸</span> BloodLink</a><div class="d-flex gap-3"><a href="/requester-dashboard.html" class="nav-link-custom">Dashboard</a><a href="/my-requests.html" class="nav-link-custom">My Requests</a><a href="#" id="logoutLink" class="nav-link-custom">Logout</a></div></div></div></nav>
-<main class="page"><div class="container"><div class="page-header"><div class="eyebrow">New blood request</div><h1>Request blood.</h1><p>Provide the blood requirement and hospital location so BloodLink can identify eligible nearby donors.</p></div>
-<div id="errorMessage" class="alert alert-danger mb-4" style="display:none"></div><div id="successMessage" class="alert alert-success mb-4" style="display:none"></div>
-<div class="card-custom"><form id="requestForm">
-<div class="section-title">Blood requirement</div><div class="section-subtitle">Specify the blood type and quantity required.</div>
-<div class="row g-3 mb-4"><div class="col-md-6"><label class="form-label">Blood group</label><select id="blood_group" class="form-select" required><option value="">Select</option><option>O+</option><option>O-</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option></select></div>
-<div class="col-md-6"><label class="form-label">Units required</label><input id="units_required" type="number" min="1" value="1" class="form-control" required></div></div>
-<div class="mb-4"><label class="form-label">Urgency level</label><select id="urgency" class="form-select"><option>LOW</option><option selected>MEDIUM</option><option>HIGH</option><option>CRITICAL</option></select></div>
-<hr class="my-4"><div class="section-title">Hospital information</div><div class="section-subtitle">Where should the donor go?</div>
-<div class="mb-3"><label class="form-label">Hospital name</label><input id="hospital_name" class="form-control" required></div>
-<div class="mb-4"><label class="form-label">Hospital address</label><input id="hospital_address" class="form-control" required></div>
-<div class="section-title">Hospital location</div><div class="section-subtitle">Coordinates are used to find nearby eligible donors.</div>
-<div class="row g-3 mb-2"><div class="col-md-6"><label class="form-label">Latitude</label><input id="latitude" type="number" step="any" class="form-control" required></div><div class="col-md-6"><label class="form-label">Longitude</label><input id="longitude" type="number" step="any" class="form-control" required></div></div>
-<button type="button" class="location-btn mb-3" onclick="getLocation()"><i class="bi bi-geo-alt-fill me-1"></i>Detect my location</button><div id="locationStatus"></div>
-<div class="row g-3"><div class="col-md-6"><label class="form-label">Search radius (km)</label><input id="radius_km" type="number" min="1" value="10" class="form-control"></div><div class="col-md-6"><label class="form-label">Units description</label><input id="description" class="form-control" placeholder="Optional details"></div></div>
-<button id="submitButton" class="submit-btn" type="submit">Find Eligible Donors <i class="bi bi-arrow-right ms-2"></i></button>
-</form></div></div></main>
-<script>
-const user=requireAuth("REQUESTER");
-if(user){
-logoutLink.onclick=async e=>{e.preventDefault();await logoutUser();location.href="/";};
-requestForm.onsubmit=async e=>{e.preventDefault();submitButton.disabled=true;submitButton.textContent="Creating request...";
-try{const d=await createBloodRequest({blood_group:blood_group.value,units_required:+units_required.value,urgency:urgency.value,hospital_name:hospital_name.value.trim(),hospital_address:hospital_address.value.trim(),latitude:+latitude.value,longitude:+longitude.value,radius_km:+radius_km.value,description:description.value.trim()});showMessage("successMessage","Blood request created successfully.","success");setTimeout(()=>location.href=`/request-detail.html?id=${d.id||d.request?.id}`,800);}
-catch(err){showMessage("errorMessage",err.message);}finally{submitButton.disabled=false;submitButton.innerHTML='Find Eligible Donors <i class="bi bi-arrow-right ms-2"></i>';}};}
-function getLocation(){const s=document.getElementById("locationStatus");s.textContent="Detecting location...";if(!navigator.geolocation){s.textContent="Geolocation unavailable.";return;}navigator.geolocation.getCurrentPosition(p=>{latitude.value=p.coords.latitude.toFixed(6);longitude.value=p.coords.longitude.toFixed(6);s.className="text-success";s.textContent="Location detected successfully.";},()=>{s.className="text-danger";s.textContent="Unable to detect location."},{enableHighAccuracy:true,timeout:10000});}
-</script>
+<nav class="navbar sticky-top">
+<div class="container d-flex justify-content-between align-items-center">
 
+<a href="/requester-dashboard.html" class="brand">
+<span class="brand-icon"></span>
+<span>Blood<span style="color:var(--red)">Link</span></span>
+</a>
+
+<div class="d-flex gap-3">
+<a href="/requester-dashboard.html" class="nav-link-custom">Dashboard</a>
+<a href="#" id="logoutLink" class="nav-link-custom">Logout</a>
+</div>
+
+</div>
+</nav>
+
+<main class="page">
+<div class="container">
+
+<div class="page-header mb-4">
+<div class="eyebrow">Blood request</div>
+<h1>Create a blood request</h1>
+<p>
+Provide the details below. BloodLink will find eligible nearby donors
+based on blood group, distance, availability and donation eligibility.
+</p>
+</div>
+
+<div id="message"></div>
+
+<div class="row g-4">
+
+<div class="col-lg-7">
+
+<div class="form-card">
+
+<form id="requestForm">
+
+<h4 class="section-title">Blood requirement</h4>
+
+<div class="row g-4">
+
+<div class="col-md-6">
+
+<label class="form-label">Blood group</label>
+
+<select id="blood_group" class="form-select" required>
+<option value="">Select blood group</option>
+<option>A+</option>
+<option>A-</option>
+<option>B+</option>
+<option>B-</option>
+<option>AB+</option>
+<option>AB-</option>
+<option>O+</option>
+<option>O-</option>
+</select>
+
+</div>
+
+<div class="col-md-6">
+
+<label class="form-label">Units required</label>
+
+<input
+id="units_required"
+type="number"
+min="1"
+max="20"
+class="form-control"
+placeholder="e.g. 2"
+required
+>
+
+</div>
+
+</div>
+
+<div class="mt-4">
+
+<label class="form-label">Urgency</label>
+
+<div class="urgency-wrapper">
+
+<div class="urgency-option">
+<input type="radio" name="urgency" id="critical" value="CRITICAL">
+<label for="critical">CRITICAL</label>
+</div>
+
+<div class="urgency-option">
+<input type="radio" name="urgency" id="high" value="HIGH">
+<label for="high">HIGH</label>
+</div>
+
+<div class="urgency-option">
+<input type="radio" name="urgency" id="medium" value="MEDIUM" checked>
+<label for="medium">MEDIUM</label>
+</div>
+
+<div class="urgency-option">
+<input type="radio" name="urgency" id="low" value="LOW">
+<label for="low">LOW</label>
+</div>
+
+</div>
+
+</div>
+
+<hr class="my-4">
+
+<h4 class="section-title">Hospital information</h4>
+
+<div class="mb-4">
+<label class="form-label">Hospital name</label>
+<input id="hospital_name" class="form-control" placeholder="Hospital name" required>
+</div>
+
+<div class="mb-4">
+<label class="form-label">Hospital address</label>
+<textarea id="hospital_address" class="form-control" rows="3" placeholder="Full hospital address" required></textarea>
+</div>
+
+<div class="row g-4">
+
+<div class="col-md-6">
+<label class="form-label">Latitude</label>
+<input id="latitude" type="number" step="any" class="form-control" required>
+</div>
+
+<div class="col-md-6">
+<label class="form-label">Longitude</label>
+<input id="longitude" type="number" step="any" class="form-control" required>
+</div>
+
+</div>
+
+<div class="help mt-2">
+Coordinates are used to calculate donor distance.
+</div>
+
+<div class="mt-4">
+
+<label class="form-label">Donor search radius</label>
+
+<div class="input-group">
+<input id="radius_km" type="number" min="1" max="500" value="25" class="form-control">
+<span class="input-group-text">km</span>
+</div>
+
+</div>
+
+<div class="mt-4">
+
+<label class="form-label">Additional details</label>
+
+<textarea
+id="description"
+class="form-control"
+rows="4"
+placeholder="Add any important information..."
+></textarea>
+
+</div>
+
+<button type="submit" class="submit-btn" id="submitBtn">
+<i class="bi bi-search me-2"></i>
+Find Eligible Donors
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+<div class="col-lg-5">
+
+<div class="info-card">
+
+<div class="eyebrow" style="color:#ff6870">
+HOW IT WORKS
+</div>
+
+<h4 class="mt-2">BloodLink finds the right donors.</h4>
+
+<p>
+Once your request is submitted, the matching engine checks
+donor compatibility, location, availability and eligibility.
+</p>
+
+<div class="info-point">
+<i class="bi bi-droplet-fill"></i>
+<span>Blood group compatibility is checked automatically.</span>
+</div>
+
+<div class="info-point">
+<i class="bi bi-geo-alt-fill"></i>
+<span>Nearby donors are identified using distance.</span>
+</div>
+
+<div class="info-point">
+<i class="bi bi-clock-history"></i>
+<span>Recent donors are filtered based on donation eligibility.</span>
+</div>
+
+<div class="info-point">
+<i class="bi bi-shield-lock-fill"></i>
+<span>Donor contact information remains private until acceptance.</span>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</div>
+</main>
+
+<script>
+
+const user=requireAuth("REQUESTER");
+
+if(user){
+
+document.getElementById("logoutLink").onclick=async e=>{
+e.preventDefault();
+await logoutUser();
+window.location.href="/";
+};
+
+document.getElementById("requestForm").addEventListener("submit",async e=>{
+
+e.preventDefault();
+
+const btn=document.getElementById("submitBtn");
+
+btn.disabled=true;
+btn.innerHTML="Finding donors...";
+
+try{
+
+const data=await createBloodRequest({
+
+blood_group:document.getElementById("blood_group").value,
+units_required:parseInt(document.getElementById("units_required").value),
+urgency:document.querySelector('input[name="urgency"]:checked').value,
+hospital_name:document.getElementById("hospital_name").value.trim(),
+hospital_address:document.getElementById("hospital_address").value.trim(),
+latitude:parseFloat(document.getElementById("latitude").value),
+longitude:parseFloat(document.getElementById("longitude").value),
+radius_km:parseFloat(document.getElementById("radius_km").value),
+description:document.getElementById("description").value.trim()
+
+});
+
+window.location.href=
+data.id
+?`/request-detail.html?id=${data.id}`
+:"/my-requests.html";
+
+}catch(e){
+
+document.getElementById("message").innerHTML=
+`<div class="alert alert-danger">${e.message}</div>`;
+
+btn.disabled=false;
+btn.innerHTML='<i class="bi bi-search me-2"></i>Find Eligible Donors';
+
+}
+
+});
+
+}
+</script>
 
 </body>
 </html>
