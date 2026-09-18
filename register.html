@@ -1,0 +1,951 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create Account | BloodLink</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+    <style>
+
+        :root {
+            --red: #c81d25;
+            --dark: #171717;
+            --muted: #6b7280;
+            --soft-red: #fff1f2;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            min-height: 100vh;
+            font-family: "DM Sans", sans-serif;
+            background: #fafafa;
+            color: var(--dark);
+        }
+
+        h1, h2, h3, h4 {
+            font-family: "Manrope", sans-serif;
+        }
+
+        /* NAVBAR */
+
+        .navbar {
+            background: rgba(255,255,255,.96);
+            border-bottom: 1px solid #eee;
+            padding: 17px 0;
+        }
+
+        .brand {
+            text-decoration: none;
+            color: var(--dark);
+            font-family: "Manrope", sans-serif;
+            font-size: 1.45rem;
+            font-weight: 800;
+        }
+
+        .brand span {
+            color: var(--red);
+        }
+
+        .home-link {
+            color: #555;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .home-link:hover {
+            color: var(--red);
+        }
+
+        /* MAIN */
+
+        .register-wrapper {
+            padding: 50px 0 70px;
+        }
+
+        .register-card {
+            background: white;
+            border-radius: 28px;
+            overflow: hidden;
+            border: 1px solid #eee;
+            box-shadow: 0 20px 60px rgba(0,0,0,.08);
+        }
+
+        /* HEADER */
+
+        .register-header {
+            padding: 50px 55px 35px;
+            background:
+                linear-gradient(
+                    135deg,
+                    #fff1f2,
+                    #ffffff
+                );
+            border-bottom: 1px solid #eee;
+        }
+
+        .eyebrow {
+            color: var(--red);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: .75rem;
+            font-weight: 800;
+        }
+
+        .register-header h1 {
+            font-size: 2.7rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-top: 8px;
+        }
+
+        .register-header p {
+            color: var(--muted);
+            max-width: 650px;
+            line-height: 1.7;
+        }
+
+        /* BODY */
+
+        .register-body {
+            padding: 45px 55px;
+        }
+
+        .section-title {
+            font-weight: 800;
+            margin-bottom: 22px;
+        }
+
+        .form-label {
+            font-size: .9rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .form-control,
+        .form-select {
+            padding: 13px 14px;
+            border-color: #ddd;
+            border-radius: 10px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--red);
+            box-shadow: 0 0 0 3px rgba(200,29,37,.08);
+        }
+
+        .help-text {
+            color: #888;
+            font-size: .78rem;
+            margin-top: 6px;
+        }
+
+        /* ROLE */
+
+        .role-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .role-option {
+            position: relative;
+        }
+
+        .role-option input {
+            position: absolute;
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .role-label {
+            display: block;
+            border: 2px solid #eee;
+            border-radius: 16px;
+            padding: 22px;
+            cursor: pointer;
+            transition: .2s;
+            height: 100%;
+        }
+
+        .role-label:hover {
+            border-color: #f2a0a4;
+        }
+
+        .role-option input:checked + .role-label {
+            border-color: var(--red);
+            background: var(--soft-red);
+        }
+
+        .role-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 13px;
+            background: #f7f7f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--red);
+            font-size: 1.3rem;
+            margin-bottom: 15px;
+        }
+
+        .role-label h4 {
+            font-size: 1rem;
+            font-weight: 800;
+        }
+
+        .role-label p {
+            color: var(--muted);
+            font-size: .83rem;
+            line-height: 1.55;
+            margin-bottom: 0;
+        }
+
+        /* PASSWORD */
+
+        .password-box {
+            position: relative;
+        }
+
+        .password-box .form-control {
+            padding-right: 50px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            border: none;
+            background: transparent;
+            color: #888;
+            z-index: 5;
+        }
+
+        /* SUBMIT */
+
+        .create-btn {
+            width: 100%;
+            background: var(--red);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 11px;
+            font-weight: 800;
+            margin-top: 15px;
+            transition: .2s;
+        }
+
+        .create-btn:hover {
+            background: #a9151d;
+            transform: translateY(-1px);
+        }
+
+        .create-btn:disabled {
+            opacity: .7;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .login-text {
+            text-align: center;
+            margin-top: 22px;
+            color: var(--muted);
+        }
+
+        .login-text a {
+            color: var(--red);
+            text-decoration: none;
+            font-weight: 800;
+        }
+
+        .privacy-note {
+            margin-top: 25px;
+            padding: 16px;
+            background: #f7f7f7;
+            border-radius: 12px;
+            color: #666;
+            font-size: .83rem;
+            line-height: 1.6;
+        }
+
+        .errorlist {
+            list-style: none;
+            padding: 0;
+            margin: 7px 0 0;
+            color: #c81d25;
+            font-size: .8rem;
+        }
+
+        @media (max-width: 767px) {
+
+            .register-wrapper {
+                padding: 25px 12px;
+            }
+
+            .register-header,
+            .register-body {
+                padding: 30px 22px;
+            }
+
+            .register-header h1 {
+                font-size: 2.2rem;
+            }
+
+            .role-wrapper {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar">
+
+    <div class="container d-flex justify-content-between align-items-center">
+
+        <a href="/" class="brand">
+            <span>🩸</span> BloodLink
+        </a>
+
+        <a href="/" class="home-link">
+            <i class="bi bi-arrow-left me-1"></i>
+            Back to home
+        </a>
+
+    </div>
+
+</nav>
+
+
+
+<!-- MAIN -->
+
+<main class="register-wrapper">
+
+    <div class="container">
+
+        <div class="register-card">
+
+
+            <!-- HEADER -->
+
+            <div class="register-header">
+
+                <div class="eyebrow">
+                    Join BloodLink
+                </div>
+
+                <h1>
+                    Create your account.
+                </h1>
+
+                <p class="mb-0">
+                    Whether you're here to donate blood or request it,
+                    BloodLink helps connect people through relevant,
+                    privacy-conscious matching.
+                </p>
+
+            </div>
+
+
+
+            <!-- BODY -->
+
+            <div class="register-body">
+
+
+                <!-- API ERROR -->
+
+                <div
+                    id="errorMessage"
+                    class="alert alert-danger"
+                    style="display: none;"
+                ></div>
+
+
+                <!-- SUCCESS -->
+
+                <div
+                    id="successMessage"
+                    class="alert alert-success"
+                    style="display: none;"
+                ></div>
+
+
+
+                <form id="registerForm">
+
+
+                    <!-- ROLE -->
+
+                    <h4 class="section-title">
+                        How will you use BloodLink?
+                    </h4>
+
+
+                    <div class="role-wrapper mb-5">
+
+
+                        <div class="role-option">
+
+                            <input
+                                type="radio"
+                                name="role"
+                                value="DONOR"
+                                id="roleDonor"
+                                required
+                            >
+
+                            <label
+                                for="roleDonor"
+                                class="role-label"
+                            >
+
+                                <div class="role-icon">
+                                    <i class="bi bi-heart-fill"></i>
+                                </div>
+
+                                <h4>
+                                    I want to donate
+                                </h4>
+
+                                <p>
+                                    Register as a donor and receive
+                                    relevant nearby blood requests.
+                                </p>
+
+                            </label>
+
+                        </div>
+
+
+
+                        <div class="role-option">
+
+                            <input
+                                type="radio"
+                                name="role"
+                                value="REQUESTER"
+                                id="roleRequester"
+                            >
+
+                            <label
+                                for="roleRequester"
+                                class="role-label"
+                            >
+
+                                <div class="role-icon">
+                                    <i class="bi bi-hospital-fill"></i>
+                                </div>
+
+                                <h4>
+                                    I need blood
+                                </h4>
+
+                                <p>
+                                    Create requests and find eligible
+                                    nearby donors.
+                                </p>
+
+                            </label>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- ACCOUNT -->
+
+                    <h4 class="section-title">
+                        Account details
+                    </h4>
+
+
+                    <div class="row g-4 mb-4">
+
+
+                        <!-- USERNAME -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="username"
+                                class="form-label"
+                            >
+                                Username
+                            </label>
+
+                            <input
+                                type="text"
+                                id="username"
+                                name="username"
+                                class="form-control"
+                                placeholder="Choose a username"
+                                autocomplete="username"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- EMAIL -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="email"
+                                class="form-label"
+                            >
+                                Email address
+                            </label>
+
+                            <input
+                                type="email"
+                                id="email"
+                                name="email"
+                                class="form-control"
+                                placeholder="Enter your email"
+                                autocomplete="email"
+                                required
+                            >
+
+                        </div>
+
+
+
+                        <!-- PHONE -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="phone"
+                                class="form-label"
+                            >
+                                Phone number
+                            </label>
+
+                            <input
+                                type="tel"
+                                id="phone"
+                                name="phone"
+                                class="form-control"
+                                placeholder="Enter phone number"
+                                autocomplete="tel"
+                                required
+                            >
+
+                            <div class="help-text">
+                                Used for contact after an accepted match.
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PASSWORD -->
+
+                    <h4 class="section-title">
+                        Secure your account
+                    </h4>
+
+
+                    <div class="row g-4">
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="password"
+                                class="form-label"
+                            >
+                                Password
+                            </label>
+
+
+                            <div class="password-box">
+
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    class="form-control"
+                                    placeholder="Create a password"
+                                    autocomplete="new-password"
+                                    minlength="8"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    onclick="togglePassword('password', this)"
+                                >
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                            </div>
+
+
+                            <div class="help-text">
+                                Minimum 8 characters.
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- CONFIRM PASSWORD -->
+
+                        <div class="col-md-6">
+
+                            <label
+                                for="password_confirm"
+                                class="form-label"
+                            >
+                                Confirm password
+                            </label>
+
+
+                            <div class="password-box">
+
+                                <input
+                                    type="password"
+                                    id="password_confirm"
+                                    name="password_confirm"
+                                    class="form-control"
+                                    placeholder="Confirm your password"
+                                    autocomplete="new-password"
+                                    minlength="8"
+                                    required
+                                >
+
+                                <button
+                                    type="button"
+                                    class="password-toggle"
+                                    onclick="togglePassword('password_confirm', this)"
+                                >
+                                    <i class="bi bi-eye"></i>
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+
+                    <!-- PRIVACY -->
+
+                    <div class="privacy-note">
+
+                        <i class="bi bi-shield-check me-2"></i>
+
+                        <strong>Privacy by design:</strong>
+
+                        your phone number is not exposed to other users
+                        simply because you register. BloodLink only reveals
+                        donor contact information after an accepted match.
+
+                    </div>
+
+
+
+                    <!-- SUBMIT -->
+
+                    <button
+                        type="submit"
+                        class="create-btn"
+                        id="registerButton"
+                    >
+
+                        Create BloodLink Account
+
+                        <i class="bi bi-arrow-right ms-2"></i>
+
+                    </button>
+
+
+
+                    <div class="login-text">
+
+                        Already have an account?
+
+                        <a href="/login.html">
+                            Sign in
+                        </a>
+
+                    </div>
+
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- API -->
+
+<script src="/static/js/api.js"></script>
+
+
+<script>
+
+    /* =========================================
+       PASSWORD VISIBILITY
+    ========================================= */
+
+    function togglePassword(id, button) {
+
+        const input =
+            document.getElementById(id);
+
+        if (input.type === "password") {
+
+            input.type = "text";
+
+            button.innerHTML =
+                '<i class="bi bi-eye-slash"></i>';
+
+        } else {
+
+            input.type = "password";
+
+            button.innerHTML =
+                '<i class="bi bi-eye"></i>';
+
+        }
+
+    }
+
+
+
+    /* =========================================
+       REGISTER
+    ========================================= */
+
+    const registerForm =
+        document.getElementById("registerForm");
+
+    const registerButton =
+        document.getElementById("registerButton");
+
+    const errorMessage =
+        document.getElementById("errorMessage");
+
+    const successMessage =
+        document.getElementById("successMessage");
+
+
+    registerForm.addEventListener(
+        "submit",
+        async function (event) {
+
+            event.preventDefault();
+
+
+            errorMessage.style.display = "none";
+            successMessage.style.display = "none";
+
+
+            const role =
+                document.querySelector(
+                    'input[name="role"]:checked'
+                );
+
+
+            if (!role) {
+
+                errorMessage.textContent =
+                    "Please select how you will use BloodLink.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+            }
+
+
+            const username =
+                document
+                    .getElementById("username")
+                    .value
+                    .trim();
+
+
+            const email =
+                document
+                    .getElementById("email")
+                    .value
+                    .trim();
+
+
+            const phone =
+                document
+                    .getElementById("phone")
+                    .value
+                    .trim();
+
+
+            const password =
+                document
+                    .getElementById("password")
+                    .value;
+
+
+            const passwordConfirm =
+                document
+                    .getElementById("password_confirm")
+                    .value;
+
+
+            if (password !== passwordConfirm) {
+
+                errorMessage.textContent =
+                    "Passwords do not match.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+            }
+
+
+            if (password.length < 8) {
+
+                errorMessage.textContent =
+                    "Password must contain at least 8 characters.";
+
+                errorMessage.style.display =
+                    "block";
+
+                return;
+            }
+
+
+            registerButton.disabled = true;
+
+            registerButton.innerHTML =
+                'Creating account <span class="spinner-border spinner-border-sm ms-2"></span>';
+
+
+            try {
+
+                const data =
+                    await registerUser({
+
+                        username: username,
+
+                        email: email,
+
+                        phone: phone,
+
+                        password: password,
+
+                        password_confirm: passwordConfirm,
+
+                        role: role.value
+
+                    });
+
+
+                successMessage.textContent =
+                    "Account created successfully! Redirecting...";
+
+                successMessage.style.display =
+                    "block";
+
+
+                /*
+                 * Donors need to complete
+                 * their donor profile first.
+                 */
+
+                setTimeout(function () {
+
+                    if (data.user.role === "DONOR") {
+
+                        window.location.href =
+                            "/donor-profile.html";
+
+                    } else {
+
+                        window.location.href =
+                            "/dashboard.html";
+
+                    }
+
+                }, 700);
+
+
+            } catch (error) {
+
+                errorMessage.textContent =
+                    error.message;
+
+                errorMessage.style.display =
+                    "block";
+
+
+                registerButton.disabled = false;
+
+                registerButton.innerHTML =
+                    'Create BloodLink Account <i class="bi bi-arrow-right ms-2"></i>';
+
+            }
+
+        }
+    );
+
+</script>
+
+
+</body>
+
+</html>

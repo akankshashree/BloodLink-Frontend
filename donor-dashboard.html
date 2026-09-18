@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donor Dashboard | BloodLink</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<style>
+
+        :root {
+            --red: #c81d25;
+            --red-dark: #a9151d;
+            --soft-red: #fff1f2;
+            --dark: #171717;
+            --muted: #6b7280;
+            --green: #16803c;
+            --soft-green: #ecfdf3;
+            --orange: #d97706;
+            --soft-orange: #fff7ed;
+            --border: #eeeeee;
+            --background: #f8f8f8;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: var(--dark);
+            font-family: "DM Sans", sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Manrope", sans-serif;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+
+        .brand {
+            text-decoration: none;
+            color: var(--dark);
+            font-family: "Manrope", sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+        }
+
+        .brand span {
+            color: var(--red);
+        }
+
+        .nav-btn {
+            border: 1px solid #e5e5e5;
+            background: white;
+            color: #444;
+            border-radius: 10px;
+            padding: 9px 14px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .notification-btn {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            background: var(--red);
+            color: white;
+            border-radius: 50px;
+            font-size: .65rem;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        .logout-btn {
+            color: #666;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            color: var(--red);
+        }
+
+        /* ================= PAGE ================= */
+
+        .dashboard {
+            padding: 45px 0 70px;
+        }
+
+        /* ================= HERO ================= */
+
+        .welcome-card {
+            background:
+                linear-gradient(
+                    120deg,
+                    #9f1239,
+                    #c81d25 55%,
+                    #e33b44
+                );
+
+            border-radius: 25px;
+            color: white;
+            padding: 42px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(200,29,37,.16);
+        }
+
+        .welcome-card::after {
+            content: "🩸";
+            position: absolute;
+            right: 35px;
+            bottom: -25px;
+            font-size: 12rem;
+            opacity: .10;
+            transform: rotate(-12deg);
+        }
+
+        .welcome-eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: .75rem;
+            font-weight: 800;
+            color: #ffd9dc;
+        }
+
+        .welcome-card h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 7px 0 10px;
+        }
+
+        .welcome-card p {
+            color: #ffe8e9;
+            max-width: 650px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .profile-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.2);
+            padding: 9px 15px;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+
+        .blood-pill {
+            background: white;
+            color: var(--red);
+            padding: 10px 16px;
+            border-radius: 50px;
+            font-weight: 800;
+            margin-left: 8px;
+        }
+
+        /* ================= ALERT ================= */
+
+        .setup-alert {
+            background: white;
+            border: 1px solid #f1d4d6;
+            border-left: 5px solid var(--red);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .setup-alert h5 {
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .setup-alert p {
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 11px 17px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .primary-btn:hover {
+            background: var(--red-dark);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* ================= STATS ================= */
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 23px;
+            height: 100%;
+            transition: .2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,.05);
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--soft-red);
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-family: "Manrope", sans-serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: .85rem;
+            margin-top: 2px;
+        }
+
+        /* ================= SECTION ================= */
+
+        .section-title {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            font-size: .9rem;
+            margin-bottom: 25px;
+        }
+
+        /* ================= STATUS CARD ================= */
+
+        .status-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            height: 100%;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 11px;
+            border-radius: 50px;
+            font-size: .75rem;
+            font-weight: 800;
+        }
+
+        .status-ready {
+            background: var(--soft-green);
+            color: var(--green);
+        }
+
+        .status-pending {
+            background: var(--soft-orange);
+            color: var(--orange);
+        }
+
+        .status-neutral {
+            background: #f4f4f5;
+            color: #666;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .status-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-row-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #f7f7f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .status-row strong {
+            display: block;
+            font-size: .9rem;
+        }
+
+        .status-row small {
+            color: var(--muted);
+        }
+
+        /* ================= QUICK ACTIONS ================= */
+
+        .action-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: .2s;
+        }
+
+        .action-card:hover {
+            border-color: #f0a0a4;
+            color: var(--red);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,.05);
+        }
+
+        .action-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: var(--soft-red);
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+        }
+
+        .action-card strong {
+            display: block;
+            font-size: .9rem;
+        }
+
+        .action-card small {
+            color: var(--muted);
+        }
+
+        .action-arrow {
+            margin-left: auto;
+            color: #aaa;
+        }
+
+        /* ================= INFORMATION ================= */
+
+        .info-card {
+            background: #181818;
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            height: 100%;
+        }
+
+        .info-card h4 {
+            font-weight: 800;
+        }
+
+        .info-card p {
+            color: #bdbdbd;
+            line-height: 1.7;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 11px;
+            margin-top: 17px;
+        }
+
+        .info-item i {
+            color: #ff6870;
+        }
+
+        /* ================= EMPTY STATE ================= */
+
+        .empty-card {
+            background: white;
+            border: 1px dashed #ddd;
+            border-radius: 18px;
+            padding: 35px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 15px;
+            border-radius: 15px;
+            background: var(--soft-red);
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .empty-card h5 {
+            font-weight: 800;
+        }
+
+        .empty-card p {
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            border-top: 1px solid var(--border);
+            background: white;
+            padding: 25px 0;
+            color: #888;
+            font-size: .85rem;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 767px) {
+
+            .dashboard {
+                padding: 25px 0 50px;
+            }
+
+            .welcome-card {
+                padding: 30px 25px;
+            }
+
+            .welcome-card h1 {
+                font-size: 2.15rem;
+            }
+
+            .welcome-card::after {
+                font-size: 8rem;
+            }
+
+            .blood-pill {
+                margin-left: 0;
+                margin-top: 8px;
+            }
+
+            .profile-pill {
+                flex-wrap: wrap;
+            }
+
+        }
+
+    </style>
+<style>
+
+
+        :root {
+            --red: #c81d25;
+            --red-dark: #a9151d;
+            --soft-red: #fff1f2;
+            --dark: #171717;
+            --muted: #6b7280;
+            --green: #16803c;
+            --soft-green: #ecfdf3;
+            --orange: #d97706;
+            --soft-orange: #fff7ed;
+            --border: #eeeeee;
+            --background: #f8f8f8;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: var(--background);
+            color: var(--dark);
+            font-family: "DM Sans", sans-serif;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: "Manrope", sans-serif;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid var(--border);
+            padding: 14px 0;
+        }
+
+        .brand {
+            text-decoration: none;
+            color: var(--dark);
+            font-family: "Manrope", sans-serif;
+            font-weight: 800;
+            font-size: 1.4rem;
+        }
+
+        .brand span {
+            color: var(--red);
+        }
+
+        .nav-btn {
+            border: 1px solid #e5e5e5;
+            background: white;
+            color: #444;
+            border-radius: 10px;
+            padding: 9px 14px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: .2s;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--red);
+            color: var(--red);
+        }
+
+        .notification-btn {
+            position: relative;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -7px;
+            right: -7px;
+            background: var(--red);
+            color: white;
+            border-radius: 50px;
+            font-size: .65rem;
+            min-width: 20px;
+            height: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px solid white;
+        }
+
+        .logout-btn {
+            color: #666;
+            text-decoration: none;
+            font-weight: 600;
+        }
+
+        .logout-btn:hover {
+            color: var(--red);
+        }
+
+        /* ================= PAGE ================= */
+
+        .dashboard {
+            padding: 45px 0 70px;
+        }
+
+        /* ================= HERO ================= */
+
+        .welcome-card {
+            background:
+                linear-gradient(
+                    120deg,
+                    #9f1239,
+                    #c81d25 55%,
+                    #e33b44
+                );
+
+            border-radius: 25px;
+            color: white;
+            padding: 42px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(200,29,37,.16);
+        }
+
+        .welcome-card::after {
+            content: "🩸";
+            position: absolute;
+            right: 35px;
+            bottom: -25px;
+            font-size: 12rem;
+            opacity: .10;
+            transform: rotate(-12deg);
+        }
+
+        .welcome-eyebrow {
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: .75rem;
+            font-weight: 800;
+            color: #ffd9dc;
+        }
+
+        .welcome-card h1 {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin: 7px 0 10px;
+        }
+
+        .welcome-card p {
+            color: #ffe8e9;
+            max-width: 650px;
+            line-height: 1.7;
+            margin-bottom: 25px;
+        }
+
+        .profile-pill {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            background: rgba(255,255,255,.15);
+            border: 1px solid rgba(255,255,255,.2);
+            padding: 9px 15px;
+            border-radius: 50px;
+            font-weight: 700;
+        }
+
+        .blood-pill {
+            background: white;
+            color: var(--red);
+            padding: 10px 16px;
+            border-radius: 50px;
+            font-weight: 800;
+            margin-left: 8px;
+        }
+
+        /* ================= ALERT ================= */
+
+        .setup-alert {
+            background: white;
+            border: 1px solid #f1d4d6;
+            border-left: 5px solid var(--red);
+            border-radius: 16px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+
+        .setup-alert h5 {
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .setup-alert p {
+            color: var(--muted);
+            margin-bottom: 15px;
+        }
+
+        .primary-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--red);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            padding: 11px 17px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: .2s;
+        }
+
+        .primary-btn:hover {
+            background: var(--red-dark);
+            color: white;
+            transform: translateY(-1px);
+        }
+
+        /* ================= STATS ================= */
+
+        .stat-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 23px;
+            height: 100%;
+            transition: .2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 25px rgba(0,0,0,.05);
+        }
+
+        .stat-icon {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            background: var(--soft-red);
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            margin-bottom: 15px;
+        }
+
+        .stat-number {
+            font-family: "Manrope", sans-serif;
+            font-size: 1.9rem;
+            font-weight: 800;
+        }
+
+        .stat-label {
+            color: var(--muted);
+            font-size: .85rem;
+            margin-top: 2px;
+        }
+
+        /* ================= SECTION ================= */
+
+        .section-title {
+            font-size: 1.45rem;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+
+        .section-subtitle {
+            color: var(--muted);
+            font-size: .9rem;
+            margin-bottom: 25px;
+        }
+
+        /* ================= STATUS CARD ================= */
+
+        .status-card {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 28px;
+            height: 100%;
+        }
+
+        .status-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 22px;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 7px 11px;
+            border-radius: 50px;
+            font-size: .75rem;
+            font-weight: 800;
+        }
+
+        .status-ready {
+            background: var(--soft-green);
+            color: var(--green);
+        }
+
+        .status-pending {
+            background: var(--soft-orange);
+            color: var(--orange);
+        }
+
+        .status-neutral {
+            background: #f4f4f5;
+            color: #666;
+        }
+
+        .status-row {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            padding: 13px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .status-row:last-child {
+            border-bottom: none;
+        }
+
+        .status-row-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 10px;
+            background: #f7f7f7;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        .status-row strong {
+            display: block;
+            font-size: .9rem;
+        }
+
+        .status-row small {
+            color: var(--muted);
+        }
+
+        /* ================= QUICK ACTIONS ================= */
+
+        .action-card {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 18px;
+            color: var(--dark);
+            text-decoration: none;
+            transition: .2s;
+        }
+
+        .action-card:hover {
+            border-color: #f0a0a4;
+            color: var(--red);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(0,0,0,.05);
+        }
+
+        .action-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 12px;
+            background: var(--soft-red);
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.15rem;
+            flex-shrink: 0;
+        }
+
+        .action-card strong {
+            display: block;
+            font-size: .9rem;
+        }
+
+        .action-card small {
+            color: var(--muted);
+        }
+
+        .action-arrow {
+            margin-left: auto;
+            color: #aaa;
+        }
+
+        /* ================= INFORMATION ================= */
+
+        .info-card {
+            background: #181818;
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            height: 100%;
+        }
+
+        .info-card h4 {
+            font-weight: 800;
+        }
+
+        .info-card p {
+            color: #bdbdbd;
+            line-height: 1.7;
+        }
+
+        .info-item {
+            display: flex;
+            gap: 11px;
+            margin-top: 17px;
+        }
+
+        .info-item i {
+            color: #ff6870;
+        }
+
+        /* ================= EMPTY STATE ================= */
+
+        .empty-card {
+            background: white;
+            border: 1px dashed #ddd;
+            border-radius: 18px;
+            padding: 35px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 55px;
+            height: 55px;
+            margin: 0 auto 15px;
+            border-radius: 15px;
+            background: var(--soft-red);
+            color: var(--red);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+        }
+
+        .empty-card h5 {
+            font-weight: 800;
+        }
+
+        .empty-card p {
+            color: var(--muted);
+            max-width: 500px;
+            margin: 0 auto 20px;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            border-top: 1px solid var(--border);
+            background: white;
+            padding: 25px 0;
+            color: #888;
+            font-size: .85rem;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 767px) {
+
+            .dashboard {
+                padding: 25px 0 50px;
+            }
+
+            .welcome-card {
+                padding: 30px 25px;
+            }
+
+            .welcome-card h1 {
+                font-size: 2.15rem;
+            }
+
+            .welcome-card::after {
+                font-size: 8rem;
+            }
+
+            .blood-pill {
+                margin-left: 0;
+                margin-top: 8px;
+            }
+
+            .profile-pill {
+                flex-wrap: wrap;
+            }
+
+        }
+
+    
+.stat-card{background:#fff;border:1px solid #eee;border-radius:18px;padding:24px}.stat-label{color:#777;font-size:.8rem;font-weight:700}.stat-value{font:800 2rem Manrope;margin-top:5px}.dashboard-action,.action-btn{display:block;text-decoration:none;border-radius:10px;padding:12px;font-weight:700;background:#fff;color:#171717;border:1px solid #ddd}.dashboard-action:hover,.action-btn:hover{color:#c81d25;border-color:#c81d25}
+</style>
+</head>
+<body>
+
+<nav class="navbar sticky-top"><div class="container"><div class="d-flex justify-content-between align-items-center w-100">
+<a href="/donor-dashboard.html" class="brand"><span>🩸</span> BloodLink</a>
+<div class="d-flex gap-3"><a href="/notifications.html" class="nav-link-custom">Notifications <span id="notifBadge"></span></a><a href="#" id="logoutLink" class="nav-link-custom">Logout</a></div></div></div></nav>
+<main class="page"><div class="container">
+<div class="page-header"><div class="eyebrow">Donor dashboard</div><h1>Welcome back, <span id="username">Donor</span>.</h1><p>Stay ready to help. BloodLink shows you relevant requests based on your blood group, location and availability.</p></div>
+<div id="errorMessage" class="alert alert-danger mb-4" style="display:none"></div>
+<div class="row g-4 mb-4">
+<div class="col-md-4"><div class="stat-card"><div class="stat-label">Pending matches</div><div class="stat-value" id="pendingMatches">0</div></div></div>
+<div class="col-md-4"><div class="stat-card"><div class="stat-label">Total matches</div><div class="stat-value" id="totalMatches">0</div></div></div>
+<div class="col-md-4"><div class="stat-card"><div class="stat-label">Accepted</div><div class="stat-value" id="acceptedMatches">0</div></div></div>
+</div>
+<div class="row g-4">
+<div class="col-lg-7"><div class="card-custom">
+<div class="card-title">Your donor status</div><div class="card-subtitle">Your current matching profile.</div>
+<div id="profileStatus" class="p-3 rounded" style="background:#f8f8f8">Loading...</div>
+<div class="d-flex gap-2 flex-wrap mt-4"><a href="/donor-profile.html" class="action-btn">Update donor profile</a><a href="/matches.html" class="action-btn">View blood matches</a></div>
+</div></div>
+<div class="col-lg-5"><div class="info-card">
+<div class="eyebrow">Quick actions</div><h4 class="mt-2">Ready to help?</h4><p>Keep your profile current and review requests matched to you.</p>
+<div class="d-grid gap-2"><a href="/matches.html" class="dashboard-action">View Blood Matches</a><a href="/donation-history.html" class="dashboard-action">Donation History</a><a href="/notifications.html" class="dashboard-action">Notifications</a></div>
+</div></div>
+</div></div></main>
+<script>
+const user=requireAuth("DONOR");
+if(user){
+document.getElementById("username").textContent=user.username;
+document.getElementById("logoutLink").onclick=async e=>{e.preventDefault();await logoutUser();location.href="/";};
+(async()=>{
+ try{
+  const d=await getDashboard();
+  pendingMatches.textContent=d.pending_matches??0; totalMatches.textContent=d.total_matches??0; acceptedMatches.textContent=d.accepted_matches??0;
+  if(d.donor_profile){profileStatus.innerHTML=`<strong>${d.donor_profile.blood_group}</strong> · ${d.donor_profile.address||"Location saved"} · ${d.donor_profile.is_available?"Available":"Unavailable"}`;}
+  else profileStatus.innerHTML='<a href="/donor-profile.html">Complete your donor profile</a>';
+  if(d.unread_notifications) notifBadge.textContent=`(${d.unread_notifications} new)`;
+ }catch(e){showMessage("errorMessage",e.message);}
+})();
+}
+</script>
+
+
+</body>
+</html>

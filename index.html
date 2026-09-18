@@ -1,0 +1,2341 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>BloodLink | Privacy-Preserving Blood Donor Matching</title>
+
+    <!-- Google Fonts -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap -->
+
+    <link
+        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+        rel="stylesheet"
+    >
+
+    <!-- Bootstrap Icons -->
+
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    >
+
+
+    <style>
+
+        :root {
+            --red: #c81d25;
+            --dark-red: #9f1239;
+            --soft-red: #fff1f2;
+            --text: #171717;
+            --muted: #6b7280;
+            --cream: #fffafa;
+            --green: #16803c;
+            --border: #eee;
+        }
+
+
+        * {
+            box-sizing: border-box;
+        }
+
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+
+        body {
+            margin: 0;
+            font-family: "DM Sans", sans-serif;
+            color: var(--text);
+            background: #ffffff;
+        }
+
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        .navbar-brand {
+            font-family: "Manrope", sans-serif;
+        }
+
+
+        /* =====================================================
+           NAVBAR
+        ===================================================== */
+
+        .navbar {
+            background: rgba(255, 255, 255, 0.94);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+            padding: 14px 0;
+        }
+
+
+        /* BloodLink brand */
+
+        .navbar-brand {
+            display: inline-flex;
+            align-items: center;
+            gap: 11px;
+
+            text-decoration: none;
+
+            font-family: "Manrope", sans-serif;
+            font-size: 1.45rem;
+            font-weight: 800;
+
+            color: var(--text) !important;
+        }
+
+
+        /* Red medical plus box */
+
+        .brand-icon {
+            width: 42px;
+            height: 42px;
+
+            border-radius: 11px;
+
+            background: var(--red);
+
+            position: relative;
+            flex-shrink: 0;
+
+            box-shadow:
+                0 5px 15px rgba(200, 29, 37, 0.20);
+        }
+
+
+        /* Vertical part of plus */
+
+        .brand-icon::before {
+            content: "";
+
+            position: absolute;
+
+            width: 9px;
+            height: 27px;
+
+            background: white;
+
+            border-radius: 3px;
+
+            left: 16.5px;
+            top: 7.5px;
+        }
+
+
+        /* Horizontal part of plus */
+
+        .brand-icon::after {
+            content: "";
+
+            position: absolute;
+
+            width: 27px;
+            height: 9px;
+
+            background: white;
+
+            border-radius: 3px;
+
+            left: 7.5px;
+            top: 16.5px;
+        }
+
+
+        .brand-name {
+            line-height: 1;
+            letter-spacing: -0.6px;
+        }
+
+
+        .brand-name span {
+            color: var(--red);
+        }
+
+
+        .nav-link {
+            color: #444 !important;
+            font-weight: 600;
+            margin: 0 8px;
+        }
+
+
+        .nav-link:hover {
+            color: var(--red) !important;
+        }
+
+
+        .login-btn {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 9px 18px !important;
+        }
+
+
+        .register-btn {
+            background: var(--red);
+            color: white !important;
+            border-radius: 10px;
+            padding: 10px 18px !important;
+        }
+
+
+        .register-btn:hover {
+            background: #a9151d;
+            color: white !important;
+        }
+
+
+        /* =====================================================
+           HERO
+        ===================================================== */
+
+        .hero {
+            min-height: 700px;
+
+            background:
+                linear-gradient(
+                    90deg,
+                    rgba(255,255,255,1) 0%,
+                    rgba(255,255,255,.97) 43%,
+                    rgba(255,255,255,.35) 72%,
+                    rgba(255,255,255,.05) 100%
+                ),
+                url("https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1800&q=85");
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            align-items: center;
+
+            position: relative;
+        }
+
+
+        .hero-content {
+            max-width: 680px;
+            padding: 80px 0;
+        }
+
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            background: var(--soft-red);
+            color: var(--red);
+
+            border: 1px solid #fecdd3;
+            border-radius: 100px;
+
+            padding: 8px 15px;
+
+            font-size: 0.9rem;
+            font-weight: 700;
+
+            margin-bottom: 22px;
+        }
+
+
+        .hero h1 {
+            font-size: clamp(3rem, 6vw, 5.4rem);
+            line-height: 1.02;
+            letter-spacing: -3px;
+            font-weight: 800;
+            margin-bottom: 25px;
+        }
+
+
+        .hero h1 span {
+            color: var(--red);
+        }
+
+
+        .hero-text {
+            color: #555;
+            font-size: 1.18rem;
+            line-height: 1.7;
+            max-width: 600px;
+            margin-bottom: 35px;
+        }
+
+
+        .hero-buttons {
+            display: flex;
+            gap: 14px;
+            flex-wrap: wrap;
+        }
+
+
+        .primary-btn {
+            background: var(--red);
+            border: none;
+            color: white;
+
+            padding: 15px 25px;
+
+            border-radius: 12px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            transition: .25s;
+        }
+
+
+        .primary-btn:hover {
+            background: #a9151d;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+
+        .secondary-btn {
+            background: white;
+
+            border: 1px solid #ddd;
+
+            color: var(--text);
+
+            padding: 15px 25px;
+
+            border-radius: 12px;
+
+            font-weight: 700;
+
+            text-decoration: none;
+
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+
+            transition: .25s;
+        }
+
+
+        .secondary-btn:hover {
+            border-color: var(--red);
+            color: var(--red);
+            transform: translateY(-2px);
+        }
+
+
+        .hero-note {
+            margin-top: 28px;
+            color: #777;
+            font-size: .9rem;
+        }
+
+
+        /* =====================================================
+           STATS
+        ===================================================== */
+
+        .stats-section {
+            margin-top: -45px;
+
+            position: relative;
+            z-index: 5;
+        }
+
+
+        .stats-card {
+            background: white;
+
+            border-radius: 20px;
+
+            box-shadow: 0 15px 45px rgba(0,0,0,.09);
+
+            padding: 28px;
+        }
+
+
+        .stat {
+            text-align: center;
+
+            border-right: 1px solid #eee;
+        }
+
+
+        .stat:last-child {
+            border-right: none;
+        }
+
+
+        .stat-number {
+            font-family: "Manrope", sans-serif;
+
+            font-size: 2rem;
+
+            font-weight: 800;
+
+            color: var(--red);
+        }
+
+
+        .stat-label {
+            color: var(--muted);
+            font-size: .9rem;
+        }
+
+
+        /* =====================================================
+           SECTION
+        ===================================================== */
+
+        .section {
+            padding: 100px 0;
+        }
+
+
+        .section-soft {
+            background: #fff8f8;
+        }
+
+
+        .section-heading {
+            max-width: 700px;
+
+            margin: 0 auto 55px;
+
+            text-align: center;
+        }
+
+
+        .eyebrow {
+            color: var(--red);
+
+            font-weight: 800;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1.5px;
+
+            font-size: .8rem;
+
+            margin-bottom: 10px;
+        }
+
+
+        .section-heading h2 {
+            font-size: 2.8rem;
+
+            font-weight: 800;
+
+            letter-spacing: -1.5px;
+        }
+
+
+        .section-heading p {
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            margin-top: 15px;
+        }
+
+
+        /* =====================================================
+           PROBLEM CARDS
+        ===================================================== */
+
+        .feature-card {
+            height: 100%;
+
+            padding: 30px;
+
+            border: 1px solid var(--border);
+
+            border-radius: 20px;
+
+            background: white;
+
+            transition: .25s;
+        }
+
+
+        .feature-card:hover {
+            transform: translateY(-7px);
+
+            box-shadow: 0 15px 35px rgba(0,0,0,.08);
+        }
+
+
+        .icon-box {
+            width: 55px;
+            height: 55px;
+
+            border-radius: 15px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: var(--soft-red);
+
+            color: var(--red);
+
+            font-size: 1.5rem;
+
+            margin-bottom: 20px;
+        }
+
+
+        .feature-card h4 {
+            font-weight: 800;
+            margin-bottom: 12px;
+        }
+
+
+        .feature-card p {
+            color: var(--muted);
+
+            line-height: 1.7;
+
+            margin: 0;
+        }
+
+
+        /* =====================================================
+           HOW IT WORKS
+        ===================================================== */
+
+        .step-card {
+            position: relative;
+
+            text-align: center;
+
+            padding: 25px;
+        }
+
+
+        .step-number {
+            width: 62px;
+            height: 62px;
+
+            border-radius: 50%;
+
+            background: var(--red);
+
+            color: white;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: 0 auto 20px;
+
+            font-family: "Manrope", sans-serif;
+
+            font-size: 1.25rem;
+
+            font-weight: 800;
+        }
+
+
+        .step-card h4 {
+            font-weight: 800;
+        }
+
+
+        .step-card p {
+            color: var(--muted);
+            line-height: 1.6;
+        }
+
+
+        .step-line {
+            position: absolute;
+
+            top: 55px;
+
+            right: -50%;
+
+            width: 100%;
+
+            height: 2px;
+
+            border-top: 2px dashed #f5a4a8;
+        }
+
+
+        /* =====================================================
+           PRIVACY
+        ===================================================== */
+
+        .privacy-box {
+            background: #181818;
+
+            color: white;
+
+            border-radius: 28px;
+
+            overflow: hidden;
+        }
+
+
+        .privacy-content {
+            padding: 65px;
+        }
+
+
+        .privacy-content h2 {
+            font-size: 2.7rem;
+
+            font-weight: 800;
+        }
+
+
+        .privacy-content p {
+            color: #c9c9c9;
+
+            line-height: 1.8;
+        }
+
+
+        .privacy-point {
+            display: flex;
+
+            gap: 13px;
+
+            margin-top: 20px;
+        }
+
+
+        .privacy-point i {
+            color: #ff6670;
+
+            font-size: 1.2rem;
+        }
+
+
+        .privacy-image {
+            min-height: 450px;
+
+            background:
+                linear-gradient(rgba(0,0,0,.1), rgba(0,0,0,.25)),
+                url("https://images.unsplash.com/photo-1584982751601-97dcc096659c?auto=format&fit=crop&w=1000&q=85");
+
+            background-size: cover;
+
+            background-position: center;
+        }
+
+
+        /* =====================================================
+           MATCHING
+        ===================================================== */
+
+        .matching-card {
+            background: white;
+
+            border-radius: 25px;
+
+            border: 1px solid #eee;
+
+            padding: 35px;
+
+            height: 100%;
+
+            box-shadow: 0 10px 35px rgba(0,0,0,.05);
+        }
+
+
+        .blood-pill {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 8px;
+
+            background: var(--soft-red);
+
+            color: var(--red);
+
+            padding: 8px 13px;
+
+            border-radius: 50px;
+
+            font-weight: 800;
+
+            font-size: .85rem;
+        }
+
+
+        .match-row {
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            padding: 17px 0;
+
+            border-bottom: 1px solid #eee;
+        }
+
+
+        .match-row:last-child {
+            border-bottom: none;
+        }
+
+
+        .match-distance {
+            color: var(--green);
+
+            font-weight: 700;
+        }
+
+
+        .check {
+            color: var(--green);
+
+            margin-right: 7px;
+        }
+
+
+        /* =====================================================
+           BLOG
+        ===================================================== */
+
+        .blog-card {
+            border: 1px solid #eee;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            background: white;
+
+            height: 100%;
+
+            transition: .25s;
+        }
+
+
+        .blog-card:hover {
+            transform: translateY(-6px);
+
+            box-shadow: 0 15px 35px rgba(0,0,0,.08);
+        }
+
+
+        .blog-image {
+            height: 210px;
+
+            background-size: cover;
+
+            background-position: center;
+        }
+
+
+        .blog-body {
+            padding: 25px;
+        }
+
+
+        .blog-tag {
+            font-size: .75rem;
+
+            text-transform: uppercase;
+
+            letter-spacing: 1px;
+
+            color: var(--red);
+
+            font-weight: 800;
+        }
+
+
+        .blog-body h4 {
+            font-weight: 800;
+
+            margin: 10px 0;
+        }
+
+
+        .blog-body p {
+            color: var(--muted);
+
+            line-height: 1.6;
+        }
+
+
+        .blog-link {
+            color: var(--red);
+
+            text-decoration: none;
+
+            font-weight: 700;
+        }
+
+
+        /* =====================================================
+           CTA
+        ===================================================== */
+
+        .cta {
+            padding: 90px 0;
+
+            background:
+                linear-gradient(110deg, #a9151d, #d92731);
+
+            color: white;
+
+            text-align: center;
+        }
+
+
+        .cta h2 {
+            font-size: 3.2rem;
+
+            font-weight: 800;
+
+            letter-spacing: -1px;
+        }
+
+
+        .cta p {
+            color: #ffe5e7;
+
+            max-width: 650px;
+
+            margin: 15px auto 30px;
+
+            line-height: 1.7;
+        }
+
+
+        .cta-btn {
+            background: white;
+
+            color: var(--red);
+
+            padding: 15px 27px;
+
+            border-radius: 12px;
+
+            font-weight: 800;
+
+            text-decoration: none;
+
+            display: inline-block;
+
+            transition: .25s;
+        }
+
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+
+            color: var(--red);
+        }
+
+
+        /* =====================================================
+           FOOTER
+        ===================================================== */
+
+        footer {
+            background: #111;
+
+            color: white;
+
+            padding: 60px 0 25px;
+        }
+
+
+        .footer-brand {
+            display: inline-flex;
+
+            align-items: center;
+
+            gap: 10px;
+
+            font-family: "Manrope", sans-serif;
+
+            font-size: 1.5rem;
+
+            font-weight: 800;
+        }
+
+
+        .footer-brand-icon {
+            width: 34px;
+            height: 34px;
+
+            border-radius: 9px;
+
+            background: var(--red);
+
+            position: relative;
+        }
+
+
+        .footer-brand-icon::before {
+            content: "";
+
+            position: absolute;
+
+            width: 7px;
+            height: 22px;
+
+            background: white;
+
+            border-radius: 2px;
+
+            left: 13.5px;
+            top: 6px;
+        }
+
+
+        .footer-brand-icon::after {
+            content: "";
+
+            position: absolute;
+
+            width: 22px;
+            height: 7px;
+
+            background: white;
+
+            border-radius: 2px;
+
+            left: 6px;
+            top: 13.5px;
+        }
+
+
+        .footer-brand span {
+            color: #ff5962;
+        }
+
+
+        .footer-text {
+            color: #aaa;
+
+            max-width: 420px;
+
+            line-height: 1.7;
+        }
+
+
+        .footer-title {
+            font-weight: 800;
+
+            margin-bottom: 18px;
+        }
+
+
+        .footer-link {
+            display: block;
+
+            color: #aaa;
+
+            text-decoration: none;
+
+            margin-bottom: 10px;
+        }
+
+
+        .footer-link:hover {
+            color: white;
+        }
+
+
+        .footer-bottom {
+            border-top: 1px solid #292929;
+
+            margin-top: 40px;
+
+            padding-top: 20px;
+
+            color: #777;
+
+            font-size: .85rem;
+        }
+
+
+        /* =====================================================
+           RESPONSIVE
+        ===================================================== */
+
+        @media (max-width: 991px) {
+
+            .hero {
+                min-height: 650px;
+
+                background:
+                    linear-gradient(
+                        rgba(255,255,255,.9),
+                        rgba(255,255,255,.94)
+                    ),
+                    url("https://images.unsplash.com/photo-1584515933487-779824d29309?auto=format&fit=crop&w=1400&q=80");
+
+                background-size: cover;
+
+                background-position: center;
+            }
+
+
+            .step-line {
+                display: none;
+            }
+
+
+            .privacy-image {
+                min-height: 300px;
+            }
+
+
+            .privacy-content {
+                padding: 40px;
+            }
+
+        }
+
+
+        @media (max-width: 767px) {
+
+            .navbar-brand {
+                font-size: 1.25rem;
+            }
+
+
+            .brand-icon {
+                width: 38px;
+                height: 38px;
+            }
+
+
+            .brand-icon::before {
+                width: 8px;
+                height: 24px;
+
+                left: 15px;
+                top: 7px;
+            }
+
+
+            .brand-icon::after {
+                width: 24px;
+                height: 8px;
+
+                left: 7px;
+                top: 15px;
+            }
+
+
+            .hero h1 {
+                letter-spacing: -2px;
+            }
+
+
+            .stats-section {
+                margin-top: 20px;
+            }
+
+
+            .stat {
+                border-right: none;
+
+                border-bottom: 1px solid #eee;
+
+                padding: 15px;
+            }
+
+
+            .stat:last-child {
+                border-bottom: none;
+            }
+
+
+            .section {
+                padding: 70px 0;
+            }
+
+
+            .section-heading h2 {
+                font-size: 2.2rem;
+            }
+
+
+            .cta h2 {
+                font-size: 2.3rem;
+            }
+
+
+            .privacy-content h2 {
+                font-size: 2.2rem;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================================
+     NAVBAR
+========================================================= -->
+
+<nav class="navbar navbar-expand-lg sticky-top">
+
+    <div class="container">
+
+
+        <a class="navbar-brand" href="/">
+
+            <div class="brand-icon"></div>
+
+            <div class="brand-name">
+                Blood<span>Link</span>
+            </div>
+
+        </a>
+
+
+        <button
+            class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarNav"
+        >
+
+            <span class="navbar-toggler-icon"></span>
+
+        </button>
+
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+
+
+            <ul class="navbar-nav mx-auto">
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="#how-it-works"
+                    >
+                        How It Works
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="#matching"
+                    >
+                        Matching
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="#privacy"
+                    >
+                        Privacy
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a
+                        class="nav-link"
+                        href="#health"
+                    >
+                        Health & Safety
+                    </a>
+
+                </li>
+
+            </ul>
+
+
+            <div class="navbar-nav align-items-lg-center">
+
+                <a
+                    href="/login.html"
+                    class="nav-link login-btn"
+                >
+                    Log in
+                </a>
+
+
+                <a
+                    href="/register.html"
+                    class="nav-link register-btn"
+                >
+                    Get Started
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+
+<!-- =========================================================
+     HERO
+========================================================= -->
+
+<section class="hero">
+
+    <div class="container">
+
+        <div class="hero-content">
+
+
+            <div class="hero-badge">
+
+                <i class="bi bi-heart-pulse-fill"></i>
+
+                Smart blood donor matching
+
+            </div>
+
+
+            <h1>
+
+                When every
+
+                <span>drop</span>
+
+                matters.
+
+            </h1>
+
+
+            <p class="hero-text">
+
+                BloodLink connects blood requests with eligible,
+                nearby donors — while keeping donor contact
+                information private until they choose to help.
+
+            </p>
+
+
+            <div class="hero-buttons">
+
+
+                <a
+                    href="/register.html"
+                    class="primary-btn"
+                >
+
+                    <i class="bi bi-plus-circle"></i>
+
+                    Request Blood
+
+                </a>
+
+
+                <a
+                    href="/register.html"
+                    class="secondary-btn"
+                >
+
+                    <i class="bi bi-heart"></i>
+
+                    Become a Donor
+
+                </a>
+
+
+            </div>
+
+
+            <div class="hero-note">
+
+                <i class="bi bi-shield-check"></i>
+
+                Privacy-first • Location-aware • Eligibility-based
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     STATS
+========================================================= -->
+
+<section class="stats-section">
+
+    <div class="container">
+
+        <div class="stats-card">
+
+            <div class="row">
+
+
+                <div class="col-md-3 stat">
+
+                    <div class="stat-number">
+                        8
+                    </div>
+
+                    <div class="stat-label">
+                        Blood Groups Supported
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3 stat">
+
+                    <div class="stat-number">
+                        10km+
+                    </div>
+
+                    <div class="stat-label">
+                        Configurable Matching Radius
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3 stat">
+
+                    <div class="stat-number">
+                        24/7
+                    </div>
+
+                    <div class="stat-label">
+                        Request Availability
+                    </div>
+
+                </div>
+
+
+                <div class="col-md-3 stat">
+
+                    <div class="stat-number">
+                        🔒
+                    </div>
+
+                    <div class="stat-label">
+                        Privacy Protected
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     WHY BLOODLINK
+========================================================= -->
+
+<section class="section">
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                Why BloodLink?
+            </div>
+
+            <h2>
+                Stop broadcasting.
+                Start matching.
+            </h2>
+
+            <p>
+                Traditional emergency blood requests often reach
+                people who cannot help. BloodLink filters requests
+                before notifying donors.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="icon-box">
+
+                        <i class="bi bi-geo-alt-fill"></i>
+
+                    </div>
+
+                    <h4>
+                        Nearby Donors
+                    </h4>
+
+                    <p>
+                        Find eligible donors within a configurable
+                        radius using their registered location.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="icon-box">
+
+                        <i class="bi bi-droplet-half"></i>
+
+                    </div>
+
+                    <h4>
+                        Blood Compatibility
+                    </h4>
+
+                    <p>
+                        The matching engine filters donors based
+                        on the requested blood group before
+                        sending notifications.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-4">
+
+                <div class="feature-card">
+
+                    <div class="icon-box">
+
+                        <i class="bi bi-shield-lock-fill"></i>
+
+                    </div>
+
+                    <h4>
+                        Privacy First
+                    </h4>
+
+                    <p>
+                        Donor contact information remains hidden
+                        until the donor explicitly accepts the
+                        blood request.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     HOW IT WORKS
+========================================================= -->
+
+<section
+    class="section section-soft"
+    id="how-it-works"
+>
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                Simple workflow
+            </div>
+
+            <h2>
+                From request to connection.
+            </h2>
+
+            <p>
+                BloodLink handles the filtering and notification
+                process so people don't have to broadcast emergency
+                requests to everyone.
+            </p>
+
+        </div>
+
+
+        <div class="row">
+
+
+            <div class="col-md-3">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        01
+                    </div>
+
+                    <h4>
+                        Request
+                    </h4>
+
+                    <p>
+                        Enter the required blood group,
+                        hospital location, urgency and units.
+                    </p>
+
+                    <div class="step-line"></div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-3">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        02
+                    </div>
+
+                    <h4>
+                        Match
+                    </h4>
+
+                    <p>
+                        BloodLink checks compatibility,
+                        distance, availability and eligibility.
+                    </p>
+
+                    <div class="step-line"></div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-3">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        03
+                    </div>
+
+                    <h4>
+                        Notify
+                    </h4>
+
+                    <p>
+                        Only eligible nearby donors receive
+                        a notification for the request.
+                    </p>
+
+                    <div class="step-line"></div>
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-md-3">
+
+                <div class="step-card">
+
+                    <div class="step-number">
+                        04
+                    </div>
+
+                    <h4>
+                        Accept
+                    </h4>
+
+                    <p>
+                        When a donor accepts, contact information
+                        can be revealed to the requester.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     MATCHING DEMO
+========================================================= -->
+
+<section
+    class="section"
+    id="matching"
+>
+
+    <div class="container">
+
+        <div class="row align-items-center g-5">
+
+
+            <div class="col-lg-6">
+
+                <div class="eyebrow">
+                    Intelligent matching
+                </div>
+
+                <h2
+                    style="
+                    font-size: 3rem;
+                    font-weight: 800;
+                    letter-spacing: -1.5px;
+                    "
+                >
+                    The right donor.
+                    Not every donor.
+                </h2>
+
+                <p
+                    class="text-muted mt-3"
+                    style="line-height:1.8;"
+                >
+                    BloodLink evaluates multiple conditions before
+                    notifying a donor. This reduces irrelevant
+                    messages and avoids repeatedly disturbing donors
+                    who aren't currently eligible.
+                </p>
+
+
+                <div class="mt-4">
+
+
+                    <p>
+
+                        <i class="bi bi-check-circle-fill check"></i>
+
+                        Blood group compatibility
+
+                    </p>
+
+
+                    <p>
+
+                        <i class="bi bi-check-circle-fill check"></i>
+
+                        Distance from hospital
+
+                    </p>
+
+
+                    <p>
+
+                        <i class="bi bi-check-circle-fill check"></i>
+
+                        Donor availability
+
+                    </p>
+
+
+                    <p>
+
+                        <i class="bi bi-check-circle-fill check"></i>
+
+                        Verification status
+
+                    </p>
+
+
+                    <p>
+
+                        <i class="bi bi-check-circle-fill check"></i>
+
+                        Donation interval
+
+                    </p>
+
+
+                </div>
+
+            </div>
+
+
+
+            <div class="col-lg-6">
+
+                <div class="matching-card">
+
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+
+                        <div>
+
+                            <small class="text-muted">
+                                ACTIVE REQUEST
+                            </small>
+
+                            <h4 class="mb-0">
+                                City Hospital
+                            </h4>
+
+                        </div>
+
+
+                        <div class="blood-pill">
+
+                            <i class="bi bi-droplet-fill"></i>
+
+                            A+
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="match-row">
+
+                        <div>
+
+                            <strong>
+                                Donor #104
+                            </strong>
+
+                            <div class="small text-muted">
+                                Compatible • Available
+                            </div>
+
+                        </div>
+
+                        <div class="match-distance">
+                            1.8 km
+                        </div>
+
+                    </div>
+
+
+                    <div class="match-row">
+
+                        <div>
+
+                            <strong>
+                                Donor #218
+                            </strong>
+
+                            <div class="small text-muted">
+                                Compatible • Available
+                            </div>
+
+                        </div>
+
+                        <div class="match-distance">
+                            3.4 km
+                        </div>
+
+                    </div>
+
+
+                    <div class="match-row">
+
+                        <div>
+
+                            <strong>
+                                Donor #301
+                            </strong>
+
+                            <div class="small text-muted">
+                                Compatible • Available
+                            </div>
+
+                        </div>
+
+                        <div class="match-distance">
+                            6.7 km
+                        </div>
+
+                    </div>
+
+
+                    <div
+                        class="mt-4 p-3 rounded-3"
+                        style="background:#f7f7f7;"
+                    >
+
+                        <small class="text-muted">
+                            CONTACT INFORMATION
+                        </small>
+
+                        <div class="mt-1">
+
+                            <i class="bi bi-lock-fill"></i>
+
+                            Hidden until donor accepts
+
+                        </div>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PRIVACY
+========================================================= -->
+
+<section
+    class="section section-soft"
+    id="privacy"
+>
+
+    <div class="container">
+
+
+        <div class="privacy-box">
+
+            <div class="row g-0 align-items-stretch">
+
+
+                <div class="col-lg-6">
+
+                    <div class="privacy-content">
+
+
+                        <div class="eyebrow">
+                            Privacy by design
+                        </div>
+
+
+                        <h2>
+                            Your number isn't
+                            broadcast to everyone.
+                        </h2>
+
+
+                        <p>
+                            BloodLink separates matching from
+                            contact sharing. Donors receive only
+                            the information necessary to decide
+                            whether they can help.
+                        </p>
+
+
+
+                        <div class="privacy-point">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            <div>
+
+                                <strong>
+                                    Before acceptance
+                                </strong>
+
+                                <div class="text-secondary">
+                                    Donor contact information stays hidden.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="privacy-point">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            <div>
+
+                                <strong>
+                                    Donor chooses
+                                </strong>
+
+                                <div class="text-secondary">
+                                    The donor decides whether to accept.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="privacy-point">
+
+                            <i class="bi bi-check-circle-fill"></i>
+
+                            <div>
+
+                                <strong>
+                                    After acceptance
+                                </strong>
+
+                                <div class="text-secondary">
+                                    Contact details can be revealed for coordination.
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                    </div>
+
+                </div>
+
+
+
+                <div class="col-lg-6">
+
+                    <div class="privacy-image"></div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     HEALTH & SAFETY
+========================================================= -->
+
+<section
+    class="section"
+    id="health"
+>
+
+    <div class="container">
+
+
+        <div class="section-heading">
+
+            <div class="eyebrow">
+                Health & Safety
+            </div>
+
+            <h2>
+                Know before you donate.
+            </h2>
+
+            <p>
+                A small educational corner for donors and requesters.
+            </p>
+
+        </div>
+
+
+        <div class="row g-4">
+
+
+            <div class="col-md-4">
+
+                <article class="blog-card">
+
+
+                    <div
+                        class="blog-image"
+                        style="
+                        background-image:
+                        url('https://images.unsplash.com/photo-1603398938378-e54eab446dde?auto=format&fit=crop&w=900&q=80');
+                        "
+                    ></div>
+
+
+                    <div class="blog-body">
+
+                        <div class="blog-tag">
+                            Blood Donation
+                        </div>
+
+                        <h4>
+                            Why blood donation matters
+                        </h4>
+
+                        <p>
+                            Donated blood can be an important resource
+                            for hospitals during surgeries, emergencies
+                            and other medical situations.
+                        </p>
+
+                        <a
+                            href="#"
+                            class="blog-link"
+                        >
+                            Read more →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+
+            <div class="col-md-4">
+
+                <article class="blog-card">
+
+
+                    <div
+                        class="blog-image"
+                        style="
+                        background-image:
+                        url('https://images.unsplash.com/photo-1576091160399-112ba8d25d1d?auto=format&fit=crop&w=900&q=80');
+                        "
+                    ></div>
+
+
+                    <div class="blog-body">
+
+                        <div class="blog-tag">
+                            First Aid
+                        </div>
+
+                        <h4>
+                            Emergency first-aid basics
+                        </h4>
+
+                        <p>
+                            In an emergency, staying calm and contacting
+                            appropriate medical services should come before
+                            attempting unfamiliar medical procedures.
+                        </p>
+
+                        <a
+                            href="#"
+                            class="blog-link"
+                        >
+                            Read more →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+
+            <div class="col-md-4">
+
+                <article class="blog-card">
+
+
+                    <div
+                        class="blog-image"
+                        style="
+                        background-image:
+                        url('https://images.unsplash.com/photo-1538108149393-fbbd81895907?auto=format&fit=crop&w=900&q=80');
+                        "
+                    ></div>
+
+
+                    <div class="blog-body">
+
+                        <div class="blog-tag">
+                            Hospital Care
+                        </div>
+
+                        <h4>
+                            Preparing for an emergency
+                        </h4>
+
+                        <p>
+                            Keep important medical information accessible
+                            and follow instructions from qualified healthcare
+                            professionals during emergencies.
+                        </p>
+
+                        <a
+                            href="#"
+                            class="blog-link"
+                        >
+                            Read more →
+                        </a>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FINAL CTA
+========================================================= -->
+
+<section class="cta">
+
+    <div class="container">
+
+        <h2>
+            Someone nearby may be able to help.
+        </h2>
+
+        <p>
+            Create a request, let BloodLink find eligible donors,
+            and connect only when a donor chooses to respond.
+        </p>
+
+        <a
+            href="/register.html"
+            class="cta-btn"
+        >
+
+            Get Started
+
+            <i class="bi bi-arrow-right ms-2"></i>
+
+        </a>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     FOOTER
+========================================================= -->
+
+<footer>
+
+    <div class="container">
+
+
+        <div class="row g-5">
+
+
+            <div class="col-lg-6">
+
+
+                <div class="footer-brand">
+
+                    <div class="footer-brand-icon"></div>
+
+                    <div>
+                        Blood<span>Link</span>
+                    </div>
+
+                </div>
+
+
+                <p class="footer-text mt-3">
+
+                    A privacy-preserving blood donor matching
+                    platform designed to connect blood requests
+                    with eligible nearby donors.
+
+                </p>
+
+
+            </div>
+
+
+
+            <div class="col-sm-6 col-lg-3">
+
+
+                <div class="footer-title">
+                    Platform
+                </div>
+
+
+                <a
+                    href="/login.html"
+                    class="footer-link"
+                >
+                    Login
+                </a>
+
+
+                <a
+                    href="/register.html"
+                    class="footer-link"
+                >
+                    Register
+                </a>
+
+
+                <a
+                    href="#how-it-works"
+                    class="footer-link"
+                >
+                    How It Works
+                </a>
+
+
+            </div>
+
+
+
+            <div class="col-sm-6 col-lg-3">
+
+
+                <div class="footer-title">
+                    Features
+                </div>
+
+
+                <a
+                    href="#matching"
+                    class="footer-link"
+                >
+                    Donor Matching
+                </a>
+
+
+                <a
+                    href="#privacy"
+                    class="footer-link"
+                >
+                    Privacy Protection
+                </a>
+
+
+                <a
+                    href="#health"
+                    class="footer-link"
+                >
+                    Health & Safety
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+
+        <div
+            class="footer-bottom d-flex justify-content-between flex-wrap gap-2"
+        >
+
+            <span>
+                © 2026 BloodLink. Prototype project.
+            </span>
+
+
+            <span>
+                Built with Django
+            </span>
+
+        </div>
+
+
+    </div>
+
+</footer>
+
+
+
+<!-- Bootstrap JS -->
+
+<script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+</script>
+
+
+</body>
+
+</html>
