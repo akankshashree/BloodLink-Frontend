@@ -608,7 +608,7 @@ html[data-theme="dark"] .theme-toggle:hover{
    COMMUNITY REVIEWS
 ========================= */
 .reviews-section{
-    margin-top:50px;
+    margin-top:0;
 }
 
 .reviews-head{
@@ -814,6 +814,399 @@ html[data-theme="dark"] .theme-toggle:hover{
 @media(max-width:600px){
     .reviews-grid{
         grid-template-columns:1fr;
+    }
+}
+
+
+/* =========================
+   BLOODLINK LEARN
+========================= */
+.learn-section{
+    margin-top:50px;
+}
+
+.learn-head{
+    margin-bottom:22px;
+}
+
+.learn-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
+}
+
+.learn-card{
+    display:block;
+    text-decoration:none;
+    color:var(--text,#171717);
+    background:var(--card,#fff);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:21px;
+    min-height:175px;
+    transition:.2s;
+}
+
+.learn-card:hover{
+    color:var(--text,#171717);
+    transform:translateY(-4px);
+    border-color:#f0a0a4;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.learn-icon{
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    background:var(--soft-red);
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.15rem;
+    margin-bottom:15px;
+}
+
+.learn-card h5{
+    font-weight:800;
+    font-size:1rem;
+    margin-bottom:7px;
+}
+
+.learn-card p{
+    color:var(--muted);
+    font-size:.82rem;
+    line-height:1.55;
+    margin:0 0 13px;
+}
+
+.learn-link{
+    color:var(--red);
+    font-size:.8rem;
+    font-weight:800;
+}
+
+.learn-feature{
+    grid-column:span 2;
+    min-height:190px;
+    background:linear-gradient(135deg,#fff1f2,#fff);
+}
+
+.learn-feature .learn-icon{
+    background:#fff;
+}
+
+html[data-theme="dark"] .learn-card{
+    background:var(--card);
+    color:var(--text);
+    border-color:var(--border);
+}
+
+html[data-theme="dark"] .learn-card:hover{
+    color:var(--text);
+    border-color:#7d3036;
+}
+
+html[data-theme="dark"] .learn-feature{
+    background:linear-gradient(135deg,#32171b,#171a20);
+}
+
+html[data-theme="dark"] .learn-feature .learn-icon{
+    background:#35171b;
+}
+
+@media(max-width:1100px){
+    .learn-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+    .learn-grid{
+        grid-template-columns:1fr;
+    }
+    .learn-feature{
+        grid-column:span 1;
+    }
+}
+
+
+/* =========================
+   ENHANCED BLOODLINK SECTIONS
+========================= */
+
+.enhanced-container{
+    width:100%;
+    max-width:1440px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left:28px;
+    padding-right:28px;
+}
+
+.enhanced-section{
+    margin-top:44px;
+    margin-bottom:44px;
+}
+
+.enhanced-panel{
+    background:var(--card,#fff);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:28px;
+    box-shadow:0 5px 22px rgba(0,0,0,.025);
+}
+
+.enhanced-section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.enhanced-section-head h2{
+    margin:0 0 4px;
+}
+
+.enhanced-section-head p{
+    margin:0;
+    color:var(--muted);
+    font-size:.9rem;
+}
+
+.enhanced-link{
+    color:var(--red);
+    text-decoration:none;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.enhanced-link:hover{
+    color:var(--red-dark);
+}
+
+/* Notifications */
+.notification-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px;
+}
+
+.notification-item{
+    background:var(--surface,#fff);
+    border:1px solid var(--border)!important;
+    border-radius:16px!important;
+    padding:20px!important;
+    min-height:138px;
+    transition:.2s;
+}
+
+.notification-item:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 22px rgba(0,0,0,.05);
+}
+
+.notification-item.unread{
+    background:var(--soft-red);
+    border-color:#f2c7ca!important;
+}
+
+.notification-item .stat-icon{
+    flex:0 0 45px;
+}
+
+/* Reviews */
+.reviews-section.enhanced-section{
+    margin-top:44px;
+}
+
+.reviews-panel{
+    background:linear-gradient(135deg,#fff7f8,#fffafa);
+    border:1px solid #f3dfe1;
+    border-radius:22px;
+    padding:28px;
+}
+
+.reviews-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px;
+}
+
+.review-card{
+    background:var(--card,#fff);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+    min-height:205px;
+    box-shadow:0 4px 15px rgba(0,0,0,.025);
+}
+
+.review-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.review-top{
+    margin-bottom:13px;
+}
+
+.review-text{
+    min-height:58px;
+}
+
+.review-btn{
+    border:0;
+    background:var(--red);
+    color:white;
+    border-radius:10px;
+    padding:11px 17px;
+    font-weight:800;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.review-btn:hover{
+    background:var(--red-dark);
+}
+
+/* Learn */
+.learn-section.enhanced-section{
+    margin-top:44px;
+}
+
+.learn-panel{
+    background:var(--card,#fff);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:28px;
+}
+
+.learn-grid{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:14px;
+}
+
+.learn-card{
+    display:block;
+    text-decoration:none;
+    color:var(--text,#171717);
+    background:var(--surface,#fff);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:18px;
+    min-height:152px;
+    transition:.2s;
+}
+
+.learn-card:hover{
+    color:var(--text,#171717);
+    transform:translateY(-3px);
+    border-color:#efb4b8;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+.learn-icon{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:var(--soft-red);
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.1rem;
+    margin-bottom:13px;
+}
+
+.learn-card h5{
+    font-size:.9rem;
+    font-weight:800;
+    margin-bottom:6px;
+}
+
+.learn-card p{
+    color:var(--muted);
+    font-size:.76rem;
+    line-height:1.45;
+    margin:0 0 9px;
+}
+
+.learn-link{
+    color:var(--red);
+    font-size:.76rem;
+    font-weight:800;
+}
+
+.learn-feature{
+    grid-column:auto;
+    min-height:152px;
+    background:var(--surface,#fff);
+}
+
+/* Dark mode */
+html[data-theme="dark"] .enhanced-panel,
+html[data-theme="dark"] .learn-panel{
+    background:var(--card);
+    border-color:var(--border);
+}
+
+html[data-theme="dark"] .reviews-panel{
+    background:linear-gradient(135deg,#281518,#171a20);
+    border-color:#49272b;
+}
+
+html[data-theme="dark"] .notification-item,
+html[data-theme="dark"] .review-card,
+html[data-theme="dark"] .learn-card{
+    background:var(--surface);
+    border-color:var(--border)!important;
+}
+
+html[data-theme="dark"] .notification-item.unread{
+    background:#30191d;
+    border-color:#633137!important;
+}
+
+@media(max-width:1100px){
+    .notification-grid,
+    .reviews-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .learn-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
+
+@media(max-width:767px){
+    .enhanced-container{
+        padding-left:18px;
+        padding-right:18px;
+    }
+
+    .enhanced-panel,
+    .reviews-panel,
+    .learn-panel{
+        padding:20px;
+        border-radius:18px;
+    }
+
+    .notification-grid,
+    .reviews-grid,
+    .learn-grid{
+        grid-template-columns:1fr;
+    }
+
+    .enhanced-section{
+        margin-top:32px;
+        margin-bottom:32px;
     }
 }
 
@@ -1052,8 +1445,10 @@ Review matched blood requests and keep your donor information updated.
 </div>
 
 <!-- RECENT NOTIFICATIONS -->
-<section class="mt-5 mb-5">
-    <div class="d-flex justify-content-between align-items-end flex-wrap gap-2 mb-3">
+<div class="enhanced-container">
+<section class="enhanced-section">
+<div class="enhanced-panel">
+    <div class="enhanced-section-head">
         <div>
             <h2 class="section-title mb-1">Recent notifications</h2>
             <p class="section-subtitle mb-0">Your latest BloodLink updates.</p>
@@ -1062,7 +1457,7 @@ Review matched blood requests and keep your donor information updated.
             View all <i class="bi bi-arrow-right"></i>
         </a>
     </div>
-    <div id="recentNotifications" class="row g-3">
+    <div id="recentNotifications" class="notification-grid">
         <div class="col-12">
             <div class="notification-item p-3 rounded-3 border bg-white">
                 <small class="text-muted">Loading notifications...</small>
@@ -1072,9 +1467,91 @@ Review matched blood requests and keep your donor information updated.
 </section>
 
 
+
+<!-- LEARN BLOOD DONATION -->
+<div class="enhanced-container">
+<section class="learn-section enhanced-section">
+<div class="learn-panel">
+    <div class="learn-head">
+        <div class="welcome-eyebrow" style="color:var(--red);">BLOODLINK LEARN</div>
+        <h2 class="section-title mt-1">Learn before you donate</h2>
+        <p class="section-subtitle mb-0">
+            Simple guides on food, blood groups, eligibility and recovery.
+        </p>
+    </div>
+
+    <div class="learn-grid">
+
+        <a href="#" class="learn-card learn-feature" data-learn-topic="eat">
+            <div class="learn-icon"><i class="bi bi-egg-fried"></i></div>
+            <h5>What to eat before & after donating</h5>
+            <p>
+                Learn about hydration, balanced meals and iron-rich foods
+                that can support recovery.
+            </p>
+            <span class="learn-link">Read guide <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+        <a href="#" class="learn-card" data-learn-topic="before">
+            <div class="learn-icon"><i class="bi bi-clipboard2-check"></i></div>
+            <h5>Before donation</h5>
+            <p>What to expect and how to prepare for a donation.</p>
+            <span class="learn-link">Learn more <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+        <a href="#" class="learn-card" data-learn-topic="after">
+            <div class="learn-icon"><i class="bi bi-heart-pulse"></i></div>
+            <h5>After donation</h5>
+            <p>Rest, fluids, food and practical recovery guidance.</p>
+            <span class="learn-link">Learn more <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+        <a href="#" class="learn-card" data-learn-topic="groups">
+            <div class="learn-icon"><i class="bi bi-droplet-fill"></i></div>
+            <h5>Blood groups</h5>
+            <p>Understand A, B, AB and O blood groups and Rh positive/negative.</p>
+            <span class="learn-link">Explore types <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+        <a href="#" class="learn-card" data-learn-topic="eligibility">
+            <div class="learn-icon"><i class="bi bi-person-check-fill"></i></div>
+            <h5>Can I donate?</h5>
+            <p>General eligibility factors and why donor screening matters.</p>
+            <span class="learn-link">Check basics <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+        <a href="#" class="learn-card" data-learn-topic="iron">
+            <div class="learn-icon"><i class="bi bi-capsule-pill"></i></div>
+            <h5>Iron & blood donation</h5>
+            <p>Why iron matters and which foods are naturally rich in iron.</p>
+            <span class="learn-link">Learn about iron <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+        <a href="#" class="learn-card" data-learn-topic="recovery">
+            <div class="learn-icon"><i class="bi bi-battery-charging"></i></div>
+            <h5>Recovery & hydration</h5>
+            <p>Simple steps to help you feel comfortable after donating.</p>
+            <span class="learn-link">Recovery guide <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+        <a href="#" class="learn-card" data-learn-topic="wellbeing">
+            <div class="learn-icon"><i class="bi bi-emoji-smile"></i></div>
+            <h5>Donor wellbeing</h5>
+            <p>Tips for managing nervousness, stress and donation anxiety.</p>
+            <span class="learn-link">Read more <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+    </div>
+</div>
+</div>
+</section>
+</div>
+
 <!-- COMMUNITY REVIEWS -->
-<section class="reviews-section mb-5">
-    <div class="reviews-head">
+<div class="enhanced-container">
+<section class="reviews-section enhanced-section">
+<div class="reviews-panel">
+    <div class="enhanced-section-head reviews-head">
         <div>
             <h2 class="section-title mb-1">What our community says</h2>
             <p class="section-subtitle mb-0">
@@ -1089,6 +1566,30 @@ Review matched blood requests and keep your donor information updated.
 
     <div class="reviews-grid" id="reviewsGrid"></div>
 </section>
+</div>
+
+
+<!-- LEARN GUIDE MODAL -->
+<div class="review-modal" id="learnModal" role="dialog" aria-modal="true" aria-labelledby="learnModalTitle">
+    <div class="review-dialog">
+        <div class="review-dialog-header">
+            <div>
+                <div class="welcome-eyebrow" style="color:var(--red);">BLOODLINK LEARN</div>
+                <h4 id="learnModalTitle" class="mb-0 mt-1">Donation guide</h4>
+            </div>
+            <button type="button" class="review-close" id="closeLearnModal" aria-label="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div id="learnModalBody" class="review-text"></div>
+        <div class="mt-3 p-3 rounded-3 bg-light">
+            <small class="text-muted">
+                General educational information only. Donor eligibility and medical advice
+                should come from the blood donation service or qualified healthcare professional.
+            </small>
+        </div>
+    </div>
+</div>
 
 <!-- REVIEW MODAL -->
 <div class="review-modal" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle">
@@ -1493,7 +1994,7 @@ async function loadRecentNotifications(){
             const unread = n.is_read === false || n.read === false || n.status === "UNREAD";
 
             return `
-                <div class="col-md-4">
+                <div>
                     <div class="notification-item ${unread ? "unread" : ""} p-3 rounded-3 border bg-white h-100">
                         <div class="d-flex align-items-start gap-2">
                             <div class="stat-icon mb-0 flex-shrink-0">
@@ -1546,6 +2047,106 @@ loadRecentNotifications();
 </script>
 
 <script>
+
+/* =========================
+   LEARN GUIDES
+========================= */
+(function(){
+    const modal = document.getElementById("learnModal");
+    const title = document.getElementById("learnModalTitle");
+    const body = document.getElementById("learnModalBody");
+    const close = document.getElementById("closeLearnModal");
+
+    const guides = {
+        eat:{
+            title:"What to eat before & after donating",
+            html:`
+                <p><strong>Before donation:</strong> Have a normal, balanced meal and drink enough fluids. Avoid arriving dehydrated.</p>
+                <p><strong>Good choices:</strong> leafy greens, beans/lentils, eggs, lean meat, fish, whole grains, fruits and other balanced foods. Iron-rich foods can be especially useful because iron is needed to make haemoglobin.</p>
+                <p><strong>After donation:</strong> Have fluids and a snack/meal, and follow the instructions given by the donation centre.</p>
+            `
+        },
+        before:{
+            title:"Before donation",
+            html:`
+                <p>Eat a healthy meal, stay hydrated and follow the donor centre's eligibility instructions. Bring any information or identification the centre asks for.</p>
+                <p>Screening is important because eligibility can depend on factors such as age, weight, health, medicines and recent activities or travel.</p>
+            `
+        },
+        after:{
+            title:"After donation",
+            html:`
+                <p>Take a short rest, have refreshments and drink fluids. Avoid strenuous activity for the period recommended by your donation centre.</p>
+                <p>If you feel unwell or have symptoms that concern you, contact the donation service or a healthcare professional.</p>
+            `
+        },
+        groups:{
+            title:"Understanding blood groups",
+            html:`
+                <p>The main ABO blood groups are <strong>A, B, AB and O</strong>. Each can also be Rh-positive or Rh-negative, giving eight common blood types: A+, A−, B+, B−, AB+, AB−, O+ and O−.</p>
+                <p>Compatibility depends on the type of transfusion. Hospitals use blood typing and crossmatching before transfusion.</p>
+            `
+        },
+        eligibility:{
+            title:"Can I donate?",
+            html:`
+                <p>Donation eligibility is determined by the blood donation service after screening. Requirements can vary by country and donation centre.</p>
+                <p>Health, age, weight, haemoglobin, medicines, recent illness and other factors may affect eligibility. BloodLink does not replace donor screening.</p>
+            `
+        },
+        iron:{
+            title:"Iron & blood donation",
+            html:`
+                <p>Iron is needed to make haemoglobin, which carries oxygen in red blood cells. Blood donation can reduce the body's iron stores.</p>
+                <p>Iron-containing foods include beans and lentils, leafy green vegetables, meat, seafood, eggs and fortified foods. If you are concerned about iron deficiency, speak with a healthcare professional rather than starting supplements on your own.</p>
+            `
+        },
+        recovery:{
+            title:"Recovery & hydration",
+            html:`
+                <p>Most donors can return to normal activities according to the guidance of their donation centre. Rest briefly after donating and replace fluids.</p>
+                <p>Listen to your body. If you become dizzy or feel unwell, sit or lie down and seek help from the donation staff.</p>
+            `
+        },
+        wellbeing:{
+            title:"Donor wellbeing",
+            html:`
+                <p>Feeling nervous before donating is common. Take slow breaths, tell staff if you feel anxious and give yourself enough time to rest.</p>
+                <p>If stress or anxiety is persistent or interfering with daily life, consider speaking with a qualified mental-health professional.</p>
+            `
+        }
+    };
+
+    document.querySelectorAll("[data-learn-topic]").forEach(function(card){
+        card.addEventListener("click", function(e){
+            e.preventDefault();
+            const guide = guides[card.dataset.learnTopic];
+            if(!guide) return;
+            title.textContent = guide.title;
+            body.innerHTML = guide.html;
+            modal.classList.add("show");
+        });
+    });
+
+    function closeModal(){
+        modal.classList.remove("show");
+    }
+
+    if(close) close.addEventListener("click", closeModal);
+
+    if(modal){
+        modal.addEventListener("click", function(e){
+            if(e.target === modal) closeModal();
+        });
+    }
+
+    document.addEventListener("keydown", function(e){
+        if(e.key === "Escape" && modal.classList.contains("show")){
+            closeModal();
+        }
+    });
+})();
+
 
 /* =========================
    COMMUNITY REVIEWS
