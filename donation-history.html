@@ -1,660 +1,988 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <title>Donation History | BloodLink</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+<script src="/static/js/api.js"></script>
+
 <style>
 
-        :root {
-            --red: #c81d25;
-            --red-dark: #a9151d;
-            --soft-red: #fff1f2;
-            --dark: #171717;
-            --muted: #6b7280;
-            --green: #16803c;
-            --soft-green: #ecfdf3;
-            --border: #eeeeee;
-            --background: #f8f8f8;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: var(--background);
-            color: var(--dark);
-            font-family: "DM Sans", sans-serif;
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: "Manrope", sans-serif;
-        }
-
-        /* NAVBAR */
-
-        .navbar {
-            background: white;
-            border-bottom: 1px solid var(--border);
-            padding: 14px 0;
-        }
-
-        .brand {
-            text-decoration: none;
-            color: var(--dark);
-            font-family: "Manrope", sans-serif;
-            font-size: 1.4rem;
-            font-weight: 800;
-        }
-
-        .brand span {
-            color: var(--red);
-        }
-
-        .nav-link-custom {
-            color: #555;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: .9rem;
-        }
-
-        .nav-link-custom:hover {
-            color: var(--red);
-        }
-
-        /* PAGE */
-
-        .page {
-            padding: 45px 0 70px;
-        }
-
-        .eyebrow {
-            color: var(--red);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: .73rem;
-            font-weight: 800;
-        }
-
-        .page-header h1 {
-            font-size: 2.6rem;
-            font-weight: 800;
-            margin: 6px 0 8px;
-            letter-spacing: -.8px;
-        }
-
-        .page-header p {
-            color: var(--muted);
-            max-width: 650px;
-            line-height: 1.7;
-        }
-
-        /* CARDS */
-
-        .card-custom {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        .card-subtitle {
-            color: var(--muted);
-            font-size: .85rem;
-            margin-bottom: 25px;
-        }
-
-        /* FORM */
-
-        .form-label {
-            font-size: .88rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .form-control {
-            border-color: #ddd;
-            border-radius: 10px;
-            padding: 12px 13px;
-        }
-
-        .form-control:focus {
-            border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(200,29,37,.08);
-        }
-
-        .save-btn {
-            width: 100%;
-            border: none;
-            background: var(--red);
-            color: white;
-            border-radius: 11px;
-            padding: 14px;
-            font-weight: 800;
-            margin-top: 10px;
-            transition: .2s;
-        }
-
-        .save-btn:hover {
-            background: var(--red-dark);
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        /* DONATION TIMELINE */
-
-        .timeline {
-            position: relative;
-            padding-left: 28px;
-        }
-
-        .timeline::before {
-            content: "";
-            position: absolute;
-            left: 8px;
-            top: 10px;
-            bottom: 10px;
-            width: 2px;
-            background: #eee;
-        }
-
-        .donation-item {
-            position: relative;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 17px;
-            padding: 20px;
-            margin-bottom: 15px;
-        }
-
-        .donation-dot {
-            position: absolute;
-            left: -28px;
-            top: 22px;
-            width: 17px;
-            height: 17px;
-            border-radius: 50%;
-            background: var(--red);
-            border: 4px solid var(--soft-red);
-        }
-
-        .donation-date {
-            color: var(--red);
-            font-size: .76rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: .6px;
-        }
-
-        .donation-item h5 {
-            font-weight: 800;
-            margin: 5px 0;
-        }
-
-        .donation-meta {
-            color: var(--muted);
-            font-size: .84rem;
-        }
-
-        .verified {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: var(--soft-green);
-            color: var(--green);
-            border-radius: 50px;
-            padding: 6px 9px;
-            font-size: .7rem;
-            font-weight: 800;
-        }
-
-        .unverified {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: #f5f5f5;
-            color: #777;
-            border-radius: 50px;
-            padding: 6px 9px;
-            font-size: .7rem;
-            font-weight: 800;
-        }
-
-        /* EMPTY */
-
-        .empty-state {
-            background: white;
-            border: 1px dashed #d8d8d8;
-            border-radius: 18px;
-            padding: 45px 25px;
-            text-align: center;
-        }
-
-        .empty-icon {
-            width: 62px;
-            height: 62px;
-            border-radius: 17px;
-            background: var(--soft-red);
-            color: var(--red);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin: 0 auto 17px;
-        }
-
-        .empty-state h5 {
-            font-weight: 800;
-        }
-
-        .empty-state p {
-            color: var(--muted);
-            max-width: 450px;
-            margin: 0 auto;
-        }
-
-        /* SIDE */
-
-        .info-card {
-            background: #181818;
-            color: white;
-            border-radius: 20px;
-            padding: 28px;
-        }
-
-        .info-card h4 {
-            font-weight: 800;
-        }
-
-        .info-card p {
-            color: #bbb;
-            font-size: .87rem;
-            line-height: 1.7;
-        }
-
-        .info-point {
-            display: flex;
-            gap: 10px;
-            margin-top: 17px;
-        }
-
-        .info-point i {
-            color: #ff6870;
-        }
-
-        .info-point span {
-            color: #ddd;
-            font-size: .83rem;
-        }
-
-        .alert {
-            border: none;
-            border-radius: 12px;
-        }
-
-        @media (max-width: 767px) {
-
-            .page {
-                padding: 28px 0 50px;
-            }
-
-            .page-header h1 {
-                font-size: 2.15rem;
-            }
-
-            .card-custom {
-                padding: 23px;
-            }
-
-        }
-
-    </style>
-<style>
-
-
-        :root {
-            --red: #c81d25;
-            --red-dark: #a9151d;
-            --soft-red: #fff1f2;
-            --dark: #171717;
-            --muted: #6b7280;
-            --green: #16803c;
-            --soft-green: #ecfdf3;
-            --border: #eeeeee;
-            --background: #f8f8f8;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: var(--background);
-            color: var(--dark);
-            font-family: "DM Sans", sans-serif;
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: "Manrope", sans-serif;
-        }
-
-        /* NAVBAR */
-
-        .navbar {
-            background: white;
-            border-bottom: 1px solid var(--border);
-            padding: 14px 0;
-        }
-
-        .brand {
-            text-decoration: none;
-            color: var(--dark);
-            font-family: "Manrope", sans-serif;
-            font-size: 1.4rem;
-            font-weight: 800;
-        }
-
-        .brand span {
-            color: var(--red);
-        }
-
-        .nav-link-custom {
-            color: #555;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: .9rem;
-        }
-
-        .nav-link-custom:hover {
-            color: var(--red);
-        }
-
-        /* PAGE */
-
-        .page {
-            padding: 45px 0 70px;
-        }
-
-        .eyebrow {
-            color: var(--red);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            font-size: .73rem;
-            font-weight: 800;
-        }
-
-        .page-header h1 {
-            font-size: 2.6rem;
-            font-weight: 800;
-            margin: 6px 0 8px;
-            letter-spacing: -.8px;
-        }
-
-        .page-header p {
-            color: var(--muted);
-            max-width: 650px;
-            line-height: 1.7;
-        }
-
-        /* CARDS */
-
-        .card-custom {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 30px;
-        }
-
-        .card-title {
-            font-size: 1.2rem;
-            font-weight: 800;
-            margin-bottom: 5px;
-        }
-
-        .card-subtitle {
-            color: var(--muted);
-            font-size: .85rem;
-            margin-bottom: 25px;
-        }
-
-        /* FORM */
-
-        .form-label {
-            font-size: .88rem;
-            font-weight: 700;
-            margin-bottom: 8px;
-        }
-
-        .form-control {
-            border-color: #ddd;
-            border-radius: 10px;
-            padding: 12px 13px;
-        }
-
-        .form-control:focus {
-            border-color: var(--red);
-            box-shadow: 0 0 0 3px rgba(200,29,37,.08);
-        }
-
-        .save-btn {
-            width: 100%;
-            border: none;
-            background: var(--red);
-            color: white;
-            border-radius: 11px;
-            padding: 14px;
-            font-weight: 800;
-            margin-top: 10px;
-            transition: .2s;
-        }
-
-        .save-btn:hover {
-            background: var(--red-dark);
-            color: white;
-            transform: translateY(-1px);
-        }
-
-        /* DONATION TIMELINE */
-
-        .timeline {
-            position: relative;
-            padding-left: 28px;
-        }
-
-        .timeline::before {
-            content: "";
-            position: absolute;
-            left: 8px;
-            top: 10px;
-            bottom: 10px;
-            width: 2px;
-            background: #eee;
-        }
-
-        .donation-item {
-            position: relative;
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 17px;
-            padding: 20px;
-            margin-bottom: 15px;
-        }
-
-        .donation-dot {
-            position: absolute;
-            left: -28px;
-            top: 22px;
-            width: 17px;
-            height: 17px;
-            border-radius: 50%;
-            background: var(--red);
-            border: 4px solid var(--soft-red);
-        }
-
-        .donation-date {
-            color: var(--red);
-            font-size: .76rem;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: .6px;
-        }
-
-        .donation-item h5 {
-            font-weight: 800;
-            margin: 5px 0;
-        }
-
-        .donation-meta {
-            color: var(--muted);
-            font-size: .84rem;
-        }
-
-        .verified {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: var(--soft-green);
-            color: var(--green);
-            border-radius: 50px;
-            padding: 6px 9px;
-            font-size: .7rem;
-            font-weight: 800;
-        }
-
-        .unverified {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            background: #f5f5f5;
-            color: #777;
-            border-radius: 50px;
-            padding: 6px 9px;
-            font-size: .7rem;
-            font-weight: 800;
-        }
-
-        /* EMPTY */
-
-        .empty-state {
-            background: white;
-            border: 1px dashed #d8d8d8;
-            border-radius: 18px;
-            padding: 45px 25px;
-            text-align: center;
-        }
-
-        .empty-icon {
-            width: 62px;
-            height: 62px;
-            border-radius: 17px;
-            background: var(--soft-red);
-            color: var(--red);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            margin: 0 auto 17px;
-        }
-
-        .empty-state h5 {
-            font-weight: 800;
-        }
-
-        .empty-state p {
-            color: var(--muted);
-            max-width: 450px;
-            margin: 0 auto;
-        }
-
-        /* SIDE */
-
-        .info-card {
-            background: #181818;
-            color: white;
-            border-radius: 20px;
-            padding: 28px;
-        }
-
-        .info-card h4 {
-            font-weight: 800;
-        }
-
-        .info-card p {
-            color: #bbb;
-            font-size: .87rem;
-            line-height: 1.7;
-        }
-
-        .info-point {
-            display: flex;
-            gap: 10px;
-            margin-top: 17px;
-        }
-
-        .info-point i {
-            color: #ff6870;
-        }
-
-        .info-point span {
-            color: #ddd;
-            font-size: .83rem;
-        }
-
-        .alert {
-            border: none;
-            border-radius: 12px;
-        }
-
-        @media (max-width: 767px) {
-
-            .page {
-                padding: 28px 0 50px;
-            }
-
-            .page-header h1 {
-                font-size: 2.15rem;
-            }
-
-            .card-custom {
-                padding: 23px;
-            }
-
-        }
-
-    
+:root {
+    --red: #c81d25;
+    --red-dark: #a9151d;
+    --soft-red: #fff1f2;
+    --dark: #171717;
+    --muted: #6b7280;
+    --green: #16803c;
+    --soft-green: #ecfdf3;
+    --border: #eeeeee;
+    --background: #f8f8f8;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--background);
+    color: var(--dark);
+    font-family: "DM Sans", sans-serif;
+}
+
+h1, h2, h3, h4, h5 {
+    font-family: "Manrope", sans-serif;
+}
+
+
+/* NAVBAR */
+
+.navbar {
+    background: white;
+    border-bottom: 1px solid var(--border);
+    padding: 14px 0;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--dark);
+    font-family: "Manrope", sans-serif;
+    font-size: 1.4rem;
+    font-weight: 800;
+}
+
+.brand-icon {
+    width: 42px;
+    height: 42px;
+    border-radius: 11px;
+    background: var(--red);
+    position: relative;
+    display: inline-block;
+    flex-shrink: 0;
+    box-shadow: 0 5px 15px rgba(200, 29, 37, 0.20);
+}
+
+.brand-icon::before {
+    content: "";
+    position: absolute;
+    width: 9px;
+    height: 27px;
+    background: white;
+    border-radius: 3px;
+    left: 16.5px;
+    top: 7.5px;
+}
+
+.brand-icon::after {
+    content: "";
+    position: absolute;
+    width: 27px;
+    height: 9px;
+    background: white;
+    border-radius: 3px;
+    left: 7.5px;
+    top: 16.5px;
+}
+
+.nav-link-custom {
+    color: #555;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: .9rem;
+}
+
+.nav-link-custom:hover {
+    color: var(--red);
+}
+
+
+/* PAGE */
+
+.page {
+    padding: 45px 0 70px;
+}
+
+.eyebrow {
+    color: var(--red);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    font-size: .73rem;
+    font-weight: 800;
+}
+
+.page-header h1 {
+    font-size: 2.6rem;
+    font-weight: 800;
+    margin: 6px 0 8px;
+    letter-spacing: -.8px;
+}
+
+.page-header p {
+    color: var(--muted);
+    max-width: 650px;
+    line-height: 1.7;
+}
+
+
+/* CARDS */
+
+.card-custom {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 30px;
+}
+
+.card-title {
+    font-size: 1.2rem;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.card-subtitle {
+    color: var(--muted);
+    font-size: .85rem;
+    margin-bottom: 25px;
+}
+
+
+/* FORM */
+
+.form-label {
+    font-size: .88rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+.form-control,
+.form-select {
+    border-color: #ddd;
+    border-radius: 10px;
+    padding: 12px 13px;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--red);
+    box-shadow: 0 0 0 3px rgba(200,29,37,.08);
+}
+
+.save-btn {
+    width: 100%;
+    border: none;
+    background: var(--red);
+    color: white;
+    border-radius: 11px;
+    padding: 14px;
+    font-weight: 800;
+    margin-top: 10px;
+    transition: .2s;
+}
+
+.save-btn:hover {
+    background: var(--red-dark);
+    color: white;
+    transform: translateY(-1px);
+}
+
+
+/* TIMELINE */
+
+.timeline {
+    position: relative;
+    padding-left: 28px;
+}
+
+.timeline::before {
+    content: "";
+    position: absolute;
+    left: 8px;
+    top: 10px;
+    bottom: 10px;
+    width: 2px;
+    background: #eee;
+}
+
+.donation-item {
+    position: relative;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 17px;
+    padding: 20px;
+    margin-bottom: 15px;
+}
+
+.donation-dot {
+    position: absolute;
+    left: -28px;
+    top: 22px;
+    width: 17px;
+    height: 17px;
+    border-radius: 50%;
+    background: var(--red);
+    border: 4px solid var(--soft-red);
+}
+
+.donation-date {
+    color: var(--red);
+    font-size: .76rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: .6px;
+}
+
+.donation-item h5 {
+    font-weight: 800;
+    margin: 5px 0;
+}
+
+.donation-meta {
+    color: var(--muted);
+    font-size: .84rem;
+}
+
+.verified {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: var(--soft-green);
+    color: var(--green);
+    border-radius: 50px;
+    padding: 6px 9px;
+    font-size: .7rem;
+    font-weight: 800;
+}
+
+.unverified {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    background: #f5f5f5;
+    color: #777;
+    border-radius: 50px;
+    padding: 6px 9px;
+    font-size: .7rem;
+    font-weight: 800;
+}
+
+
+/* EMPTY */
+
+.empty-state {
+    background: white;
+    border: 1px dashed #d8d8d8;
+    border-radius: 18px;
+    padding: 45px 25px;
+    text-align: center;
+}
+
+.empty-icon {
+    width: 62px;
+    height: 62px;
+    border-radius: 17px;
+    background: var(--soft-red);
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    margin: 0 auto 17px;
+}
+
+.empty-state h5 {
+    font-weight: 800;
+}
+
+.empty-state p {
+    color: var(--muted);
+    max-width: 450px;
+    margin: 0 auto;
+}
+
+
+/* SIDE */
+
+.info-card {
+    background: #181818;
+    color: white;
+    border-radius: 20px;
+    padding: 28px;
+}
+
+.info-card h4 {
+    font-weight: 800;
+}
+
+.info-card p {
+    color: #bbb;
+    font-size: .87rem;
+    line-height: 1.7;
+}
+
+.info-point {
+    display: flex;
+    gap: 10px;
+    margin-top: 17px;
+}
+
+.info-point i {
+    color: #ff6870;
+}
+
+.info-point span {
+    color: #ddd;
+    font-size: .83rem;
+}
+
+.alert {
+    border: none;
+    border-radius: 12px;
+}
+
+@media (max-width: 767px) {
+
+    .page {
+        padding: 28px 0 50px;
+    }
+
+    .page-header h1 {
+        font-size: 2.15rem;
+    }
+
+    .card-custom {
+        padding: 23px;
+    }
+
+}
+
 </style>
+
 </head>
+
+
 <body>
 
-<nav class="navbar sticky-top"><div class="container"><div class="d-flex justify-content-between align-items-center"><a href="/donor-dashboard.html" class="brand"><span>🩸</span> BloodLink</a><div class="d-flex gap-3"><a href="/donor-dashboard.html" class="nav-link-custom">Dashboard</a><a href="#" id="logoutLink" class="nav-link-custom">Logout</a></div></div></div></nav>
-<main class="page"><div class="container"><div class="page-header mb-4"><div class="eyebrow">Donor activity</div><h1>Donation history</h1><p>Keep a record of your previous blood donations. This information can help BloodLink determine whether your donation interval has passed.</p></div>
-<div id="errorMessage" class="alert alert-danger mb-4" style="display:none"></div><div id="successMessage" class="alert alert-success mb-4" style="display:none"></div>
-<div class="row g-4"><div class="col-lg-5"><div class="card-custom"><div class="card-title">Record a donation</div><div class="card-subtitle">Add your latest donation details.</div>
-<form id="donationForm"><div class="mb-4"><label class="form-label">Donation date</label><input id="donation_date" type="date" class="form-control" required></div>
-<div class="mb-4"><label class="form-label">Hospital / blood bank</label><input id="hospital_name" class="form-control" required></div>
-<div class="mb-4"><label class="form-label">Donation type</label><select id="donation_type" class="form-select"><option>Whole Blood</option><option>Platelets</option><option>Plasma</option></select></div>
-<button id="addButton" class="save-btn" type="submit"><i class="bi bi-plus-circle me-2"></i>Add Donation</button></form></div>
-<div class="info-card mt-4"><div class="eyebrow">Why record this?</div><h4 class="mt-2">Keep your eligibility information current.</h4><p>BloodLink checks the latest recorded donation when determining donor eligibility for matching.</p></div></div>
-<div class="col-lg-7"><div class="card-custom"><div class="card-title">Your donations</div><div class="card-subtitle">Previous donation records</div><div id="historyList"></div></div></div></div></div></main>
+
+<!-- NAVBAR -->
+
+<nav class="navbar sticky-top">
+
+<div class="container">
+
+<div class="d-flex justify-content-between align-items-center w-100">
+
+<a href="/donor-dashboard.html" class="brand">
+
+<span class="brand-icon"></span>
+
+<span>
+Blood<span style="color:var(--red)">Link</span>
+</span>
+
+</a>
+
+<div class="d-flex gap-3">
+
+<a
+href="/donor-dashboard.html"
+class="nav-link-custom"
+>
+Dashboard
+</a>
+
+<a
+href="#"
+id="logoutLink"
+class="nav-link-custom"
+>
+Logout
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<main class="page">
+
+<div class="container">
+
+
+<!-- HEADER -->
+
+<div class="page-header mb-4">
+
+<div class="eyebrow">
+Donor activity
+</div>
+
+<h1>
+Donation history
+</h1>
+
+<p>
+Keep a record of your previous blood donations.
+This information can help BloodLink determine
+whether your donation interval has passed.
+</p>
+
+</div>
+
+
+<div id="message"></div>
+
+
+<div class="row g-4">
+
+
+<!-- ADD DONATION -->
+
+<div class="col-lg-5">
+
+<div class="card-custom">
+
+<div class="card-title">
+Record a donation
+</div>
+
+<div class="card-subtitle">
+Add your latest donation details.
+</div>
+
+
+<form id="donationForm">
+
+
+<!-- DATE -->
+
+<div class="mb-4">
+
+<label class="form-label">
+Donation date
+</label>
+
+<input
+type="date"
+id="donation_date"
+class="form-control"
+required
+>
+
+</div>
+
+
+<!-- HOSPITAL -->
+
+<div class="mb-4">
+
+<label class="form-label">
+Hospital / blood bank
+</label>
+
+<input
+type="text"
+id="hospital_name"
+class="form-control"
+placeholder="Hospital or blood bank"
+required
+>
+
+</div>
+
+
+<!-- TYPE -->
+
+<div class="mb-4">
+
+<label class="form-label">
+Donation type
+</label>
+
+<select
+id="donation_type"
+class="form-select"
+required
+>
+
+<option value="">
+Select donation type
+</option>
+
+<option value="WHOLE_BLOOD">
+Whole Blood
+</option>
+
+<option value="PLASMA">
+Plasma
+</option>
+
+<option value="PLATELETS">
+Platelets
+</option>
+
+<option value="DOUBLE_RED_CELLS">
+Double Red Cells
+</option>
+
+</select>
+
+</div>
+
+
+<button
+type="submit"
+class="save-btn"
+id="saveBtn"
+>
+
+<i class="bi bi-plus-circle me-2"></i>
+
+Add Donation
+
+</button>
+
+</form>
+
+</div>
+
+
+<!-- INFO -->
+
+<div class="info-card mt-4">
+
+<div
+style="
+color:#ff6870;
+text-transform:uppercase;
+letter-spacing:1.4px;
+font-size:.72rem;
+font-weight:800;
+"
+>
+Why record this?
+</div>
+
+<h4 class="mt-2">
+Keep your eligibility information current.
+</h4>
+
+<p>
+BloodLink checks the latest recorded donation
+when determining donor eligibility for matching.
+</p>
+
+
+<div class="info-point">
+
+<i class="bi bi-calendar-check-fill"></i>
+
+<span>
+Your latest donation date is used by
+the matching engine.
+</span>
+
+</div>
+
+
+<div class="info-point">
+
+<i class="bi bi-shield-check"></i>
+
+<span>
+Verification status can be maintained
+separately from your donation record.
+</span>
+
+</div>
+
+
+<div class="info-point">
+
+<i class="bi bi-pencil-square"></i>
+
+<span>
+Keep entries accurate and up to date.
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<!-- HISTORY -->
+
+<div class="col-lg-7">
+
+<div class="card-custom">
+
+<div class="d-flex justify-content-between align-items-start gap-3 mb-4">
+
+<div>
+
+<div class="card-title">
+Your donations
+</div>
+
+<div class="card-subtitle mb-0">
+Previous donation records
+</div>
+
+</div>
+
+<span
+class="badge rounded-pill text-bg-light"
+style="padding:9px 12px;"
+id="recordCount"
+>
+0 records
+</span>
+
+</div>
+
+
+<div id="donationsContainer">
+
+<div class="text-center py-5 text-muted">
+Loading donation history...
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</main>
+
+
 <script>
-const user=requireAuth("DONOR");if(user){logoutLink.onclick=async e=>{e.preventDefault();await logoutUser();location.href="/";};loadDonations();donationForm.onsubmit=async e=>{e.preventDefault();addButton.disabled=true;try{await addDonation({donation_date:donation_date.value,hospital_name:hospital_name.value.trim(),donation_type:donation_type.value});showMessage("successMessage","Donation recorded successfully.","success");donationForm.reset();loadDonations();}catch(err){showMessage("errorMessage",err.message);}finally{addButton.disabled=false;}}}
-async function loadDonations(){try{const d=await getDonations();const arr=d.results||d.donations||d||[];historyList.innerHTML=arr.length?arr.map(x=>`<div class="history-item mb-3 p-3" style="border:1px solid #eee;border-radius:12px"><strong>${x.hospital_name}</strong><div class="text-muted">${x.donation_date} · ${x.donation_type||"Whole Blood"}</div></div>`).join(""):`<p class="text-muted">No donation records yet.</p>`;}catch(e){showMessage("errorMessage",e.message);}}
+
+const user = requireAuth("DONOR");
+
+
+if (user) {
+
+
+/* LOGOUT */
+
+document.getElementById("logoutLink").onclick = async e => {
+
+e.preventDefault();
+
+await logoutUser();
+
+window.location.href = "/";
+
+};
+
+
+/* LOAD DONATIONS */
+
+async function loadDonations() {
+
+const container =
+document.getElementById("donationsContainer");
+
+try {
+
+const data = await getDonations();
+
+const donations = Array.isArray(data)
+? data
+: (data.results || data.donations || []);
+
+
+document.getElementById("recordCount").textContent =
+`${donations.length} record${donations.length === 1 ? "" : "s"}`;
+
+
+if (!donations.length) {
+
+container.innerHTML = `
+
+<div class="empty-state">
+
+<div class="empty-icon">
+
+<i class="bi bi-droplet-half"></i>
+
+</div>
+
+<h5>
+No donations recorded yet
+</h5>
+
+<p>
+Your donation history will appear here
+after you add your first donation.
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+container.innerHTML = `
+
+<div class="timeline">
+
+${donations.map(donation => `
+
+<div class="donation-item">
+
+<div class="donation-dot"></div>
+
+
+<div class="d-flex justify-content-between align-items-start gap-3">
+
+<div>
+
+<div class="donation-date">
+
+${formatDate(donation.donation_date)}
+
+</div>
+
+
+<h5>
+
+${escapeHtml(
+donation.hospital_name ||
+"Donation recorded"
+)}
+
+</h5>
+
+
+<div class="donation-meta">
+
+<i class="bi bi-droplet me-1"></i>
+
+${formatDonationType(donation.donation_type)}
+
+</div>
+
+</div>
+
+
+${
+donation.verified
+
+?
+
+`<span class="verified">
+
+<i class="bi bi-check-circle-fill"></i>
+
+Verified
+
+</span>`
+
+:
+
+`<span class="unverified">
+
+<i class="bi bi-clock"></i>
+
+Unverified
+
+</span>`
+
+}
+
+</div>
+
+</div>
+
+`).join("")}
+
+</div>
+
+`;
+
+} catch (error) {
+
+container.innerHTML = `
+
+<div class="alert alert-danger">
+
+${escapeHtml(error.message)}
+
+</div>
+
+`;
+
+}
+
+}
+
+
+/* ADD DONATION */
+
+document
+.getElementById("donationForm")
+.addEventListener("submit", async e => {
+
+e.preventDefault();
+
+const button =
+document.getElementById("saveBtn");
+
+button.disabled = true;
+
+button.innerHTML =
+'<span class="spinner-border spinner-border-sm me-2"></span>Adding...';
+
+
+try {
+
+await addDonation({
+
+donation_date:
+document.getElementById("donation_date").value,
+
+hospital_name:
+document.getElementById("hospital_name").value.trim(),
+
+donation_type:
+document.getElementById("donation_type").value
+
+});
+
+
+document.getElementById("message").innerHTML = `
+
+<div class="alert alert-success">
+
+<i class="bi bi-check-circle-fill me-2"></i>
+
+Donation added successfully.
+
+</div>
+
+`;
+
+
+document
+.getElementById("donationForm")
+.reset();
+
+
+await loadDonations();
+
+
+} catch (error) {
+
+document.getElementById("message").innerHTML = `
+
+<div class="alert alert-danger">
+
+${escapeHtml(error.message)}
+
+</div>
+
+`;
+
+}
+
+
+button.disabled = false;
+
+button.innerHTML =
+'<i class="bi bi-plus-circle me-2"></i>Add Donation';
+
+});
+
+
+/* HELPERS */
+
+function formatDate(date) {
+
+if (!date) return "Unknown date";
+
+const d = new Date(date);
+
+if (Number.isNaN(d.getTime())) {
+return date;
+}
+
+return d.toLocaleDateString("en-IN", {
+
+day: "2-digit",
+month: "short",
+year: "numeric"
+
+});
+
+}
+
+
+function formatDonationType(type) {
+
+if (!type) {
+return "Donation";
+}
+
+return type
+.replaceAll("_", " ")
+.toLowerCase()
+.replace(/\b\w/g, char => char.toUpperCase());
+
+}
+
+
+function escapeHtml(value) {
+
+const div = document.createElement("div");
+
+div.textContent = value ?? "";
+
+return div.innerHTML;
+
+}
+
+
+loadDonations();
+
+}
+
 </script>
 
 
 </body>
+
 </html>

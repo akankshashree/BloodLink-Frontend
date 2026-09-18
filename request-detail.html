@@ -2,703 +2,471 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 <title>Request Details | BloodLink</title>
-<link href="https://fonts.googleapis.com" rel="preconnect"/>
-<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&amp;family=Manrope:wght@600;700;800&amp;display=swap" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<script src="/static/js/api.js"></script>
+
 <style>
-
-        :root {
-            --red: #c81d25;
-            --red-dark: #a9151d;
-            --soft-red: #fff1f2;
-            --dark: #171717;
-            --muted: #6b7280;
-            --border: #eeeeee;
-            --background: #f8f8f8;
-            --green: #16803c;
-            --soft-green: #ecfdf3;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: var(--background);
-            color: var(--dark);
-            font-family: "DM Sans", sans-serif;
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: "Manrope", sans-serif;
-        }
-
-        .navbar {
-            background: white;
-            border-bottom: 1px solid var(--border);
-            padding: 14px 0;
-        }
-
-        .brand {
-            text-decoration: none;
-            color: var(--dark);
-            font-family: "Manrope", sans-serif;
-            font-size: 1.4rem;
-            font-weight: 800;
-        }
-
-        .brand span {
-            color: var(--red);
-        }
-
-        .nav-link-custom {
-            color: #555;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: .9rem;
-        }
-
-        .nav-link-custom:hover {
-            color: var(--red);
-        }
-
-        .page {
-            padding: 42px 0 70px;
-        }
-
-        .back-link {
-            color: #666;
-            text-decoration: none;
-            font-size: .82rem;
-            font-weight: 700;
-        }
-
-        .back-link:hover {
-            color: var(--red);
-        }
-
-        .header-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 22px;
-            padding: 28px;
-        }
-
-        .blood-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 19px;
-            background: var(--soft-red);
-            color: var(--red);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Manrope", sans-serif;
-            font-size: 1.1rem;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-
-        .request-title {
-            font-size: 1.7rem;
-            font-weight: 800;
-            margin-bottom: 3px;
-        }
-
-        .muted {
-            color: var(--muted);
-        }
-
-        .status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 7px 11px;
-            border-radius: 50px;
-            font-size: .7rem;
-            font-weight: 800;
-        }
-
-        .status-open {
-            background: #fff7ed;
-            color: #c2410c;
-        }
-
-        .status-partial {
-            background: #eff6ff;
-            color: #1d4ed8;
-        }
-
-        .status-fulfilled {
-            background: var(--soft-green);
-            color: var(--green);
-        }
-
-        .status-other {
-            background: #f4f4f5;
-            color: #71717a;
-        }
-
-        .urgency {
-            padding: 7px 11px;
-            border-radius: 50px;
-            font-size: .7rem;
-            font-weight: 800;
-        }
-
-        .critical {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-
-        .high {
-            background: #ffedd5;
-            color: #c2410c;
-        }
-
-        .medium {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .low {
-            background: #f3f4f6;
-            color: #4b5563;
-        }
-
-        .section-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 27px;
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 800;
-        }
-
-        .section-subtitle {
-            color: var(--muted);
-            font-size: .8rem;
-        }
-
-        .info-row {
-            display: flex;
-            gap: 14px;
-            padding: 14px 0;
-            border-bottom: 1px solid #f1f1f1;
-        }
-
-        .info-row:last-child {
-            border-bottom: none;
-        }
-
-        .info-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: #f7f7f7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--red);
-            flex-shrink: 0;
-        }
-
-        .info-label {
-            color: #888;
-            font-size: .7rem;
-            text-transform: uppercase;
-            letter-spacing: .6px;
-            font-weight: 800;
-        }
-
-        .info-value {
-            font-weight: 700;
-            font-size: .88rem;
-            margin-top: 2px;
-        }
-
-        .match-card {
-            border: 1px solid #eee;
-            border-radius: 16px;
-            padding: 18px;
-            margin-top: 14px;
-        }
-
-        .match-card.accepted {
-            border-color: #b7e4c7;
-            background: #fbfffc;
-        }
-
-        .donor-avatar {
-            width: 46px;
-            height: 46px;
-            border-radius: 13px;
-            background: #f3f3f3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            color: #555;
-        }
-
-        .donor-name {
-            font-weight: 800;
-        }
-
-        .distance {
-            color: var(--muted);
-            font-size: .78rem;
-        }
-
-        .match-status {
-            font-size: .68rem;
-            font-weight: 800;
-            padding: 6px 9px;
-            border-radius: 50px;
-        }
-
-        .pending {
-            background: #f3f4f6;
-            color: #6b7280;
-        }
-
-        .notified {
-            background: #fff7ed;
-            color: #c2410c;
-        }
-
-        .accepted-status {
-            background: var(--soft-green);
-            color: var(--green);
-        }
-
-        .declined {
-            background: #fef2f2;
-            color: #b91c1c;
-        }
-
-        .privacy-box {
-            background: #181818;
-            color: white;
-            border-radius: 18px;
-            padding: 23px;
-        }
-
-        .privacy-box h5 {
-            font-weight: 800;
-        }
-
-        .privacy-box p {
-            color: #bbb;
-            font-size: .8rem;
-            line-height: 1.7;
-            margin-bottom: 0;
-        }
-
-        .phone-box {
-            background: var(--soft-green);
-            color: var(--green);
-            border-radius: 10px;
-            padding: 11px 13px;
-            font-size: .82rem;
-            font-weight: 800;
-            margin-top: 12px;
-        }
-
-        .empty-matches {
-            padding: 35px 20px;
-            text-align: center;
-            border: 1px dashed #ddd;
-            border-radius: 16px;
-            margin-top: 18px;
-        }
-
-        .empty-matches i {
-            font-size: 1.8rem;
-            color: #bbb;
-        }
-
-        .empty-matches p {
-            color: var(--muted);
-            font-size: .82rem;
-            margin: 10px 0 0;
-        }
-
-        @media (max-width: 767px) {
-            .page {
-                padding: 28px 0 50px;
-            }
-
-            .header-card,
-            .section-card {
-                padding: 21px;
-            }
-
-            .request-title {
-                font-size: 1.35rem;
-            }
-        }
-
-    </style>
-<style>
-
-
-        :root {
-            --red: #c81d25;
-            --red-dark: #a9151d;
-            --soft-red: #fff1f2;
-            --dark: #171717;
-            --muted: #6b7280;
-            --border: #eeeeee;
-            --background: #f8f8f8;
-            --green: #16803c;
-            --soft-green: #ecfdf3;
-        }
-
-        * {
-            box-sizing: border-box;
-        }
-
-        body {
-            margin: 0;
-            background: var(--background);
-            color: var(--dark);
-            font-family: "DM Sans", sans-serif;
-        }
-
-        h1, h2, h3, h4, h5 {
-            font-family: "Manrope", sans-serif;
-        }
-
-        .navbar {
-            background: white;
-            border-bottom: 1px solid var(--border);
-            padding: 14px 0;
-        }
-
-        .brand {
-            text-decoration: none;
-            color: var(--dark);
-            font-family: "Manrope", sans-serif;
-            font-size: 1.4rem;
-            font-weight: 800;
-        }
-
-        .brand span {
-            color: var(--red);
-        }
-
-        .nav-link-custom {
-            color: #555;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: .9rem;
-        }
-
-        .nav-link-custom:hover {
-            color: var(--red);
-        }
-
-        .page {
-            padding: 42px 0 70px;
-        }
-
-        .back-link {
-            color: #666;
-            text-decoration: none;
-            font-size: .82rem;
-            font-weight: 700;
-        }
-
-        .back-link:hover {
-            color: var(--red);
-        }
-
-        .header-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 22px;
-            padding: 28px;
-        }
-
-        .blood-circle {
-            width: 70px;
-            height: 70px;
-            border-radius: 19px;
-            background: var(--soft-red);
-            color: var(--red);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: "Manrope", sans-serif;
-            font-size: 1.1rem;
-            font-weight: 800;
-            flex-shrink: 0;
-        }
-
-        .request-title {
-            font-size: 1.7rem;
-            font-weight: 800;
-            margin-bottom: 3px;
-        }
-
-        .muted {
-            color: var(--muted);
-        }
-
-        .status {
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            padding: 7px 11px;
-            border-radius: 50px;
-            font-size: .7rem;
-            font-weight: 800;
-        }
-
-        .status-open {
-            background: #fff7ed;
-            color: #c2410c;
-        }
-
-        .status-partial {
-            background: #eff6ff;
-            color: #1d4ed8;
-        }
-
-        .status-fulfilled {
-            background: var(--soft-green);
-            color: var(--green);
-        }
-
-        .status-other {
-            background: #f4f4f5;
-            color: #71717a;
-        }
-
-        .urgency {
-            padding: 7px 11px;
-            border-radius: 50px;
-            font-size: .7rem;
-            font-weight: 800;
-        }
-
-        .critical {
-            background: #fee2e2;
-            color: #b91c1c;
-        }
-
-        .high {
-            background: #ffedd5;
-            color: #c2410c;
-        }
-
-        .medium {
-            background: #fef3c7;
-            color: #92400e;
-        }
-
-        .low {
-            background: #f3f4f6;
-            color: #4b5563;
-        }
-
-        .section-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 20px;
-            padding: 27px;
-        }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 800;
-        }
-
-        .section-subtitle {
-            color: var(--muted);
-            font-size: .8rem;
-        }
-
-        .info-row {
-            display: flex;
-            gap: 14px;
-            padding: 14px 0;
-            border-bottom: 1px solid #f1f1f1;
-        }
-
-        .info-row:last-child {
-            border-bottom: none;
-        }
-
-        .info-icon {
-            width: 38px;
-            height: 38px;
-            border-radius: 10px;
-            background: #f7f7f7;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--red);
-            flex-shrink: 0;
-        }
-
-        .info-label {
-            color: #888;
-            font-size: .7rem;
-            text-transform: uppercase;
-            letter-spacing: .6px;
-            font-weight: 800;
-        }
-
-        .info-value {
-            font-weight: 700;
-            font-size: .88rem;
-            margin-top: 2px;
-        }
-
-        .match-card {
-            border: 1px solid #eee;
-            border-radius: 16px;
-            padding: 18px;
-            margin-top: 14px;
-        }
-
-        .match-card.accepted {
-            border-color: #b7e4c7;
-            background: #fbfffc;
-        }
-
-        .donor-avatar {
-            width: 46px;
-            height: 46px;
-            border-radius: 13px;
-            background: #f3f3f3;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 800;
-            color: #555;
-        }
-
-        .donor-name {
-            font-weight: 800;
-        }
-
-        .distance {
-            color: var(--muted);
-            font-size: .78rem;
-        }
-
-        .match-status {
-            font-size: .68rem;
-            font-weight: 800;
-            padding: 6px 9px;
-            border-radius: 50px;
-        }
-
-        .pending {
-            background: #f3f4f6;
-            color: #6b7280;
-        }
-
-        .notified {
-            background: #fff7ed;
-            color: #c2410c;
-        }
-
-        .accepted-status {
-            background: var(--soft-green);
-            color: var(--green);
-        }
-
-        .declined {
-            background: #fef2f2;
-            color: #b91c1c;
-        }
-
-        .privacy-box {
-            background: #181818;
-            color: white;
-            border-radius: 18px;
-            padding: 23px;
-        }
-
-        .privacy-box h5 {
-            font-weight: 800;
-        }
-
-        .privacy-box p {
-            color: #bbb;
-            font-size: .8rem;
-            line-height: 1.7;
-            margin-bottom: 0;
-        }
-
-        .phone-box {
-            background: var(--soft-green);
-            color: var(--green);
-            border-radius: 10px;
-            padding: 11px 13px;
-            font-size: .82rem;
-            font-weight: 800;
-            margin-top: 12px;
-        }
-
-        .empty-matches {
-            padding: 35px 20px;
-            text-align: center;
-            border: 1px dashed #ddd;
-            border-radius: 16px;
-            margin-top: 18px;
-        }
-
-        .empty-matches i {
-            font-size: 1.8rem;
-            color: #bbb;
-        }
-
-        .empty-matches p {
-            color: var(--muted);
-            font-size: .82rem;
-            margin: 10px 0 0;
-        }
-
-        @media (max-width: 767px) {
-            .page {
-                padding: 28px 0 50px;
-            }
-
-            .header-card,
-            .section-card {
-                padding: 21px;
-            }
-
-            .request-title {
-                font-size: 1.35rem;
-            }
-        }
-
-    
+:root{
+--red:#c81d25;--red-dark:#a9151d;--soft-red:#fff1f2;
+--dark:#171717;--muted:#6b7280;--border:#eeeeee;
+--background:#f8f8f8;--green:#16803c;--soft-green:#ecfdf3
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--background);color:var(--dark);font-family:"DM Sans",sans-serif}
+h1,h2,h3,h4,h5{font-family:"Manrope",sans-serif}
+
+.navbar{background:white;border-bottom:1px solid var(--border);padding:14px 0}
+.brand{
+display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--dark);
+font-family:"Manrope";font-size:1.4rem;font-weight:800
+}
+.brand-icon{
+width:42px;height:42px;border-radius:11px;background:var(--red);
+position:relative;display:inline-block
+}
+.brand-icon:before{
+content:"";position:absolute;width:9px;height:27px;background:white;
+border-radius:3px;left:16.5px;top:7.5px
+}
+.brand-icon:after{
+content:"";position:absolute;width:27px;height:9px;background:white;
+border-radius:3px;left:7.5px;top:16.5px
+}
+.nav-link-custom{color:#555;text-decoration:none;font-weight:600;font-size:.9rem}
+.nav-link-custom:hover{color:var(--red)}
+
+.page{padding:42px 0 70px}
+.back-link{color:#666;text-decoration:none;font-size:.82rem;font-weight:700}
+.back-link:hover{color:var(--red)}
+
+.header-card,.section-card{
+background:white;border:1px solid var(--border);border-radius:20px;padding:27px
+}
+.header-card{border-radius:22px}
+
+.blood-circle{
+width:70px;height:70px;border-radius:19px;background:var(--soft-red);
+color:var(--red);display:flex;align-items:center;justify-content:center;
+font-family:"Manrope";font-size:1.1rem;font-weight:800;flex-shrink:0
+}
+.request-title{font-size:1.7rem;font-weight:800;margin-bottom:3px}
+.muted{color:var(--muted)}
+
+.status,.urgency,.match-status{
+display:inline-flex;align-items:center;gap:5px;border-radius:50px;font-weight:800
+}
+.status{padding:7px 11px;font-size:.7rem}
+.status-open{background:#fff7ed;color:#c2410c}
+.status-partial{background:#eff6ff;color:#1d4ed8}
+.status-fulfilled{background:var(--soft-green);color:var(--green)}
+.status-other{background:#f4f4f5;color:#71717a}
+
+.urgency{padding:7px 11px;font-size:.7rem}
+.critical{background:#fee2e2;color:#b91c1c}
+.high{background:#ffedd5;color:#c2410c}
+.medium{background:#fef3c7;color:#92400e}
+.low{background:#f3f4f6;color:#4b5563}
+
+.section-title{font-size:1.1rem;font-weight:800}
+.section-subtitle{color:var(--muted);font-size:.8rem}
+
+.info-row{
+display:flex;gap:14px;padding:14px 0;border-bottom:1px solid #f1f1f1
+}
+.info-row:last-child{border-bottom:none}
+.info-icon{
+width:38px;height:38px;border-radius:10px;background:#f7f7f7;
+display:flex;align-items:center;justify-content:center;color:var(--red);flex-shrink:0
+}
+.info-label{
+color:#888;font-size:.7rem;text-transform:uppercase;
+letter-spacing:.6px;font-weight:800
+}
+.info-value{font-weight:700;font-size:.88rem;margin-top:2px}
+
+.match-card{
+border:1px solid #eee;border-radius:16px;padding:18px;margin-top:14px
+}
+.match-card.accepted{border-color:#b7e4c7;background:#fbfffc}
+.donor-avatar{
+width:46px;height:46px;border-radius:13px;background:#f3f3f3;
+display:flex;align-items:center;justify-content:center;font-weight:800;color:#555
+}
+.donor-name{font-weight:800}
+.distance{color:var(--muted);font-size:.78rem}
+.match-status{font-size:.68rem;padding:6px 9px}
+.pending{background:#f3f4f6;color:#6b7280}
+.notified{background:#fff7ed;color:#c2410c}
+.accepted-status{background:var(--soft-green);color:var(--green)}
+.declined{background:#fef2f2;color:#b91c1c}
+
+.privacy-box{background:#181818;color:white;border-radius:18px;padding:23px}
+.privacy-box h5{font-weight:800}
+.privacy-box p{color:#bbb;font-size:.8rem;line-height:1.7;margin:0}
+
+.phone-box{
+background:var(--soft-green);color:var(--green);
+border-radius:10px;padding:11px 13px;font-size:.82rem;font-weight:800;margin-top:12px
+}
+
+.empty-matches{
+padding:35px 20px;text-align:center;border:1px dashed #ddd;
+border-radius:16px;margin-top:18px
+}
+.empty-matches i{font-size:1.8rem;color:#bbb}
+.empty-matches p{color:var(--muted);font-size:.82rem;margin:10px 0 0}
+
+@media(max-width:767px){
+.page{padding:28px 0 50px}
+.header-card,.section-card{padding:21px}
+.request-title{font-size:1.35rem}
+}
 </style>
 </head>
+
 <body>
 
-<nav class="navbar sticky-top"><div class="container"><div class="d-flex justify-content-between align-items-center w-100"><a href="/requester-dashboard.html" class="brand"><span>🩸</span> BloodLink</a><div class="d-flex gap-3"><a href="/my-requests.html" class="nav-link-custom">My Requests</a><a href="#" id="logoutLink" class="nav-link-custom">Logout</a></div></div></div></nav>
-<main class="page"><div class="container"><div id="errorMessage" class="alert alert-danger mb-4" style="display:none"></div><div id="detail"></div></div></main>
-<script>
-const user=requireAuth("REQUESTER");if(user){logoutLink.onclick=async e=>{e.preventDefault();await logoutUser();location.href="/";};const id=new URLSearchParams(location.search).get("id");if(!id){showMessage("errorMessage","Missing request id.");}else loadDetail(id);}
-async function loadDetail(id){try{const r=await getBloodRequest(id);const x=r.request||r;detail.innerHTML=`<div class="page-header"><div class="eyebrow">Blood request</div><h1>${x.blood_group} · ${x.hospital_name}</h1><p>${x.hospital_address}</p></div><div class="row g-4"><div class="col-lg-8"><div class="card-custom"><div class="section-title">Request information</div><div class="info-row"><div class="info-icon"><i class="bi bi-droplet-fill"></i></div><div><div class="info-label">Blood group</div><div class="info-value">${x.blood_group}</div></div></div><div class="info-row"><div class="info-icon"><i class="bi bi-bar-chart-fill"></i></div><div><div class="info-label">Requirement</div><div class="info-value">${x.units_fulfilled||0} / ${x.units_required} units fulfilled</div></div></div><div class="info-row"><div class="info-icon"><i class="bi bi-hospital-fill"></i></div><div><div class="info-label">Hospital</div><div class="info-value">${x.hospital_name}</div></div></div><div class="info-row"><div class="info-icon"><i class="bi bi-geo-alt-fill"></i></div><div><div class="info-label">Address</div><div class="info-value">${x.hospital_address}</div></div></div></div></div><div class="col-lg-4"><div class="card-custom"><div class="card-title">Status</div><p class="mt-3"><strong>${x.status}</strong></p><p>Urgency: <strong>${x.urgency}</strong></p><p>Search radius: <strong>${x.radius_km} km</strong></p><a href="/my-requests.html" class="btn btn-light w-100">Back to My Requests</a></div></div></div>`;}catch(e){showMessage("errorMessage",e.message);}}
-</script>
+<nav class="navbar sticky-top">
+<div class="container d-flex justify-content-between align-items-center">
 
+<a href="/requester-dashboard.html" class="brand">
+<span class="brand-icon"></span>
+<span>Blood<span style="color:var(--red)">Link</span></span>
+</a>
+
+<div class="d-flex gap-3">
+<a href="/my-requests.html" class="nav-link-custom">My Requests</a>
+<a href="#" id="logoutLink" class="nav-link-custom">Logout</a>
+</div>
+
+</div>
+</nav>
+
+<main class="page">
+<div class="container">
+
+<a href="/my-requests.html" class="back-link">
+<i class="bi bi-arrow-left me-1"></i>Back to My Requests
+</a>
+
+<div id="loading" class="text-center py-5 text-muted">
+Loading request...
+</div>
+
+<div id="content" style="display:none">
+
+<div class="header-card mt-3 mb-4">
+
+<div class="d-flex justify-content-between align-items-start gap-4 flex-wrap">
+
+<div class="d-flex gap-3">
+
+<div class="blood-circle" id="bloodGroup">—</div>
+
+<div>
+<div class="request-title" id="hospitalName">Hospital</div>
+<div class="muted small">
+Request #<span id="requestId"></span>
+· <span id="createdAt"></span>
+</div>
+</div>
+
+</div>
+
+<div class="d-flex gap-2 flex-wrap">
+<span id="statusBadge" class="status"></span>
+<span id="urgencyBadge" class="urgency"></span>
+</div>
+
+</div>
+</div>
+
+<div class="row g-4">
+
+<div class="col-lg-5">
+
+<div class="section-card mb-4">
+
+<div class="section-title">Request information</div>
+<div class="section-subtitle">Details provided with this request.</div>
+
+<div class="info-row">
+<div class="info-icon"><i class="bi bi-droplet-fill"></i></div>
+<div>
+<div class="info-label">Blood group</div>
+<div class="info-value" id="infoBlood">—</div>
+</div>
+</div>
+
+<div class="info-row">
+<div class="info-icon"><i class="bi bi-bar-chart-fill"></i></div>
+<div>
+<div class="info-label">Requirement</div>
+<div class="info-value" id="requirement">—</div>
+</div>
+</div>
+
+<div class="info-row">
+<div class="info-icon"><i class="bi bi-hospital-fill"></i></div>
+<div>
+<div class="info-label">Hospital</div>
+<div class="info-value" id="infoHospital">—</div>
+</div>
+</div>
+
+<div class="info-row">
+<div class="info-icon"><i class="bi bi-geo-alt-fill"></i></div>
+<div>
+<div class="info-label">Address</div>
+<div class="info-value" id="address">—</div>
+</div>
+</div>
+
+<div class="info-row">
+<div class="info-icon"><i class="bi bi-bullseye"></i></div>
+<div>
+<div class="info-label">Search radius</div>
+<div class="info-value" id="radius">—</div>
+</div>
+</div>
+
+<div class="info-row" id="expiryRow">
+<div class="info-icon"><i class="bi bi-clock-fill"></i></div>
+<div>
+<div class="info-label">Expires</div>
+<div class="info-value" id="expires">—</div>
+</div>
+</div>
+
+<div id="descriptionBox" class="mt-3 pt-3" style="border-top:1px solid #f1f1f1;display:none">
+<div class="info-label mb-2">Additional information</div>
+<div id="description" style="font-size:.84rem;color:#555;line-height:1.7"></div>
+</div>
+
+</div>
+
+<div class="privacy-box">
+
+<div style="color:#ff6870;font-size:.7rem;font-weight:800;letter-spacing:1px">
+<i class="bi bi-shield-lock-fill me-1"></i> PRIVACY
+</div>
+
+<h5 class="mt-2">Donor contact is protected.</h5>
+
+<p>
+Donor contact information is hidden while a match is waiting.
+Once a donor accepts the request, their registered phone number
+can be revealed to the requester.
+</p>
+
+</div>
+
+</div>
+
+<div class="col-lg-7">
+
+<div class="section-card">
+
+<div class="d-flex justify-content-between align-items-start gap-3">
+
+<div>
+<div class="section-title">Matched donors</div>
+<div class="section-subtitle mb-0">
+Donors identified by the matching engine.
+</div>
+</div>
+
+<span class="badge rounded-pill text-bg-light" id="matchCount">
+0 matches
+</span>
+
+</div>
+
+<div id="matchesContainer"></div>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+<div id="errorMessage" class="alert alert-danger mt-4" style="display:none"></div>
+
+</div>
+</main>
+
+<script>
+
+const user=requireAuth("REQUESTER");
+
+if(user){
+
+document.getElementById("logoutLink").onclick=async e=>{
+e.preventDefault();
+await logoutUser();
+window.location.href="/";
+};
+
+const id=new URLSearchParams(location.search).get("id");
+
+async function load(){
+
+if(!id){
+showError("No request ID was provided.");
+return;
+}
+
+try{
+
+const data=await getBloodRequest(id);
+
+const r=data.request||data;
+
+document.getElementById("bloodGroup").textContent=r.blood_group||"—";
+document.getElementById("requestId").textContent=r.id||id;
+document.getElementById("hospitalName").textContent=r.hospital_name||"Hospital";
+document.getElementById("createdAt").textContent=r.created_at
+?new Date(r.created_at).toLocaleString():"";
+document.getElementById("infoBlood").textContent=r.blood_group||"—";
+document.getElementById("requirement").textContent=
+`${r.units_fulfilled||0} / ${r.units_required||0} units fulfilled`;
+document.getElementById("infoHospital").textContent=r.hospital_name||"—";
+document.getElementById("address").textContent=r.hospital_address||"—";
+document.getElementById("radius").textContent=`${r.radius_km||"—"} km`;
+
+if(r.expires_at)
+document.getElementById("expires").textContent=new Date(r.expires_at).toLocaleString();
+else
+document.getElementById("expiryRow").style.display="none";
+
+if(r.description){
+document.getElementById("descriptionBox").style.display="block";
+document.getElementById("description").textContent=r.description;
+}
+
+setStatus(r.status);
+setUrgency(r.urgency);
+
+const matches=data.matches||r.matches||[];
+renderMatches(matches);
+
+document.getElementById("loading").style.display="none";
+document.getElementById("content").style.display="block";
+
+}catch(e){
+showError(e.message);
+}
+
+}
+
+function setStatus(s){
+
+const el=document.getElementById("statusBadge");
+s=(s||"OPEN").toUpperCase();
+
+el.textContent=s.replaceAll("_"," ");
+
+if(s==="OPEN")el.className="status status-open";
+else if(s==="PARTIALLY_FULFILLED")el.className="status status-partial";
+else if(s==="FULFILLED")el.className="status status-fulfilled";
+else el.className="status status-other";
+}
+
+function setUrgency(u){
+
+u=(u||"LOW").toUpperCase();
+
+const el=document.getElementById("urgencyBadge");
+el.textContent=u;
+el.className=`urgency ${u.toLowerCase()}`;
+}
+
+function renderMatches(matches){
+
+document.getElementById("matchCount").textContent=
+`${matches.length} match${matches.length===1?"":"es"}`;
+
+const box=document.getElementById("matchesContainer");
+
+if(!matches.length){
+
+box.innerHTML=`
+<div class="empty-matches">
+<i class="bi bi-people"></i>
+<p>No matched donors are available yet.</p>
+</div>`;
+return;
+}
+
+box.innerHTML=matches.map(m=>{
+
+const status=(m.status||"PENDING").toUpperCase();
+
+let cls="pending";
+if(status==="NOTIFIED")cls="notified";
+if(status==="ACCEPTED")cls="accepted-status";
+if(status==="DECLINED")cls="declined";
+
+const donor=m.donor||{};
+const name=donor.username||m.donor_name||"Donor";
+
+return `
+<div class="match-card ${status==="ACCEPTED"?"accepted":""}">
+
+<div class="d-flex justify-content-between align-items-start gap-3">
+
+<div class="d-flex gap-3">
+
+<div class="donor-avatar">
+<i class="bi bi-person-fill"></i>
+</div>
+
+<div>
+<div class="donor-name">${name}</div>
+<div class="distance">
+<i class="bi bi-geo-alt-fill me-1"></i>
+${m.distance_km??"—"} km away
+</div>
+</div>
+
+</div>
+
+<span class="match-status ${cls}">
+${status==="ACCEPTED"?'<i class="bi bi-check-circle-fill"></i>':""}
+${status}
+</span>
+
+</div>
+
+${status==="ACCEPTED" && (m.donor_phone||donor.phone)?`
+<div class="phone-box">
+<i class="bi bi-telephone-fill me-2"></i>
+${m.donor_phone||donor.phone}
+</div>`:""}
+
+</div>`;
+}).join("");
+}
+
+function showError(msg){
+document.getElementById("loading").style.display="none";
+const el=document.getElementById("errorMessage");
+el.textContent=msg;
+el.style.display="block";
+}
+
+load();
+
+}
+
+</script>
 
 </body>
 </html>
