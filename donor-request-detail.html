@@ -1,0 +1,1623 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+
+<title>Request Details | BloodLink</title>
+
+<link
+href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
+rel="stylesheet">
+
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<link
+href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+rel="stylesheet">
+
+<script src="/static/js/api.js"></script>
+
+
+<style>
+
+:root{
+--red:#c81d25;
+--red-dark:#a9151d;
+--soft-red:#fff1f2;
+--dark:#171717;
+--muted:#6b7280;
+--border:#eeeeee;
+--background:#f8f8f8;
+--green:#16803c;
+--soft-green:#ecfdf3
+}
+
+*{
+box-sizing:border-box
+}
+
+body{
+margin:0;
+background:var(--background);
+color:var(--dark);
+font-family:"DM Sans",sans-serif
+}
+
+h1,h2,h3,h4,h5{
+font-family:"Manrope",sans-serif
+}
+
+
+/* NAVBAR */
+
+.navbar{
+background:white;
+border-bottom:1px solid var(--border);
+padding:14px 0
+}
+
+.brand{
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:var(--dark);
+font-family:"Manrope";
+font-size:1.4rem;
+font-weight:800
+}
+
+.brand-icon{
+width:42px;
+height:42px;
+border-radius:11px;
+background:var(--red);
+position:relative;
+display:inline-block
+}
+
+.brand-icon:before{
+content:"";
+position:absolute;
+width:9px;
+height:27px;
+background:white;
+border-radius:3px;
+left:16.5px;
+top:7.5px
+}
+
+.brand-icon:after{
+content:"";
+position:absolute;
+width:27px;
+height:9px;
+background:white;
+border-radius:3px;
+left:7.5px;
+top:16.5px
+}
+
+.nav-link-custom{
+color:#555;
+text-decoration:none;
+font-weight:600;
+font-size:.9rem
+}
+
+.nav-link-custom:hover{
+color:var(--red)
+}
+
+
+/* PAGE */
+
+.page{
+padding:42px 0 70px
+}
+
+.back-link{
+color:#666;
+text-decoration:none;
+font-size:.82rem;
+font-weight:700
+}
+
+.back-link:hover{
+color:var(--red)
+}
+
+.header-card,
+.section-card{
+background:white;
+border:1px solid var(--border);
+border-radius:20px;
+padding:27px
+}
+
+.header-card{
+border-radius:22px
+}
+
+
+/* HEADER */
+
+.blood-circle{
+width:70px;
+height:70px;
+border-radius:19px;
+background:var(--soft-red);
+color:var(--red);
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:"Manrope";
+font-size:1.1rem;
+font-weight:800;
+flex-shrink:0
+}
+
+.request-title{
+font-size:1.7rem;
+font-weight:800;
+margin-bottom:3px
+}
+
+.muted{
+color:var(--muted)
+}
+
+
+/* BADGES */
+
+.status,
+.urgency,
+.match-status{
+display:inline-flex;
+align-items:center;
+gap:5px;
+border-radius:50px;
+font-weight:800
+}
+
+.status{
+padding:7px 11px;
+font-size:.7rem
+}
+
+.status-open{
+background:#fff7ed;
+color:#c2410c
+}
+
+.status-partial{
+background:#eff6ff;
+color:#1d4ed8
+}
+
+.status-fulfilled{
+background:var(--soft-green);
+color:var(--green)
+}
+
+.status-other{
+background:#f4f4f5;
+color:#71717a
+}
+
+.urgency{
+padding:7px 11px;
+font-size:.7rem
+}
+
+.critical{
+background:#fee2e2;
+color:#b91c1c
+}
+
+.high{
+background:#ffedd5;
+color:#c2410c
+}
+
+.medium{
+background:#fef3c7;
+color:#92400e
+}
+
+.low{
+background:#f3f4f6;
+color:#4b5563
+}
+
+
+/* INFORMATION */
+
+.section-title{
+font-size:1.1rem;
+font-weight:800
+}
+
+.section-subtitle{
+color:var(--muted);
+font-size:.8rem
+}
+
+.info-row{
+display:flex;
+gap:14px;
+padding:14px 0;
+border-bottom:1px solid #f1f1f1
+}
+
+.info-row:last-child{
+border-bottom:none
+}
+
+.info-icon{
+width:38px;
+height:38px;
+border-radius:10px;
+background:#f7f7f7;
+display:flex;
+align-items:center;
+justify-content:center;
+color:var(--red);
+flex-shrink:0
+}
+
+.info-label{
+color:#888;
+font-size:.7rem;
+text-transform:uppercase;
+letter-spacing:.6px;
+font-weight:800
+}
+
+.info-value{
+font-weight:700;
+font-size:.88rem;
+margin-top:2px
+}
+
+
+/* MATCH */
+
+.match-box{
+border:1px solid #eee;
+border-radius:16px;
+padding:20px;
+margin-top:18px
+}
+
+.match-box.notified{
+background:#fffdfa;
+border-color:#f4dfc8
+}
+
+.match-box.accepted{
+background:#fbfffc;
+border-color:#b7e4c7
+}
+
+.match-box.declined{
+background:#fffafa;
+border-color:#f2cccc
+}
+
+.match-status{
+font-size:.68rem;
+padding:6px 9px
+}
+
+.notified-status{
+background:#fff7ed;
+color:#c2410c
+}
+
+.accepted-status{
+background:var(--soft-green);
+color:var(--green)
+}
+
+.declined-status{
+background:#fef2f2;
+color:#b91c1c
+}
+
+
+/* ACTION BUTTONS */
+
+.action-btn{
+border-radius:10px;
+padding:11px 22px;
+font-size:.8rem;
+font-weight:800
+}
+
+.accept-btn{
+background:var(--red);
+border:1px solid var(--red);
+color:white
+}
+
+.accept-btn:hover{
+background:var(--red-dark);
+color:white
+}
+
+.decline-btn{
+background:white;
+border:1px solid #ddd;
+color:#333
+}
+
+.decline-btn:hover{
+border-color:#d33;
+color:#b91c1c
+}
+
+
+/* PRIVACY */
+
+.privacy-box{
+background:#181818;
+color:white;
+border-radius:18px;
+padding:23px
+}
+
+.privacy-box h5{
+font-weight:800
+}
+
+.privacy-box p{
+color:#bbb;
+font-size:.8rem;
+line-height:1.7;
+margin:0
+}
+
+
+/* INFO CARD */
+
+.info-card{
+background:#181818;
+color:white;
+border-radius:20px;
+padding:27px
+}
+
+.info-card h4{
+font-weight:800
+}
+
+.info-card p{
+color:#bbb;
+font-size:.84rem;
+line-height:1.7
+}
+
+.info-point{
+display:flex;
+gap:10px;
+margin-top:18px
+}
+
+.info-point i{
+color:#ff6870
+}
+
+.info-point span{
+color:#ddd;
+font-size:.8rem
+}
+
+
+/* MESSAGE */
+
+.message{
+margin-top:18px
+}
+
+
+/* MOBILE */
+
+@media(max-width:767px){
+
+.page{
+padding:28px 0 50px
+}
+
+.header-card,
+.section-card{
+padding:21px
+}
+
+.request-title{
+font-size:1.35rem
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- NAVBAR -->
+
+<nav class="navbar sticky-top">
+
+<div class="container d-flex justify-content-between align-items-center">
+
+<a href="/donor-dashboard.html" class="brand">
+
+<span class="brand-icon"></span>
+
+<span>
+Blood<span style="color:var(--red)">Link</span>
+</span>
+
+</a>
+
+
+<div class="d-flex gap-3">
+
+<a
+href="/matches.html"
+class="nav-link-custom">
+
+<i class="bi bi-diagram-3 me-1"></i>
+Matches
+
+</a>
+
+<a
+href="/notifications.html"
+class="nav-link-custom">
+
+<i class="bi bi-bell me-1"></i>
+Notifications
+
+</a>
+
+<a
+href="#"
+id="logoutLink"
+class="nav-link-custom">
+
+Logout
+
+</a>
+
+</div>
+
+</div>
+
+</nav>
+
+
+<main class="page">
+
+<div class="container">
+
+
+<a
+href="/matches.html"
+class="back-link">
+
+<i class="bi bi-arrow-left me-1"></i>
+
+Back to Matches
+
+</a>
+
+
+<div
+id="loading"
+class="text-center py-5 text-muted">
+
+Loading request...
+
+</div>
+
+
+<div
+id="content"
+style="display:none">
+
+
+<!-- HEADER -->
+
+<div class="header-card mt-3 mb-4">
+
+
+<div class="d-flex justify-content-between align-items-start gap-4 flex-wrap">
+
+
+<div class="d-flex gap-3">
+
+
+<div
+class="blood-circle"
+id="bloodGroup">
+
+—
+
+</div>
+
+
+<div>
+
+<div
+class="request-title"
+id="hospitalName">
+
+Hospital
+
+</div>
+
+
+<div class="muted small">
+
+Request #
+
+<span id="requestId"></span>
+
+·
+
+<span id="createdAt"></span>
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="d-flex gap-2 flex-wrap">
+
+<span
+id="statusBadge"
+class="status">
+
+</span>
+
+<span
+id="urgencyBadge"
+class="urgency">
+
+</span>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<div class="row g-4">
+
+
+<!-- LEFT -->
+
+<div class="col-lg-7">
+
+
+<div class="section-card">
+
+
+<div class="section-title">
+
+Request information
+
+</div>
+
+
+<div class="section-subtitle">
+
+Details of the blood request.
+
+</div>
+
+
+<div class="info-row">
+
+<div class="info-icon">
+
+<i class="bi bi-droplet-fill"></i>
+
+</div>
+
+
+<div>
+
+<div class="info-label">
+
+Blood group
+
+</div>
+
+<div
+class="info-value"
+id="infoBlood">
+
+—
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="info-row">
+
+<div class="info-icon">
+
+<i class="bi bi-bar-chart-fill"></i>
+
+</div>
+
+
+<div>
+
+<div class="info-label">
+
+Requirement
+
+</div>
+
+<div
+class="info-value"
+id="requirement">
+
+—
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="info-row">
+
+<div class="info-icon">
+
+<i class="bi bi-hospital-fill"></i>
+
+</div>
+
+
+<div>
+
+<div class="info-label">
+
+Hospital
+
+</div>
+
+<div
+class="info-value"
+id="infoHospital">
+
+—
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="info-row">
+
+<div class="info-icon">
+
+<i class="bi bi-geo-alt-fill"></i>
+
+</div>
+
+
+<div>
+
+<div class="info-label">
+
+Address
+
+</div>
+
+<div
+class="info-value"
+id="address">
+
+—
+
+</div>
+
+</div>
+
+</div>
+
+
+<div class="info-row">
+
+<div class="info-icon">
+
+<i class="bi bi-bullseye"></i>
+
+</div>
+
+
+<div>
+
+<div class="info-label">
+
+Donor search radius
+
+</div>
+
+<div
+class="info-value"
+id="radius">
+
+—
+
+</div>
+
+</div>
+
+</div>
+
+
+<div
+class="info-row"
+id="expiryRow">
+
+<div class="info-icon">
+
+<i class="bi bi-clock-fill"></i>
+
+</div>
+
+
+<div>
+
+<div class="info-label">
+
+Expires
+
+</div>
+
+<div
+class="info-value"
+id="expires">
+
+—
+
+</div>
+
+</div>
+
+</div>
+
+
+<div
+id="descriptionBox"
+style="
+display:none;
+border-top:1px solid #f1f1f1;
+margin-top:10px;
+padding-top:18px;
+">
+
+<div class="info-label mb-2">
+
+Additional information
+
+</div>
+
+
+<div
+id="description"
+style="
+font-size:.84rem;
+color:#555;
+line-height:1.7
+">
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- MATCH STATUS -->
+
+<div
+id="matchBox"
+class="match-box">
+
+
+<div class="d-flex justify-content-between align-items-center gap-3">
+
+
+<div>
+
+<div class="section-title">
+
+Your match
+
+</div>
+
+<div
+class="section-subtitle">
+
+Your response to this blood request.
+
+</div>
+
+</div>
+
+
+<span
+id="matchStatus"
+class="match-status">
+
+</span>
+
+</div>
+
+
+<div
+id="distance"
+class="muted mt-3"
+style="font-size:.82rem">
+
+</div>
+
+
+<div
+id="actionButtons"
+class="d-flex gap-2 mt-4">
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<!-- RIGHT -->
+
+<div class="col-lg-5">
+
+
+<div class="info-card">
+
+
+<div
+style="
+color:#ff6870;
+text-transform:uppercase;
+letter-spacing:1.4px;
+font-size:.72rem;
+font-weight:800
+">
+
+MATCH DETAILS
+
+</div>
+
+
+<h4 class="mt-2">
+
+Why you received this request.
+
+</h4>
+
+
+<p>
+
+BloodLink matched this request with your donor
+profile based on the matching criteria.
+
+</p>
+
+
+<div class="info-point">
+
+<i class="bi bi-droplet-fill"></i>
+
+<span>
+
+Your blood group is compatible with this request.
+
+</span>
+
+</div>
+
+
+<div class="info-point">
+
+<i class="bi bi-geo-alt-fill"></i>
+
+<span>
+
+The hospital is within your donor search radius.
+
+</span>
+
+</div>
+
+
+<div class="info-point">
+
+<i class="bi bi-clock-history"></i>
+
+<span>
+
+Donation eligibility is checked before matching.
+
+</span>
+
+</div>
+
+
+<div class="info-point">
+
+<i class="bi bi-shield-lock-fill"></i>
+
+<span>
+
+Your contact information remains private.
+
+</span>
+
+</div>
+
+
+</div>
+
+
+<div class="privacy-box mt-4">
+
+
+<div
+style="
+color:#ff6870;
+font-size:.7rem;
+font-weight:800;
+letter-spacing:1px
+">
+
+<i class="bi bi-shield-lock-fill me-1"></i>
+
+PRIVACY
+
+</div>
+
+
+<h5 class="mt-2">
+
+Your contact details are protected.
+
+</h5>
+
+
+<p>
+
+Your registered phone number is not shared with
+the requester while this match is waiting.
+Accept the request only if you are willing to donate.
+
+</p>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div
+id="errorMessage"
+class="alert alert-danger mt-4"
+style="display:none">
+
+</div>
+
+
+</div>
+
+</main>
+
+
+<script>
+
+const user = requireAuth("DONOR");
+
+
+if(user){
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+document
+.getElementById("logoutLink")
+.onclick = async e => {
+
+e.preventDefault();
+
+await logoutUser();
+
+window.location.href = "/";
+
+};
+
+
+/* =========================
+   URL
+========================= */
+
+const params =
+new URLSearchParams(location.search);
+
+const requestId =
+params.get("id");
+
+const matchId =
+params.get("match_id");
+
+
+/* =========================
+   LOAD
+========================= */
+
+async function loadRequest(){
+
+if(!requestId || !matchId){
+
+showError(
+"Invalid blood request or match."
+);
+
+return;
+
+}
+
+
+try{
+
+
+/*
+ * We use the donor's matches endpoint.
+ *
+ * This avoids exposing the requester-only
+ * request detail endpoint to donors.
+ */
+
+const data = await getMatches();
+
+
+const matches = Array.isArray(data)
+? data
+: (data.matches || data.results || []);
+
+
+const match = matches.find(
+item => String(item.id) === String(matchId)
+);
+
+
+if(!match){
+
+showError(
+"This blood match could not be found."
+);
+
+return;
+
+}
+
+
+const r = match.request || {};
+
+
+/* =========================
+   HEADER
+========================= */
+
+document
+.getElementById("bloodGroup")
+.textContent =
+r.blood_group || "—";
+
+
+document
+.getElementById("requestId")
+.textContent =
+r.id || requestId;
+
+
+document
+.getElementById("hospitalName")
+.textContent =
+r.hospital_name || "Blood Request";
+
+
+document
+.getElementById("createdAt")
+.textContent =
+r.created_at
+? new Date(r.created_at).toLocaleString()
+: "";
+
+
+/* =========================
+   REQUEST INFO
+========================= */
+
+document
+.getElementById("infoBlood")
+.textContent =
+r.blood_group || "—";
+
+
+document
+.getElementById("requirement")
+.textContent =
+`${r.units_fulfilled || 0} / ${
+r.units_required || 0
+} units fulfilled`;
+
+
+document
+.getElementById("infoHospital")
+.textContent =
+r.hospital_name || "—";
+
+
+document
+.getElementById("address")
+.textContent =
+r.hospital_address || "—";
+
+
+document
+.getElementById("radius")
+.textContent =
+`${r.radius_km ?? "—"} km`;
+
+
+/* =========================
+   EXPIRY
+========================= */
+
+if(r.expires_at){
+
+document
+.getElementById("expires")
+.textContent =
+new Date(
+r.expires_at
+).toLocaleString();
+
+}else{
+
+document
+.getElementById("expiryRow")
+.style.display = "none";
+
+}
+
+
+/* =========================
+   DESCRIPTION
+========================= */
+
+if(r.description){
+
+document
+.getElementById("descriptionBox")
+.style.display = "block";
+
+document
+.getElementById("description")
+.textContent =
+r.description;
+
+}
+
+
+/* =========================
+   REQUEST STATUS
+========================= */
+
+setRequestStatus(
+r.status
+);
+
+setUrgency(
+r.urgency
+);
+
+
+/* =========================
+   MATCH
+========================= */
+
+renderMatch(
+match
+);
+
+
+/* =========================
+   SHOW
+========================= */
+
+document
+.getElementById("loading")
+.style.display = "none";
+
+document
+.getElementById("content")
+.style.display = "block";
+
+
+}catch(error){
+
+showError(
+error.message ||
+"Unable to load request details."
+);
+
+}
+
+}
+
+
+/* =========================
+   REQUEST STATUS
+========================= */
+
+function setRequestStatus(status){
+
+status =
+(status || "OPEN")
+.toUpperCase();
+
+
+const el =
+document.getElementById(
+"statusBadge"
+);
+
+
+el.textContent =
+status.replaceAll(
+"_",
+" "
+);
+
+
+if(status === "OPEN"){
+
+el.className =
+"status status-open";
+
+}else if(
+status === "PARTIALLY_FULFILLED"
+){
+
+el.className =
+"status status-partial";
+
+}else if(
+status === "FULFILLED"
+){
+
+el.className =
+"status status-fulfilled";
+
+}else{
+
+el.className =
+"status status-other";
+
+}
+
+}
+
+
+/* =========================
+   URGENCY
+========================= */
+
+function setUrgency(urgency){
+
+urgency =
+(urgency || "LOW")
+.toUpperCase();
+
+
+const el =
+document.getElementById(
+"urgencyBadge"
+);
+
+
+el.textContent =
+urgency;
+
+
+el.className =
+`urgency ${urgency.toLowerCase()}`;
+
+}
+
+
+/* =========================
+   MATCH
+========================= */
+
+function renderMatch(match){
+
+const status =
+(match.status || "PENDING")
+.toUpperCase();
+
+
+const box =
+document.getElementById(
+"matchBox"
+);
+
+
+const statusEl =
+document.getElementById(
+"matchStatus"
+);
+
+
+const distanceEl =
+document.getElementById(
+"distance"
+);
+
+
+const buttons =
+document.getElementById(
+"actionButtons"
+);
+
+
+box.className =
+"match-box";
+
+
+if(status === "NOTIFIED"){
+
+box.classList.add("notified");
+
+statusEl.className =
+"match-status notified-status";
+
+statusEl.textContent =
+"NOTIFIED";
+
+}else if(status === "ACCEPTED"){
+
+box.classList.add("accepted");
+
+statusEl.className =
+"match-status accepted-status";
+
+statusEl.innerHTML =
+'<i class="bi bi-check-circle-fill"></i> ACCEPTED';
+
+}else if(status === "DECLINED"){
+
+box.classList.add("declined");
+
+statusEl.className =
+"match-status declined-status";
+
+statusEl.textContent =
+"DECLINED";
+
+}else{
+
+statusEl.className =
+"match-status";
+
+statusEl.textContent =
+status;
+
+}
+
+
+distanceEl.innerHTML =
+`<i class="bi bi-geo-alt-fill me-1"></i>
+${match.distance_km ?? "—"} km away`;
+
+
+/* =========================
+   ACTIONS
+========================= */
+
+buttons.innerHTML = "";
+
+
+if(status === "NOTIFIED"){
+
+buttons.innerHTML = `
+
+<button
+class="btn action-btn decline-btn"
+id="declineBtn">
+
+<i class="bi bi-x-circle me-1"></i>
+
+Decline
+
+</button>
+
+
+<button
+class="btn action-btn accept-btn"
+id="acceptBtn">
+
+<i class="bi bi-check-circle me-1"></i>
+
+Accept Request
+
+</button>
+
+`;
+
+
+document
+.getElementById("acceptBtn")
+.onclick = async () => {
+
+await respondToMatch(
+match.id,
+"accept"
+);
+
+};
+
+
+document
+.getElementById("declineBtn")
+.onclick = async () => {
+
+await respondToMatch(
+match.id,
+"decline"
+);
+
+};
+
+}
+
+}
+
+
+/* =========================
+   ACCEPT / DECLINE
+========================= */
+
+async function respondToMatch(
+id,
+action
+){
+
+const buttons =
+document.getElementById(
+"actionButtons"
+);
+
+buttons.innerHTML =
+`<span class="text-muted small">
+Processing...
+</span>`;
+
+
+try{
+
+
+if(action === "accept"){
+
+await acceptMatch(id);
+
+}else{
+
+await declineMatch(id);
+
+}
+
+
+/*
+ * Reload match data so the
+ * status and request information
+ * update immediately.
+ */
+
+await loadRequest();
+
+
+}catch(error){
+
+showError(
+error.message ||
+"Unable to update match."
+);
+
+}
+
+}
+
+
+/* =========================
+   ERROR
+========================= */
+
+function showError(message){
+
+document
+.getElementById("loading")
+.style.display = "none";
+
+
+const el =
+document.getElementById(
+"errorMessage"
+);
+
+el.textContent =
+message;
+
+el.style.display =
+"block";
+
+}
+
+
+/* =========================
+   START
+========================= */
+
+loadRequest();
+
+}
+
+</script>
+
+
+</body>
+</html>
