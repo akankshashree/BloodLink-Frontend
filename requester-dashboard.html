@@ -2748,6 +2748,16 @@ if (user) {
 
 </script>
 
+
+<script>
+(function(){
+    const badge = document.getElementById("notificationBadge");
+    if (badge) {
+        badge.setAttribute("aria-live", "polite");
+    }
+})();
+</script>
+
 <!-- BloodLink Assistant -->
 <script src="/static/js/bloodlink-assistant.js"></script>
 

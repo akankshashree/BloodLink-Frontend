@@ -1845,16 +1845,22 @@ if (user) {
 
             if (d.unread_notifications) {
 
-                document.getElementById(
-                    "notifBadge"
-                ).textContent =
-                    `(${d.unread_notifications})`;
+                const notifBadge =
+                    document.getElementById("notificationBadge");
+
+                if (notifBadge) {
+                    notifBadge.textContent =
+                        `(${d.unread_notifications})`;
+                }
 
             } else {
 
-                document.getElementById(
-                    "notifBadge"
-                ).textContent = "";
+                const notifBadge =
+                    document.getElementById("notificationBadge");
+
+                if (notifBadge) {
+                    notifBadge.textContent = "";
+                }
 
             }
 
@@ -2364,6 +2370,16 @@ if (user) {
 
 })();
 
+</script>
+
+
+<script>
+(function(){
+    const badge = document.getElementById("notificationBadge");
+    if (badge) {
+        badge.setAttribute("aria-live", "polite");
+    }
+})();
 </script>
 
 <!-- BloodLink Assistant -->
