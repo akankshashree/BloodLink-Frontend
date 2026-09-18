@@ -1265,83 +1265,70 @@ Privacy-preserving blood donor matching • 2026
 <!-- API LOGIC -->
 
 <script>
-
 const user = requireAuth("REQUESTER");
 
+if (user) {
 
-if(user){
+    const logoutLink = document.getElementById("logoutLink");
 
-const logoutLink =
-document.getElementById("logoutLink");
+    if (logoutLink) {
+        logoutLink.onclick = async function (e) {
+            e.preventDefault();
 
+            try {
+                await logoutUser();
+            } catch (error) {
+                console.error("Logout error:", error);
+            }
 
-logoutLink.onclick = async e => {
+            // Always clear the local session.
+            localStorage.removeItem("bloodlink_token");
+            localStorage.removeItem("bloodlink_user");
 
-e.preventDefault();
+            window.location.href = "/";
+        };
+    }
 
-await logoutUser();
+    async function loadDashboard() {
+        try {
+            const data = await getDashboard();
 
-window.location.href="/";
+            document.getElementById("totalRequests").textContent =
+                data.total_requests || 0;
 
-};
+            document.getElementById("activeRequests").textContent =
+                data.active_requests || 0;
 
+            document.getElementById("acceptedDonors").textContent =
+                data.accepted_donors || 0;
 
-async function loadDashboard(){
+            document.getElementById("fulfilledRequests").textContent =
+                data.fulfilled_requests || 0;
 
-try{
+            const unread = data.unread_notifications || 0;
+            const badge = document.getElementById("notificationBadge");
+            const newNotifications =
+                document.getElementById("newNotifications");
 
-const data = await getDashboard();
+            if (unread > 0) {
+                badge.textContent = unread;
+                badge.style.display = "flex";
+                newNotifications.textContent = ` (${unread} new)`;
+            } else {
+                badge.style.display = "none";
+                newNotifications.textContent = "";
+            }
 
+        } catch (error) {
+            console.error("Requester dashboard error:", error);
+        }
+    }
 
-document.getElementById("totalRequests").textContent =
-data.total_requests || 0;
-
-
-document.getElementById("activeRequests").textContent =
-data.active_requests || 0;
-
-
-document.getElementById("acceptedDonors").textContent =
-data.accepted_donors || 0;
-
-
-document.getElementById("fulfilledRequests").textContent =
-data.fulfilled_requests || 0;
-
-
-const unread =
-data.unread_notifications || 0;
-
-
-const badge =
-document.getElementById("notificationBadge");
-
-
-if(unread > 0){
-
-badge.textContent = unread;
-badge.style.display = "flex";
-
-document.getElementById("newNotifications").textContent =
-` (${unread} new)`;
-
+    loadDashboard();
 }
+</script>
 
-}catch(error){
-
-console.error("Requester dashboard error:",error);
-
-}
-
-}
-
-
-loadDashboard();
-
-}
-
-
-<script src="/static/js/api.js"></script>
+<!-- BloodLink Assistant -->
 <script src="/static/js/bloodlink-assistant.js"></script>
 
 </body>

@@ -658,136 +658,272 @@ const user = requireAuth("DONOR");
 
 if (user) {
 
-    document.getElementById("username").textContent = user.username;
+    const usernameEl = document.getElementById("username");
 
-    document.getElementById("logoutLink").onclick =
-    async function(e) {
-        e.preventDefault();
-        await logoutUser();
-        window.location.href = "/";
-    };
+    if (usernameEl) {
+        usernameEl.textContent = user.username || user.first_name || "Donor";
+    }
+
+
+    /* =========================
+       LOGOUT
+    ========================= */
+
+    const logoutLink =
+        document.getElementById("logoutLink");
+
+    if (logoutLink) {
+
+        logoutLink.onclick = async function(e) {
+
+            e.preventDefault();
+
+            try {
+
+                await logoutUser();
+
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            }
+
+            /*
+             * Always clear the local session,
+             * even if the backend logout request fails.
+             */
+
+            localStorage.removeItem("bloodlink_token");
+            localStorage.removeItem("bloodlink_user");
+
+            window.location.href = "/";
+
+        };
+
+    }
+
+
+    /* =========================
+       LOAD DONOR DASHBOARD
+    ========================= */
 
     (async function() {
 
         try {
 
-            const d = await getDashboard();
+            const d =
+                await getDashboard();
 
-            document.getElementById("pendingMatches").textContent =
+
+            document.getElementById(
+                "pendingMatches"
+            ).textContent =
                 d.pending_matches ?? 0;
 
-            document.getElementById("totalMatches").textContent =
+
+            document.getElementById(
+                "totalMatches"
+            ).textContent =
                 d.total_matches ?? 0;
 
-            document.getElementById("acceptedMatches").textContent =
+
+            document.getElementById(
+                "acceptedMatches"
+            ).textContent =
                 d.accepted_matches ?? 0;
 
-            document.getElementById("unreadNotifications").textContent =
+
+            document.getElementById(
+                "unreadNotifications"
+            ).textContent =
                 d.unread_notifications ?? 0;
 
+
             if (d.unread_notifications) {
-                document.getElementById("notifBadge").textContent =
+
+                document.getElementById(
+                    "notifBadge"
+                ).textContent =
                     `(${d.unread_notifications})`;
+
+            } else {
+
+                document.getElementById(
+                    "notifBadge"
+                ).textContent = "";
+
             }
 
+
             const statusBadge =
-                document.getElementById("statusBadge");
+                document.getElementById(
+                    "statusBadge"
+                );
+
 
             const profileStatus =
-                document.getElementById("profileStatus");
+                document.getElementById(
+                    "profileStatus"
+                );
+
 
             if (d.donor_profile) {
 
-                const profile = d.donor_profile;
-                const available = profile.is_available;
+                const profile =
+                    d.donor_profile;
 
-                document.getElementById("bloodGroup").textContent =
+
+                const available =
+                    profile.is_available;
+
+
+                document.getElementById(
+                    "bloodGroup"
+                ).textContent =
                     profile.blood_group || "—";
 
+
                 statusBadge.textContent =
-                    available ? "Available" : "Unavailable";
+                    available
+                        ? "Available"
+                        : "Unavailable";
+
 
                 statusBadge.className =
                     available
-                    ? "status-badge status-ready"
-                    : "status-badge status-neutral";
+                        ? "status-badge status-ready"
+                        : "status-badge status-neutral";
+
 
                 profileStatus.innerHTML = `
 
                     <div class="status-row">
+
                         <div class="status-row-icon">
                             <i class="bi bi-droplet-fill"></i>
                         </div>
+
                         <div>
                             <strong>Blood group</strong>
-                            <small>${profile.blood_group || "Not set"}</small>
+                            <small>
+                                ${profile.blood_group || "Not set"}
+                            </small>
                         </div>
+
                     </div>
 
+
                     <div class="status-row">
+
                         <div class="status-row-icon">
                             <i class="bi bi-geo-alt-fill"></i>
                         </div>
+
                         <div>
                             <strong>Location</strong>
-                            <small>${profile.address || "Location saved"}</small>
+                            <small>
+                                ${profile.address || "Location saved"}
+                            </small>
                         </div>
+
                     </div>
 
+
                     <div class="status-row">
+
                         <div class="status-row-icon">
                             <i class="bi bi-check-circle"></i>
                         </div>
+
                         <div>
                             <strong>Availability</strong>
+
                             <small>
-                                ${available
-                                ? "Ready to receive blood requests"
-                                : "Currently unavailable"}
+                                ${
+                                    available
+                                    ? "Ready to receive blood requests"
+                                    : "Currently unavailable"
+                                }
                             </small>
+
                         </div>
+
                     </div>
 
                 `;
 
             } else {
 
-                document.getElementById("bloodGroup").textContent = "Setup required";
+                document.getElementById(
+                    "bloodGroup"
+                ).textContent =
+                    "Setup required";
 
-                statusBadge.textContent = "Setup required";
+
+                statusBadge.textContent =
+                    "Setup required";
+
+
                 statusBadge.className =
                     "status-badge status-pending";
+
 
                 profileStatus.innerHTML = `
 
                     <div class="status-row">
+
                         <div class="status-row-icon">
                             <i class="bi bi-exclamation-circle"></i>
                         </div>
 
                         <div>
-                            <strong>Donor profile not completed</strong>
+
+                            <strong>
+                                Donor profile not completed
+                            </strong>
+
                             <small>
                                 Complete your profile to receive blood matches.
                             </small>
+
                         </div>
+
                     </div>
 
                 `;
+
             }
 
         } catch (e) {
 
-            showMessage(
-                "errorMessage",
-                e.message
+            console.error(
+                "Donor dashboard error:",
+                e
             );
+
+            if (
+                typeof showMessage ===
+                "function"
+            ) {
+
+                showMessage(
+                    "errorMessage",
+                    e.message
+                );
+
+            }
 
         }
 
     })();
+
 }
-<script src="/static/js/api.js"></script>
+</script>
+
+<!-- BloodLink Assistant -->
 <script src="/static/js/bloodlink-assistant.js"></script>
 
 </body>
