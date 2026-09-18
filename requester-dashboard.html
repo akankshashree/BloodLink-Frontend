@@ -1,315 +1,1347 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Login | BloodLink</title>
+<title>Requester Dashboard | BloodLink</title>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
 <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
 <script src="/static/js/api.js"></script>
 
 <style>
-:root{--red:#c81d25;--dark:#171717;--muted:#6b7280}
-*{box-sizing:border-box}
 
-body{
-margin:0;min-height:100vh;background:#fafafa;
-font-family:"DM Sans",sans-serif;color:var(--dark)
+:root{
+--red:#c81d25;
+--red-dark:#a9151d;
+--soft-red:#fff1f2;
+--dark:#171717;
+--muted:#6b7280;
+--green:#16803c;
+--soft-green:#ecfdf3;
+--orange:#d97706;
+--soft-orange:#fff7ed;
+--blue:#2563eb;
+--soft-blue:#eff6ff;
+--border:#eeeeee;
+--background:#f8f8f8
 }
 
-h1,h2,h3,h4{font-family:"Manrope",sans-serif}
+*{
+box-sizing:border-box
+}
+
+body{
+margin:0;
+background:var(--background);
+color:var(--dark);
+font-family:"DM Sans",sans-serif
+}
+
+h1,h2,h3,h4,h5,h6{
+font-family:"Manrope",sans-serif
+}
+
+
+/* NAVBAR */
 
 .navbar{
-background:white;border-bottom:1px solid #eee;padding:17px 0
+background:white;
+border-bottom:1px solid var(--border);
+padding:14px 0
 }
 
 .brand{
-display:flex;align-items:center;gap:10px;
-text-decoration:none;color:var(--dark);
-font-family:"Manrope";font-size:1.45rem;font-weight:800
+display:flex;
+align-items:center;
+gap:10px;
+text-decoration:none;
+color:var(--dark);
+font-family:"Manrope",sans-serif;
+font-weight:800;
+font-size:1.4rem
 }
 
 .brand-icon{
-width:42px;height:42px;border-radius:11px;
-background:var(--red);position:relative;display:inline-block
+width:42px;
+height:42px;
+border-radius:11px;
+background:var(--red);
+position:relative;
+display:inline-block;
+flex-shrink:0
 }
 
 .brand-icon:before{
-content:"";position:absolute;width:9px;height:27px;
-background:white;border-radius:3px;left:16.5px;top:7.5px
+content:"";
+position:absolute;
+width:9px;
+height:27px;
+background:white;
+border-radius:3px;
+left:16.5px;
+top:7.5px
 }
 
 .brand-icon:after{
-content:"";position:absolute;width:27px;height:9px;
-background:white;border-radius:3px;left:7.5px;top:16.5px
+content:"";
+position:absolute;
+width:27px;
+height:9px;
+background:white;
+border-radius:3px;
+left:7.5px;
+top:16.5px
 }
 
-.home-link{color:#555;text-decoration:none;font-weight:600}
-.home-link:hover{color:var(--red)}
-
-.login-wrapper{padding:55px 0 70px}
-
-.login-card{
-background:white;border:1px solid #eee;border-radius:28px;
-overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.08)
+.nav-btn{
+border:1px solid #e5e5e5;
+background:white;
+color:#444;
+border-radius:10px;
+padding:9px 14px;
+text-decoration:none;
+font-weight:600;
+transition:.2s
 }
 
-.login-left{
-min-height:610px;
-background:linear-gradient(145deg,#9f1239,#c81d25 55%,#e33b44);
-color:white;padding:55px;
-position:relative;overflow:hidden;
-display:flex;flex-direction:column;justify-content:flex-end
-}
-
-.login-left:after{
-content:"+";
-position:absolute;right:20px;top:-45px;
-font-size:18rem;font-weight:800;opacity:.08
-}
-
-.login-left .eyebrow{
-color:#ffd9dc;text-transform:uppercase;
-letter-spacing:1.5px;font-size:.75rem;font-weight:800
-}
-
-.login-left h1{
-font-size:3rem;font-weight:800;line-height:1.08;
-position:relative;z-index:1
-}
-
-.login-left p{
-color:#ffe8e9;line-height:1.7;
-max-width:420px;position:relative;z-index:1
-}
-
-.login-right{padding:55px}
-
-.login-right h2{font-size:2rem;font-weight:800}
-
-.subtitle{color:var(--muted);line-height:1.6}
-
-.form-label{font-size:.9rem;font-weight:700}
-
-.form-control{
-padding:13px 14px;border-color:#ddd;border-radius:10px
-}
-
-.form-control:focus{
+.nav-btn:hover{
 border-color:var(--red);
-box-shadow:0 0 0 3px rgba(200,29,37,.08)
+color:var(--red)
 }
 
-.login-btn{
-width:100%;background:var(--red);color:white;
-border:0;padding:14px;border-radius:11px;
-font-weight:800;margin-top:10px
+.notification-btn{
+position:relative
 }
 
-.login-btn:hover{background:#a9151d}
-
-.register-text{text-align:center;margin-top:22px;color:var(--muted)}
-.register-text a{color:var(--red);text-decoration:none;font-weight:800}
-
-.security-note{
-margin-top:25px;padding:15px;background:#f7f7f7;
-border-radius:12px;color:#666;font-size:.82rem
+.notification-badge{
+position:absolute;
+top:-7px;
+right:-7px;
+background:var(--red);
+color:white;
+border-radius:50px;
+font-size:.65rem;
+min-width:20px;
+height:20px;
+display:flex;
+align-items:center;
+justify-content:center;
+border:2px solid white
 }
 
-.password-box{position:relative}
-.password-box .form-control{padding-right:50px}
-
-.password-toggle{
-position:absolute;right:10px;top:50%;
-transform:translateY(-50%);
-border:0;background:transparent;color:#888
+.logout-btn{
+color:#666;
+text-decoration:none;
+font-weight:600
 }
+
+.logout-btn:hover{
+color:var(--red)
+}
+
+
+/* PAGE */
+
+.dashboard{
+padding:45px 0 70px
+}
+
+
+/* HERO */
+
+.welcome-card{
+background:
+linear-gradient(
+120deg,
+#9f1239,
+#c81d25 55%,
+#e33b44
+);
+
+border-radius:25px;
+color:white;
+padding:42px;
+position:relative;
+overflow:hidden;
+box-shadow:0 15px 40px rgba(200,29,37,.16)
+}
+
+.welcome-card::after{
+content:"🏥";
+position:absolute;
+right:30px;
+bottom:-30px;
+font-size:11rem;
+opacity:.10
+}
+
+.welcome-eyebrow{
+text-transform:uppercase;
+letter-spacing:1.5px;
+font-size:.75rem;
+font-weight:800;
+color:#ffd9dc
+}
+
+.welcome-card h1{
+font-size:2.8rem;
+font-weight:800;
+margin:7px 0 10px
+}
+
+.welcome-card p{
+color:#ffe8e9;
+max-width:680px;
+line-height:1.7;
+margin-bottom:25px
+}
+
+.hero-actions{
+display:flex;
+flex-wrap:wrap;
+gap:12px
+}
+
+.hero-primary{
+display:inline-flex;
+align-items:center;
+gap:8px;
+background:white;
+color:var(--red);
+padding:12px 18px;
+border-radius:11px;
+text-decoration:none;
+font-weight:800;
+transition:.2s
+}
+
+.hero-primary:hover{
+color:var(--red);
+transform:translateY(-2px)
+}
+
+.hero-secondary{
+display:inline-flex;
+align-items:center;
+gap:8px;
+color:white;
+border:1px solid rgba(255,255,255,.35);
+background:rgba(255,255,255,.10);
+padding:12px 18px;
+border-radius:11px;
+text-decoration:none;
+font-weight:700
+}
+
+.hero-secondary:hover{
+color:white;
+background:rgba(255,255,255,.18)
+}
+
+
+/* STATS */
+
+.stat-card{
+background:white;
+border:1px solid var(--border);
+border-radius:18px;
+padding:23px;
+height:100%;
+transition:.2s
+}
+
+.stat-card:hover{
+transform:translateY(-3px);
+box-shadow:0 10px 25px rgba(0,0,0,.05)
+}
+
+.stat-icon{
+width:44px;
+height:44px;
+border-radius:12px;
+background:var(--soft-red);
+color:var(--red);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:1.15rem;
+margin-bottom:15px
+}
+
+.stat-icon.green{
+background:var(--soft-green);
+color:var(--green)
+}
+
+.stat-icon.blue{
+background:var(--soft-blue);
+color:var(--blue)
+}
+
+.stat-number{
+font-family:"Manrope",sans-serif;
+font-size:1.9rem;
+font-weight:800
+}
+
+.stat-label{
+color:var(--muted);
+font-size:.85rem;
+margin-top:2px
+}
+
+
+/* SECTION */
+
+.section-title{
+font-size:1.45rem;
+font-weight:800;
+margin-bottom:5px
+}
+
+.section-subtitle{
+color:var(--muted);
+font-size:.9rem;
+margin-bottom:25px
+}
+
+
+/* ACTION CARDS */
+
+.action-card{
+background:white;
+border:1px solid var(--border);
+border-radius:18px;
+padding:23px;
+text-decoration:none;
+color:var(--dark);
+height:100%;
+transition:.2s
+}
+
+.action-card:hover{
+transform:translateY(-4px);
+border-color:#f0a0a4;
+box-shadow:0 10px 25px rgba(0,0,0,.06);
+color:var(--dark)
+}
+
+.action-icon{
+width:48px;
+height:48px;
+border-radius:13px;
+background:var(--soft-red);
+color:var(--red);
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:1.2rem;
+margin-bottom:17px
+}
+
+.action-card h5{
+font-weight:800;
+margin-bottom:7px
+}
+
+.action-card p{
+color:var(--muted);
+font-size:.85rem;
+line-height:1.6;
+margin-bottom:14px
+}
+
+.action-link{
+color:var(--red);
+font-weight:700;
+font-size:.85rem
+}
+
+
+/* REQUEST STATUS */
+
+.status-panel{
+background:white;
+border:1px solid var(--border);
+border-radius:20px;
+padding:28px;
+height:100%
+}
+
+.request-flow{
+display:flex;
+align-items:center;
+gap:10px;
+margin-top:20px;
+flex-wrap:wrap
+}
+
+.flow-item{
+display:flex;
+align-items:center;
+gap:7px;
+padding:8px 11px;
+border-radius:50px;
+background:#f5f5f5;
+color:#666;
+font-size:.75rem;
+font-weight:700
+}
+
+.flow-item.active{
+background:var(--soft-red);
+color:var(--red)
+}
+
+.flow-arrow{
+color:#bbb
+}
+
+
+/* PRIVACY */
+
+.privacy-card{
+background:#181818;
+color:white;
+border-radius:20px;
+padding:30px;
+height:100%
+}
+
+.privacy-card h4{
+font-weight:800
+}
+
+.privacy-card p{
+color:#bdbdbd;
+line-height:1.7
+}
+
+.privacy-point{
+display:flex;
+gap:11px;
+margin-top:17px
+}
+
+.privacy-point i{
+color:#ff6870
+}
+
+
+/* HELP */
+
+.help-card{
+background:white;
+border:1px solid var(--border);
+border-radius:20px;
+padding:30px;
+height:100%
+}
+
+.help-item{
+display:flex;
+gap:13px;
+padding:14px 0;
+border-bottom:1px solid #eee
+}
+
+.help-item:last-child{
+border-bottom:none
+}
+
+.help-icon{
+width:38px;
+height:38px;
+border-radius:10px;
+background:#f7f7f7;
+display:flex;
+align-items:center;
+justify-content:center;
+color:var(--red);
+flex-shrink:0
+}
+
+.help-item strong{
+display:block;
+font-size:.9rem
+}
+
+.help-item small{
+color:var(--muted);
+line-height:1.5
+}
+
+
+/* FOOTER */
+
+footer{
+border-top:1px solid var(--border);
+background:white;
+padding:25px 0;
+color:#888;
+font-size:.85rem
+}
+
+
+/* RESPONSIVE */
 
 @media(max-width:767px){
-.login-wrapper{padding:25px 12px}
-.login-left{min-height:300px;padding:35px}
-.login-left h1{font-size:2.2rem}
-.login-right{padding:35px 25px}
+
+.dashboard{
+padding:25px 0 50px
 }
+
+.welcome-card{
+padding:30px 25px
+}
+
+.welcome-card h1{
+font-size:2.15rem
+}
+
+.welcome-card::after{
+font-size:7rem
+}
+
+.request-flow{
+align-items:flex-start;
+flex-direction:column
+}
+
+.flow-arrow{
+display:none
+}
+
+}
+
 </style>
 </head>
 
+
 <body>
 
-<nav class="navbar">
-<div class="container d-flex justify-content-between align-items-center">
 
-<a href="/" class="brand">
-<span class="brand-icon"></span>
-<span>Blood<span style="color:var(--red)">Link</span></span>
-</a>
+<!-- NAVBAR -->
 
-<a href="/" class="home-link">
-<i class="bi bi-arrow-left me-1"></i>
-Back to home
-</a>
+<nav class="navbar sticky-top">
 
-</div>
-</nav>
-
-<main class="login-wrapper">
 <div class="container">
 
-<div class="login-card">
+<div class="d-flex align-items-center justify-content-between">
 
-<div class="row g-0">
+<a href="/requester-dashboard.html" class="brand">
 
-<div class="col-lg-6">
-<div class="login-left">
+<span class="brand-icon"></span>
 
-<div class="eyebrow">WELCOME BACK</div>
+<span>
+Blood<span style="color:var(--red)">Link</span>
+</span>
 
-<h1>Good to see you again.</h1>
+</a>
+
+
+<div class="d-flex align-items-center gap-3">
+
+<a
+href="/notifications.html"
+class="nav-btn notification-btn"
+title="Notifications"
+>
+
+<i class="bi bi-bell"></i>
+
+<span
+id="notificationBadge"
+class="notification-badge"
+style="display:none"
+>
+0
+</span>
+
+</a>
+
+
+<a
+href="#"
+id="logoutLink"
+class="logout-btn"
+>
+Logout
+</a>
+
+</div>
+
+</div>
+
+</div>
+
+</nav>
+
+
+<!-- MAIN -->
+
+<main class="dashboard">
+
+<div class="container">
+
+
+<!-- HERO -->
+
+<section class="welcome-card mb-4">
+
+<div class="welcome-eyebrow">
+Requester dashboard
+</div>
+
+<h1>
+Get the right blood,
+faster.
+</h1>
 
 <p>
-Sign in to manage your blood requests, donor matches
-and notifications — all in one place.
+Create a blood request and BloodLink will identify
+eligible nearby donors based on blood group,
+distance, availability and donation eligibility.
+</p>
+
+
+<div class="hero-actions">
+
+<a
+href="/create-request.html"
+class="hero-primary"
+>
+<i class="bi bi-plus-circle-fill"></i>
+Create Blood Request
+</a>
+
+
+<a
+href="/my-requests.html"
+class="hero-secondary"
+>
+<i class="bi bi-list-check"></i>
+View My Requests
+</a>
+
+</div>
+
+</section>
+
+
+<!-- STATISTICS -->
+
+<section class="mb-5">
+
+<div class="row g-3">
+
+
+<div class="col-6 col-lg-3">
+
+<div class="stat-card">
+
+<div class="stat-icon">
+<i class="bi bi-file-medical-fill"></i>
+</div>
+
+<div
+class="stat-number"
+id="totalRequests"
+>
+0
+</div>
+
+<div class="stat-label">
+Total requests
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-6 col-lg-3">
+
+<div class="stat-card">
+
+<div class="stat-icon">
+<i class="bi bi-activity"></i>
+</div>
+
+<div
+class="stat-number"
+id="activeRequests"
+>
+0
+</div>
+
+<div class="stat-label">
+Active requests
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-6 col-lg-3">
+
+<div class="stat-card">
+
+<div class="stat-icon green">
+<i class="bi bi-person-check-fill"></i>
+</div>
+
+<div
+class="stat-number"
+id="acceptedDonors"
+>
+0
+</div>
+
+<div class="stat-label">
+Accepted donors
+</div>
+
+</div>
+
+</div>
+
+
+<div class="col-6 col-lg-3">
+
+<div class="stat-card">
+
+<div class="stat-icon blue">
+<i class="bi bi-check2-circle"></i>
+</div>
+
+<div
+class="stat-number"
+id="fulfilledRequests"
+>
+0
+</div>
+
+<div class="stat-label">
+Fulfilled requests
+</div>
+
+</div>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- QUICK ACTIONS -->
+
+<section class="mb-5">
+
+<h2 class="section-title">
+What do you need?
+</h2>
+
+<p class="section-subtitle">
+Manage your blood requests and stay connected with matched donors.
+</p>
+
+
+<div class="row g-4">
+
+
+<div class="col-md-4">
+
+<a
+href="/create-request.html"
+class="action-card d-block"
+>
+
+<div class="action-icon">
+<i class="bi bi-plus-lg"></i>
+</div>
+
+<h5>
+Create a request
+</h5>
+
+<p>
+Tell us the blood group, hospital,
+urgency and number of units required.
+</p>
+
+<span class="action-link">
+Start a request
+<i class="bi bi-arrow-right"></i>
+</span>
+
+</a>
+
+</div>
+
+
+<div class="col-md-4">
+
+<a
+href="/my-requests.html"
+class="action-card d-block"
+>
+
+<div class="action-icon">
+<i class="bi bi-clipboard2-pulse"></i>
+</div>
+
+<h5>
+Track requests
+</h5>
+
+<p>
+See active, partially fulfilled,
+fulfilled and cancelled requests.
+</p>
+
+<span class="action-link">
+View requests
+<i class="bi bi-arrow-right"></i>
+</span>
+
+</a>
+
+</div>
+
+
+<div class="col-md-4">
+
+<a
+href="/notifications.html"
+class="action-card d-block"
+>
+
+<div class="action-icon">
+<i class="bi bi-bell-fill"></i>
+</div>
+
+<h5>
+Notifications
+<span
+id="newNotifications"
+class="text-danger"
+></span>
+</h5>
+
+<p>
+See updates when matched donors
+accept or decline your request.
+</p>
+
+<span class="action-link">
+Open notifications
+<i class="bi bi-arrow-right"></i>
+</span>
+
+</a>
+
+</div>
+
+
+</div>
+
+</section>
+
+
+<!-- REQUEST JOURNEY + PRIVACY -->
+
+<section class="mb-5">
+
+<div class="row g-4">
+
+
+<div class="col-lg-7">
+
+<div class="status-panel">
+
+<h3 class="section-title">
+How your request moves
+</h3>
+
+<p class="section-subtitle">
+BloodLink keeps the process focused and transparent.
+</p>
+
+
+<div class="request-flow">
+
+<div class="flow-item active">
+<i class="bi bi-plus-circle-fill"></i>
+Request
+</div>
+
+<span class="flow-arrow">→</span>
+
+<div class="flow-item active">
+<i class="bi bi-search"></i>
+Match
+</div>
+
+<span class="flow-arrow">→</span>
+
+<div class="flow-item active">
+<i class="bi bi-bell-fill"></i>
+Notify
+</div>
+
+<span class="flow-arrow">→</span>
+
+<div class="flow-item active">
+<i class="bi bi-person-check-fill"></i>
+Accept
+</div>
+
+</div>
+
+
+<div class="mt-4 pt-3 border-top">
+
+<div class="row g-4">
+
+<div class="col-sm-6">
+
+<strong>
+<i class="bi bi-geo-alt-fill text-danger me-2"></i>
+Location-aware
+</strong>
+
+<p class="text-muted small mt-2 mb-0">
+Donors are filtered by distance
+from the request location.
 </p>
 
 </div>
-</div>
 
-<div class="col-lg-6">
 
-<div class="login-right">
+<div class="col-sm-6">
 
-<h2>Sign in</h2>
+<strong>
+<i class="bi bi-funnel-fill text-danger me-2"></i>
+Eligibility filtering
+</strong>
 
-<p class="subtitle mb-4">
-Enter your account details to continue.
+<p class="text-muted small mt-2 mb-0">
+Only donors meeting the matching
+criteria are notified.
 </p>
 
-<div id="errorMessage" class="alert alert-danger" style="display:none"></div>
+</div>
 
-<form id="loginForm">
+</div>
 
-<div class="mb-4">
+</div>
 
-<label class="form-label" for="username">
-Username
-</label>
+</div>
 
-<input
-type="text"
-id="username"
-class="form-control"
-placeholder="Enter your username"
-autocomplete="username"
-required
+</div>
+
+
+<div class="col-lg-5">
+
+<div class="privacy-card">
+
+<div
+style="
+color:#ff6870;
+text-transform:uppercase;
+letter-spacing:1.3px;
+font-size:.72rem;
+font-weight:800;
+"
+>
+Privacy first
+</div>
+
+<h4 class="mt-2">
+Contact details stay protected.
+</h4>
+
+<p>
+A donor's phone number isn't exposed just
+because they were matched with your request.
+</p>
+
+
+<div class="privacy-point">
+
+<i class="bi bi-check-circle-fill"></i>
+
+<span>
+Donor receives the request first.
+</span>
+
+</div>
+
+
+<div class="privacy-point">
+
+<i class="bi bi-check-circle-fill"></i>
+
+<span>
+Donor chooses whether to accept.
+</span>
+
+</div>
+
+
+<div class="privacy-point">
+
+<i class="bi bi-lock-fill"></i>
+
+<span>
+Contact is revealed only after acceptance.
+</span>
+
+</div>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<!-- HELP -->
+
+<section>
+
+<div class="row g-4">
+
+
+<div class="col-lg-7">
+
+<div class="help-card">
+
+<h3 class="section-title">
+Before creating a request
+</h3>
+
+<p class="section-subtitle">
+A few details help BloodLink find relevant donors.
+</p>
+
+
+<div class="help-item">
+
+<div class="help-icon">
+<i class="bi bi-droplet-fill"></i>
+</div>
+
+<div>
+
+<strong>
+Enter the required blood group
+</strong>
+
+<small>
+Select the blood group requested by
+the hospital or medical team.
+</small>
+
+</div>
+
+</div>
+
+
+<div class="help-item">
+
+<div class="help-icon">
+<i class="bi bi-hospital-fill"></i>
+</div>
+
+<div>
+
+<strong>
+Use the hospital location
+</strong>
+
+<small>
+Accurate coordinates improve
+nearby-donor matching.
+</small>
+
+</div>
+
+</div>
+
+
+<div class="help-item">
+
+<div class="help-icon">
+<i class="bi bi-exclamation-triangle-fill"></i>
+</div>
+
+<div>
+
+<strong>
+Select the appropriate urgency
+</strong>
+
+<small>
+Indicate whether the request is
+low, medium, high or critical priority.
+</small>
+
+</div>
+
+</div>
+
+
+<div class="help-item">
+
+<div class="help-icon">
+<i class="bi bi-boxes"></i>
+</div>
+
+<div>
+
+<strong>
+Specify units required
+</strong>
+
+<small>
+BloodLink tracks how many units
+have been fulfilled.
+</small>
+
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+
+<div class="col-lg-5">
+
+<div class="help-card">
+
+<h3 class="section-title">
+Need help?
+</h3>
+
+<p class="section-subtitle">
+Useful places in your dashboard.
+</p>
+
+
+<div class="d-grid gap-2">
+
+
+<a
+href="/create-request.html"
+class="w-100 justify-content-center"
+style="
+display:inline-flex;
+align-items:center;
+gap:8px;
+background:#c81d25;
+color:white;
+padding:12px;
+border-radius:10px;
+text-decoration:none;
+font-weight:700;
+"
 >
 
-</div>
+<i class="bi bi-plus-circle"></i>
 
-<div class="mb-4">
+Create Blood Request
 
-<label class="form-label" for="password">
-Password
-</label>
+</a>
 
-<div class="password-box">
 
-<input
-type="password"
-id="password"
-class="form-control"
-placeholder="Enter your password"
-autocomplete="current-password"
-required
+<a
+href="/my-requests.html"
+class="btn btn-light w-100"
+style="
+border-radius:10px;
+padding:12px;
+font-weight:700;
+"
 >
 
-<button type="button" class="password-toggle" id="togglePassword">
-<i class="bi bi-eye"></i>
-</button>
+<i class="bi bi-list-check me-1"></i>
+
+View My Requests
+
+</a>
+
+
+<a
+href="/notifications.html"
+class="btn btn-light w-100"
+style="
+border-radius:10px;
+padding:12px;
+font-weight:700;
+"
+>
+
+<i class="bi bi-bell me-1"></i>
+
+Notifications
+
+</a>
+
+
+</div>
+
+
+<div class="mt-4 p-3 rounded-3 bg-light">
+
+<small class="text-muted">
+
+<i class="bi bi-info-circle me-1"></i>
+
+For medical emergencies, always follow
+instructions from qualified healthcare
+professionals and the hospital handling
+the case.
+
+</small>
 
 </div>
 
 </div>
 
-<button type="submit" class="login-btn" id="loginButton">
-Sign in
-<i class="bi bi-arrow-right ms-2"></i>
-</button>
-
-</form>
-
-<div class="register-text">
-Don't have an account?
-<a href="/register.html">Create one</a>
 </div>
 
-<div class="security-note">
-<i class="bi bi-shield-check me-1"></i>
-Your account information is protected.
-</div>
 
 </div>
-</div>
+
+</section>
+
 
 </div>
-</div>
-</div>
+
 </main>
+
+
+<!-- FOOTER -->
+
+<footer>
+
+<div class="container">
+
+<div class="d-flex justify-content-between flex-wrap gap-2">
+
+<span>
+BloodLink
+</span>
+
+<span>
+Privacy-preserving blood donor matching • 2026
+</span>
+
+</div>
+
+</div>
+
+</footer>
+
+
+<!-- API LOGIC -->
 
 <script>
 
-const password=document.getElementById("password");
-const toggle=document.getElementById("togglePassword");
+const user = requireAuth("REQUESTER");
 
-toggle.onclick=function(){
 
-if(password.type==="password"){
-password.type="text";
-this.innerHTML='<i class="bi bi-eye-slash"></i>';
-}else{
-password.type="password";
-this.innerHTML='<i class="bi bi-eye"></i>';
-}
+if(user){
 
-};
+const logoutLink =
+document.getElementById("logoutLink");
 
-document.getElementById("loginForm").addEventListener("submit",async e=>{
+
+logoutLink.onclick = async e => {
 
 e.preventDefault();
 
-const button=document.getElementById("loginButton");
+await logoutUser();
 
-button.disabled=true;
-button.innerHTML="Signing in...";
+window.location.href="/";
+
+};
+
+
+async function loadDashboard(){
 
 try{
 
-const data=await loginUser(
-document.getElementById("username").value.trim(),
-password.value
-);
+const data = await getDashboard();
 
-window.location.href=
-data.user.role==="DONOR"
-?"/donor-dashboard.html"
-:"/requester-dashboard.html";
 
-}catch(err){
+document.getElementById("totalRequests").textContent =
+data.total_requests || 0;
 
-showMessage("errorMessage",err.message);
 
-button.disabled=false;
-button.innerHTML='Sign in <i class="bi bi-arrow-right ms-2"></i>';
+document.getElementById("activeRequests").textContent =
+data.active_requests || 0;
+
+
+document.getElementById("acceptedDonors").textContent =
+data.accepted_donors || 0;
+
+
+document.getElementById("fulfilledRequests").textContent =
+data.fulfilled_requests || 0;
+
+
+const unread =
+data.unread_notifications || 0;
+
+
+const badge =
+document.getElementById("notificationBadge");
+
+
+if(unread > 0){
+
+badge.textContent = unread;
+badge.style.display = "flex";
+
+document.getElementById("newNotifications").textContent =
+` (${unread} new)`;
 
 }
 
-});
+}catch(error){
+
+console.error("Requester dashboard error:",error);
+
+}
+
+}
+
+
+loadDashboard();
+
+}
 
 </script>
+
 
 </body>
 </html>
