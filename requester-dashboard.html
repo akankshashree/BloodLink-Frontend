@@ -708,6 +708,220 @@ html[data-theme="dark"] .theme-toggle:hover{
     .theme-toggle{padding:9px 10px;}
 }
 
+
+/* =========================
+   COMMUNITY REVIEWS
+========================= */
+.reviews-section{
+    margin-top:50px;
+}
+
+.reviews-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
+}
+
+.reviews-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
+}
+
+.review-card{
+    background:var(--card, #fff);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+    transition:.2s;
+}
+
+.review-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.review-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:15px;
+}
+
+.review-avatar{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    background:var(--soft-red);
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Manrope",sans-serif;
+    font-weight:800;
+}
+
+.review-name{
+    font-weight:800;
+    font-size:.9rem;
+}
+
+.review-role{
+    color:var(--muted);
+    font-size:.75rem;
+    margin-top:2px;
+}
+
+.review-stars{
+    color:#f59e0b;
+    letter-spacing:1px;
+    font-size:.9rem;
+    margin-bottom:12px;
+}
+
+.review-text{
+    color:var(--text-soft, #555);
+    line-height:1.65;
+    font-size:.88rem;
+    margin:0;
+}
+
+.review-date{
+    display:block;
+    color:var(--muted);
+    font-size:.72rem;
+    margin-top:15px;
+}
+
+.review-btn{
+    border:0;
+    background:var(--red);
+    color:white;
+    border-radius:10px;
+    padding:11px 16px;
+    font-weight:800;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.review-btn:hover{
+    background:var(--red-dark);
+    transform:translateY(-1px);
+}
+
+.review-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:2000;
+}
+
+.review-modal.show{
+    display:flex;
+}
+
+.review-dialog{
+    width:min(500px,100%);
+    background:var(--card,#fff);
+    color:var(--text,#171717);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:26px;
+    box-shadow:0 25px 70px rgba(0,0,0,.25);
+}
+
+.review-dialog-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.review-close{
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    font-size:1.4rem;
+    cursor:pointer;
+}
+
+.review-form-label{
+    display:block;
+    font-weight:700;
+    font-size:.84rem;
+    margin-bottom:7px;
+}
+
+.review-input,
+.review-textarea{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--input,#fff);
+    color:var(--text,#171717);
+    border-radius:10px;
+    padding:11px 12px;
+    outline:none;
+    font-family:"DM Sans",sans-serif;
+}
+
+.review-input:focus,
+.review-textarea:focus{
+    border-color:var(--red);
+    box-shadow:0 0 0 3px rgba(200,29,37,.10);
+}
+
+.review-textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.rating-select{
+    display:flex;
+    gap:5px;
+    margin-bottom:18px;
+}
+
+.rating-star{
+    border:0;
+    background:transparent;
+    color:#c8c8c8;
+    font-size:1.55rem;
+    cursor:pointer;
+    padding:0;
+}
+
+.rating-star.active{
+    color:#f59e0b;
+}
+
+.review-form-error{
+    color:#c81d25;
+    font-size:.8rem;
+    min-height:20px;
+}
+
+@media(max-width:900px){
+    .reviews-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+    .reviews-grid{
+        grid-template-columns:1fr;
+    }
+}
+
 </style>
 </head>
 
@@ -1427,6 +1641,72 @@ the case.
 
 </div>
 
+
+<!-- COMMUNITY REVIEWS -->
+<section class="reviews-section mb-5">
+    <div class="reviews-head">
+        <div>
+            <h2 class="section-title mb-1">What our community says</h2>
+            <p class="section-subtitle mb-0">
+                Experiences from people using BloodLink.
+            </p>
+        </div>
+        <button type="button" class="review-btn" id="openReviewModal">
+            <i class="bi bi-star-fill"></i>
+            Write a Review
+        </button>
+    </div>
+
+    <div class="reviews-grid" id="reviewsGrid"></div>
+</section>
+
+<!-- REVIEW MODAL -->
+<div class="review-modal" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle">
+    <div class="review-dialog">
+        <div class="review-dialog-header">
+            <div>
+                <h4 id="reviewModalTitle" class="mb-1">Share your experience</h4>
+                <small class="text-muted">Tell the BloodLink community what you think.</small>
+            </div>
+            <button type="button" class="review-close" id="closeReviewModal" aria-label="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <form id="reviewForm">
+            <div class="mb-3">
+                <label class="review-form-label" for="reviewName">Name</label>
+                <input class="review-input" id="reviewName" maxlength="60" placeholder="Your name" required>
+            </div>
+
+            <div class="mb-3">
+                <label class="review-form-label">Rating</label>
+                <div class="rating-select" id="ratingSelect" aria-label="Choose rating">
+                    <button type="button" class="rating-star" data-rating="1">★</button>
+                    <button type="button" class="rating-star" data-rating="2">★</button>
+                    <button type="button" class="rating-star" data-rating="3">★</button>
+                    <button type="button" class="rating-star" data-rating="4">★</button>
+                    <button type="button" class="rating-star" data-rating="5">★</button>
+                </div>
+                <input type="hidden" id="reviewRating" value="5">
+            </div>
+
+            <div class="mb-2">
+                <label class="review-form-label" for="reviewText">Review</label>
+                <textarea class="review-textarea" id="reviewText" maxlength="500"
+                    placeholder="Write your experience..." required></textarea>
+            </div>
+
+            <div class="review-form-error" id="reviewFormError"></div>
+
+            <button type="submit" class="review-btn w-100 justify-content-center">
+                <i class="bi bi-send-fill"></i>
+                Submit Review
+            </button>
+        </form>
+    </div>
+</div>
+
 </main>
 
 
@@ -1646,6 +1926,206 @@ function formatNotificationDate(value){
 }
 
 loadRecentNotifications();
+
+</script>
+
+<script>
+
+/* =========================
+   COMMUNITY REVIEWS
+   Demo/local version for now
+========================= */
+
+(function(){
+
+    const defaultReviews = [
+        {
+            name:"Rahul",
+            role:"Blood Donor",
+            rating:5,
+            text:"The matching process made it much easier to find a relevant blood request without sending messages everywhere."
+        },
+        {
+            name:"Ananya",
+            role:"Requester",
+            rating:5,
+            text:"I liked how the request stayed focused and the donor's contact details were protected until acceptance."
+        },
+        {
+            name:"Arjun",
+            role:"Blood Donor",
+            rating:4,
+            text:"The dashboard is simple to use and I can quickly see my matches and notifications."
+        },
+        {
+            name:"Meera",
+            role:"Requester",
+            rating:5,
+            text:"BloodLink makes the whole process feel much more organized during a stressful situation."
+        },
+        {
+            name:"Vishal",
+            role:"Blood Donor",
+            rating:5,
+            text:"The location-based matching is a useful feature because it shows which requests are actually nearby."
+        }
+    ];
+
+    function getReviews(){
+        try{
+            const saved = JSON.parse(localStorage.getItem("bloodlink_reviews") || "null");
+            return Array.isArray(saved) && saved.length ? saved : defaultReviews;
+        }catch(e){
+            return defaultReviews;
+        }
+    }
+
+    function initials(name){
+        return String(name || "U")
+            .trim()
+            .split(/\s+/)
+            .slice(0,2)
+            .map(function(part){ return part.charAt(0).toUpperCase(); })
+            .join("") || "U";
+    }
+
+    function stars(rating){
+        const value = Math.max(1, Math.min(5, Number(rating) || 5));
+        return "★".repeat(value) + "☆".repeat(5-value);
+    }
+
+    function safe(value){
+        return String(value ?? "").replace(/[&<>"']/g, function(c){
+            return {
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#039;"
+            }[c];
+        });
+    }
+
+    function renderReviews(){
+        const grid = document.getElementById("reviewsGrid");
+        if(!grid) return;
+
+        const reviews = getReviews();
+
+        grid.innerHTML = reviews.slice(0,6).map(function(review){
+            return `
+                <article class="review-card">
+                    <div class="review-top">
+                        <div class="review-avatar">${safe(initials(review.name))}</div>
+                        <div>
+                            <div class="review-name">${safe(review.name)}</div>
+                            <div class="review-role">${safe(review.role || "BloodLink user")}</div>
+                        </div>
+                    </div>
+                    <div class="review-stars" aria-label="${Number(review.rating)||5} out of 5 stars">
+                        ${stars(review.rating)}
+                    </div>
+                    <p class="review-text">“${safe(review.text)}”</p>
+                    ${review.date ? `<span class="review-date">${safe(review.date)}</span>` : ""}
+                </article>
+            `;
+        }).join("");
+    }
+
+    const modal = document.getElementById("reviewModal");
+    const openBtn = document.getElementById("openReviewModal");
+    const closeBtn = document.getElementById("closeReviewModal");
+    const form = document.getElementById("reviewForm");
+    const ratingInput = document.getElementById("reviewRating");
+    const ratingButtons = document.querySelectorAll(".rating-star");
+
+    function setRating(value){
+        value = Number(value) || 5;
+        ratingInput.value = value;
+
+        ratingButtons.forEach(function(button){
+            button.classList.toggle(
+                "active",
+                Number(button.dataset.rating) <= value
+            );
+        });
+    }
+
+    setRating(5);
+
+    if(openBtn){
+        openBtn.addEventListener("click", function(){
+            modal.classList.add("show");
+            document.getElementById("reviewName").focus();
+        });
+    }
+
+    function closeModal(){
+        modal.classList.remove("show");
+    }
+
+    if(closeBtn) closeBtn.addEventListener("click", closeModal);
+
+    if(modal){
+        modal.addEventListener("click", function(e){
+            if(e.target === modal) closeModal();
+        });
+    }
+
+    document.addEventListener("keydown", function(e){
+        if(e.key === "Escape" && modal.classList.contains("show")){
+            closeModal();
+        }
+    });
+
+    ratingButtons.forEach(function(button){
+        button.addEventListener("click", function(){
+            setRating(button.dataset.rating);
+        });
+    });
+
+    if(form){
+        form.addEventListener("submit", function(e){
+            e.preventDefault();
+
+            const name = document.getElementById("reviewName").value.trim();
+            const text = document.getElementById("reviewText").value.trim();
+            const rating = Number(ratingInput.value);
+            const error = document.getElementById("reviewFormError");
+
+            if(!name || !text || rating < 1){
+                error.textContent = "Please complete your name, rating and review.";
+                return;
+            }
+
+            error.textContent = "";
+
+            const reviews = getReviews();
+
+            reviews.unshift({
+                name:name,
+                role:"BloodLink User",
+                rating:rating,
+                text:text,
+                date:new Date().toLocaleDateString([], {
+                    day:"numeric",
+                    month:"short",
+                    year:"numeric"
+                })
+            });
+
+            localStorage.setItem("bloodlink_reviews", JSON.stringify(reviews.slice(0,20)));
+
+            renderReviews();
+            form.reset();
+            setRating(5);
+            closeModal();
+        });
+    }
+
+    renderReviews();
+
+})();
 
 </script>
 
