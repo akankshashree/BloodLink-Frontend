@@ -1,10 +1,18 @@
 (() => {
 
+/* ============================================================
+   BLOODLINK ASSISTANT
+   FAQ + MENTAL HEALTH + PERSONAL DASHBOARD CONTEXT
+============================================================ */
+
+
+/* ============================================================
+   1. EXISTING FAQ KNOWLEDGE BASE
+============================================================ */
+
 const FAQ = [
 
-/* =========================
-   BLOOD DONATION
-========================= */
+/* ---------------- BLOOD DONATION ---------------- */
 
 {
 q: "Why should I donate blood?",
@@ -113,7 +121,7 @@ a: "O-negative red blood cells can generally be given to people of all ABO/Rh gr
 
 {
 q: "What is AB positive?",
-a: "AB-positive people have AB and Rh-positive red blood cells. For red-cell transfusion, AB-positive recipients can generally receive red cells from all ABO/Rh groups when appropriately tested."
+a: "AB-positive recipients can generally receive red cells from all ABO/Rh groups when appropriately tested."
 },
 
 {
@@ -156,9 +164,10 @@ q: "Why do I feel dizzy after donating?",
 a: "Some people experience temporary light-headedness after donation. Sit or lie down and inform donation staff if this happens. Seek medical help if symptoms are severe or persistent."
 },
 
-/* =========================
+
+/* ============================================================
    MENTAL HEALTH
-========================= */
+============================================================ */
 
 {
 q: "Why do I feel stressed at the hospital?",
@@ -217,7 +226,7 @@ a: "Persistent sleep problems, constant irritability, difficulty concentrating, 
 
 {
 q: "Can hospital work affect my mental health?",
-a: "Yes. Long hours, workload, time pressure, exposure to suffering and limited support can contribute to stress and burnout. Support from colleagues, supervisors and mental-health professionals can help."
+a: "Yes. Long hours, workload, time pressure, exposure to suffering and limited support can contribute to stress and burnout."
 },
 
 {
@@ -232,10 +241,11 @@ a: "Focus on the things you can influence right now. Break the situation into sm
 
 {
 q: "How do I manage pressure when someone urgently needs blood?",
-a: "Use BloodLink to coordinate donor matching, communicate with the hospital team and focus on the immediate steps that are within your control. Remember that you do not have to carry the entire situation alone."
+a: "Use BloodLink to coordinate donor matching, communicate with the hospital team and focus on the immediate steps that are within your control."
 },
 
-/* ANXIETY */
+
+/* ---------------- ANXIETY ---------------- */
 
 {
 q: "Why am I feeling anxious before donating blood?",
@@ -249,7 +259,7 @@ a: "Tell the donation staff before the procedure. Looking away, breathing slowly
 
 {
 q: "What can I do if I panic before donation?",
-a: "Tell the staff that you are feeling panicked. Sit somewhere safe, breathe slowly and give yourself time. You do not need to hide how you are feeling."
+a: "Tell the staff that you are feeling panicked. Sit somewhere safe, breathe slowly and give yourself time."
 },
 
 {
@@ -284,12 +294,12 @@ a: "Yes. Many people feel nervous before a medical procedure or blood donation. 
 
 {
 q: "What should I do if I feel overwhelmed by fear?",
-a: "Move somewhere safe, slow your breathing and reach out to someone you trust. If the fear is severe, persistent or affecting your ability to function, consider professional support."
+a: "Move somewhere safe, slow your breathing and reach out to someone you trust. If the fear is severe or persistent, consider professional support."
 },
 
 {
 q: "How can breathing exercises help with stress?",
-a: "Slow, controlled breathing can help you pause and reduce the body's stress response. Try breathing comfortably and slowly rather than forcing deep breaths."
+a: "Slow, controlled breathing can help you pause and reduce the body's stress response."
 },
 
 {
@@ -297,16 +307,17 @@ q: "What can I do if I can't calm myself down?",
 a: "Move to a safe environment and contact someone you trust. If you feel unsafe or believe you may hurt yourself or someone else, seek immediate professional or emergency help."
 },
 
-/* HEALTHCARE WORKERS */
+
+/* ---------------- HEALTHCARE WORKERS ---------------- */
 
 {
 q: "How do healthcare workers deal with emotional exhaustion?",
-a: "Supportive colleagues, adequate rest, reasonable workload, regular breaks and access to professional mental-health support can help. Emotional exhaustion should not simply be ignored."
+a: "Supportive colleagues, adequate rest, reasonable workload, regular breaks and access to professional mental-health support can help."
 },
 
 {
 q: "What is burnout?",
-a: "Burnout is a state associated with chronic workplace stress that has not been successfully managed. It can involve exhaustion, increased mental distance from work and reduced professional effectiveness."
+a: "Burnout is associated with chronic workplace stress that has not been successfully managed. It can involve exhaustion, increased mental distance from work and reduced professional effectiveness."
 },
 
 {
@@ -326,7 +337,7 @@ a: "Long or irregular working hours can contribute to fatigue and stress. Adequa
 
 {
 q: "Can lack of sleep affect my emotions?",
-a: "Yes. Poor sleep can affect mood, concentration, energy and stress tolerance. Persistent sleep problems should be discussed with a healthcare professional."
+a: "Yes. Poor sleep can affect mood, concentration, energy and stress tolerance."
 },
 
 {
@@ -356,7 +367,7 @@ a: "Compassion fatigue refers to emotional and physical strain associated with r
 
 {
 q: "How do I recover emotionally after a difficult shift?",
-a: "Give yourself time to decompress. Hydrate, eat, rest, disconnect from work when possible and talk with someone you trust if you need to process the experience."
+a: "Give yourself time to decompress. Hydrate, eat, rest, disconnect from work when possible and talk with someone you trust."
 },
 
 {
@@ -374,11 +385,12 @@ q: "What should a hospital team do when everyone is exhausted?",
 a: "Teams can communicate workload concerns, redistribute tasks where possible, ensure appropriate breaks and involve supervisors or occupational-health resources when workload becomes unsafe."
 },
 
-/* FAMILY / CAREGIVERS */
+
+/* ---------------- FAMILY / CAREGIVERS ---------------- */
 
 {
 q: "I'm worried about a family member in hospital. What can I do?",
-a: "Ask the healthcare team for clear information, identify what you can practically help with and stay connected with people who support you. Remember to take care of your own basic needs too."
+a: "Ask the healthcare team for clear information, identify what you can practically help with and stay connected with people who support you."
 },
 
 {
@@ -398,17 +410,17 @@ a: "Listen, help with practical tasks and respect what they need emotionally. Yo
 
 {
 q: "Why do I feel helpless when someone is in hospital?",
-a: "When someone you love is ill, much of the situation may be outside your control. Focusing on practical things you can do and staying connected with the care team can help."
+a: "When someone you love is ill, much of the situation may be outside your control. Focusing on practical things you can do can help."
 },
 
 {
 q: "How can I cope with uncertainty during treatment?",
-a: "Ask the healthcare team what is known, what is still uncertain and what the next step is. Try to focus on the present rather than imagining every possible outcome."
+a: "Ask the healthcare team what is known, what is still uncertain and what the next step is. Try to focus on the present."
 },
 
 {
 q: "How do I talk to children about a family member being ill?",
-a: "Use simple, honest language appropriate for their age. Encourage questions and reassure them that trusted adults are helping with the situation."
+a: "Use simple, honest language appropriate for their age. Encourage questions and reassure them that trusted adults are helping."
 },
 
 {
@@ -418,19 +430,20 @@ a: "Caregiving can create unrealistic expectations about what you should be able
 
 {
 q: "How can caregivers take care of themselves?",
-a: "Eat regularly, stay hydrated, rest when possible, accept practical help and maintain contact with supportive people. Caregivers also deserve support."
+a: "Eat regularly, stay hydrated, rest when possible, accept practical help and maintain contact with supportive people."
 },
 
 {
 q: "What if I'm too emotionally exhausted to support someone else?",
-a: "Tell someone you trust that you are struggling and ask for practical help. You cannot support another person effectively if your own needs are completely ignored."
+a: "Tell someone you trust that you are struggling and ask for practical help."
 },
 
-/* GRIEF */
+
+/* ---------------- GRIEF ---------------- */
 
 {
 q: "How do I cope when a patient doesn't survive?",
-a: "Losing a patient can be deeply difficult. Give yourself permission to grieve, speak with trusted colleagues and use professional support if the experience becomes difficult to process."
+a: "Losing a patient can be deeply difficult. Give yourself permission to grieve, speak with trusted colleagues and use professional support if needed."
 },
 
 {
@@ -445,17 +458,17 @@ a: "Emotional numbness can occur after a distressing loss. If it persists or sig
 
 {
 q: "Why do I keep replaying a difficult hospital experience?",
-a: "Distressing experiences can sometimes replay in your thoughts. If these memories are persistent, distressing or interfering with daily life, professional support can help."
+a: "Distressing experiences can sometimes replay in your thoughts. If these memories are persistent or interfere with daily life, professional support can help."
 },
 
 {
 q: "How can I support someone who has lost a loved one?",
-a: "Listen, be present and offer practical help. Avoid pressuring them to recover quickly or telling them how they should grieve."
+a: "Listen, be present and offer practical help. Avoid pressuring them to recover quickly."
 },
 
 {
 q: "When should I talk to a mental-health professional after a loss?",
-a: "Consider professional support when grief becomes overwhelming, persists in a way that interferes with daily life, or you feel unable to cope safely."
+a: "Consider professional support when grief becomes overwhelming, interferes with daily life or you feel unable to cope safely."
 },
 
 {
@@ -478,11 +491,12 @@ q: "How can I process a traumatic hospital experience?",
 a: "Give yourself time, stay connected with supportive people and consider speaking with a mental-health professional, especially if memories, anxiety or sleep problems continue."
 },
 
-/* RECOVERY / SELF CARE */
+
+/* ---------------- RECOVERY ---------------- */
 
 {
 q: "How can I sleep after a stressful hospital shift?",
-a: "Create a quiet wind-down period, reduce stimulating activities before bed and keep your sleep environment comfortable. Persistent sleep problems deserve professional attention."
+a: "Create a quiet wind-down period, reduce stimulating activities before bed and keep your sleep environment comfortable."
 },
 
 {
@@ -492,41 +506,40 @@ a: "After prolonged stress, the body can take time to shift out of a high-alert 
 
 {
 q: "How can I recover after a long shift?",
-a: "Prioritize sleep, hydration, food, gentle movement and time away from work-related stimulation. Ask for help if exhaustion becomes persistent."
+a: "Prioritize sleep, hydration, food, gentle movement and time away from work-related stimulation."
 },
 
 {
 q: "What are simple ways to reduce stress?",
-a: "Try slow breathing, a short walk, stretching, talking to someone you trust, adequate sleep and taking short breaks from stressful activities."
+a: "Try slow breathing, a short walk, stretching, talking to someone you trust, adequate sleep and taking short breaks."
 },
 
 {
 q: "Why is taking breaks important?",
-a: "Short breaks can give your mind and body an opportunity to recover from sustained attention and stress. In healthcare environments, breaks should be taken when safely possible."
+a: "Short breaks can give your mind and body an opportunity to recover from sustained attention and stress."
 },
 
 {
 q: "How can I look after myself while caring for someone else?",
-a: "Maintain basic sleep, food and hydration, accept help from others and make small periods of time for yourself. Caregiving does not mean ignoring your own needs."
+a: "Maintain basic sleep, food and hydration, accept help from others and make small periods of time for yourself."
 },
 
 {
 q: "What should I do when I feel completely drained?",
-a: "Stop and assess what you need immediately: rest, food, water, support or medical attention. If exhaustion is persistent or affecting your functioning, seek professional advice."
+a: "Assess what you need immediately: rest, food, water, support or medical attention. If exhaustion persists, seek professional advice."
 },
 
 {
 q: "When should I seek professional mental-health support?",
-a: "Consider professional support when distress, anxiety, low mood, sleep problems, intrusive memories or exhaustion persist or interfere with daily life. Seeking help is a valid step."
+a: "Consider professional support when distress, anxiety, low mood, sleep problems, intrusive memories or exhaustion persist or interfere with daily life."
 },
 
-/* =========================
-   EMERGENCY / SAFETY
-========================= */
+
+/* ---------------- EMERGENCY ---------------- */
 
 {
 q: "What should I do if I feel like I can't cope anymore?",
-a: "Please do not handle that feeling alone. Contact someone you trust and seek professional mental-health support. If you may be in immediate danger, contact your local emergency service or go to the nearest emergency department."
+a: "Please do not handle that feeling alone. Contact someone you trust and seek professional mental-health support. If you may be in immediate danger, contact emergency services or go to the nearest emergency department."
 },
 
 {
@@ -536,121 +549,948 @@ a: "Move to a safer place and contact someone you trust immediately. If there is
 
 {
 q: "What should I do if I'm having thoughts of hurting myself?",
-a: "Please treat this as important and get human support now. Tell someone you trust, stay with another person if possible, and contact emergency services or a mental-health crisis service. In India, Tele-MANAS can be reached at 14416 or 1800-89-14416."
+a: "Please get human support now. Tell someone you trust, stay with another person if possible, and contact emergency services or a mental-health crisis service. In India, Tele-MANAS can be reached at 14416 or 1800-89-14416."
 },
 
 {
 q: "How can I help someone who says they don't want to live?",
-a: "Stay with them if it is safe, listen without judgment and encourage immediate professional help. If you believe they are in immediate danger, contact emergency services or take them to the nearest emergency department."
+a: "Stay with them if it is safe, listen without judgment and encourage immediate professional help. If they are in immediate danger, contact emergency services or take them to the nearest emergency department."
 },
 
 {
 q: "What should I do if someone is in immediate danger?",
-a: "Contact your local emergency service immediately and stay with the person if it is safe to do so. Do not leave someone alone if you believe they may seriously harm themselves or another person."
+a: "Contact your local emergency service immediately and stay with the person if it is safe to do so."
 }
 
 ];
 
 
-/* =========================
-   QUICK QUESTIONS
-========================= */
+/* ============================================================
+   2. MY BLOODLINK DATA
+============================================================ */
 
-const QUICK = [
-
-"Why should I donate blood?",
-
-"Which blood group can I donate to?",
-
-"Does donating blood cause iron loss?",
-
-"Am I eligible to donate?",
-
-"How can I calm myself when everything feels urgent?",
-
-"What is burnout?",
-
-"How do I deal with anxiety?",
-
-"How can I support someone who is seriously ill?",
-
-"How do I cope with grief?",
-
-"When should I seek professional mental-health support?"
-
-];
+let MY_BLOODLINK = null;
 
 
-/* =========================
-   FIND ANSWER
-========================= */
+async function loadMyBloodLinkData(){
+
+    try{
+
+        const user =
+            JSON.parse(
+                localStorage.getItem(
+                    "bloodlink_user"
+                ) || "null"
+            );
+
+
+        if(!user) return;
+
+
+        MY_BLOODLINK = {
+
+            role:
+                user.role,
+
+            name:
+                user.first_name ||
+                user.username ||
+                "there",
+
+            bloodGroup:null,
+
+            address:null,
+
+            available:null,
+
+            dashboard:{},
+
+            matches:[],
+
+            requests:[],
+
+            notifications:[],
+
+            donations:[]
+
+        };
+
+
+        /* Dashboard */
+
+        if(
+            typeof getDashboard ===
+            "function"
+        ){
+
+            try{
+
+                MY_BLOODLINK.dashboard =
+                    await getDashboard();
+
+            }catch(e){
+
+                console.warn(
+                    "Dashboard context unavailable",
+                    e
+                );
+
+            }
+
+        }
+
+
+        /* Donor profile */
+
+        if(
+            user.role === "DONOR" &&
+            typeof getDonorProfile ===
+            "function"
+        ){
+
+            try{
+
+                const profile =
+                    await getDonorProfile();
+
+
+                MY_BLOODLINK.bloodGroup =
+                    profile.blood_group ||
+                    null;
+
+
+                MY_BLOODLINK.address =
+                    profile.address ||
+                    null;
+
+
+                MY_BLOODLINK.available =
+                    profile.is_available;
+
+            }catch(e){
+
+                console.warn(
+                    "Donor profile unavailable",
+                    e
+                );
+
+            }
+
+        }
+
+
+        /* Donor matches */
+
+        if(
+            user.role === "DONOR" &&
+            typeof getMatches ===
+            "function"
+        ){
+
+            try{
+
+                const matches =
+                    await getMatches();
+
+
+                MY_BLOODLINK.matches =
+                    Array.isArray(matches)
+                    ? matches
+                    : (
+                        matches.results ||
+                        matches.matches ||
+                        []
+                    );
+
+            }catch(e){
+
+                console.warn(
+                    "Matches unavailable",
+                    e
+                );
+
+            }
+
+        }
+
+
+        /* Requester requests */
+
+        if(
+            user.role === "REQUESTER" &&
+            typeof getBloodRequests ===
+            "function"
+        ){
+
+            try{
+
+                const requests =
+                    await getBloodRequests();
+
+
+                MY_BLOODLINK.requests =
+                    Array.isArray(requests)
+                    ? requests
+                    : (
+                        requests.results ||
+                        requests.requests ||
+                        []
+                    );
+
+            }catch(e){
+
+                console.warn(
+                    "Requests unavailable",
+                    e
+                );
+
+            }
+
+        }
+
+
+        /* Notifications */
+
+        if(
+            typeof getNotifications ===
+            "function"
+        ){
+
+            try{
+
+                const notifications =
+                    await getNotifications();
+
+
+                MY_BLOODLINK.notifications =
+                    Array.isArray(
+                        notifications
+                    )
+                    ? notifications
+                    : (
+                        notifications.results ||
+                        notifications.notifications ||
+                        []
+                    );
+
+            }catch(e){
+
+                console.warn(
+                    "Notifications unavailable",
+                    e
+                );
+
+            }
+
+        }
+
+
+        /* Donations */
+
+        if(
+            typeof getDonations ===
+            "function"
+        ){
+
+            try{
+
+                const donations =
+                    await getDonations();
+
+
+                MY_BLOODLINK.donations =
+                    Array.isArray(donations)
+                    ? donations
+                    : (
+                        donations.results ||
+                        donations.donations ||
+                        []
+                    );
+
+            }catch(e){
+
+                console.warn(
+                    "Donations unavailable",
+                    e
+                );
+
+            }
+
+        }
+
+    }catch(error){
+
+        console.warn(
+            "BloodLink context error:",
+            error
+        );
+
+    }
+
+}
+
+
+/* ============================================================
+   3. DATE FORMATTER
+============================================================ */
+
+function formatBLDate(value){
+
+    if(!value){
+
+        return "not available";
+
+    }
+
+
+    const date =
+        new Date(value);
+
+
+    if(
+        Number.isNaN(
+            date.getTime()
+        )
+    ){
+
+        return String(value);
+
+    }
+
+
+    return date.toLocaleString(
+        undefined,
+        {
+            dateStyle:"medium",
+            timeStyle:"short"
+        }
+    );
+
+}
+
+
+/* ============================================================
+   4. PERSONAL DASHBOARD QUESTIONS
+============================================================ */
+
+function dashboardAnswer(question){
+
+    if(!MY_BLOODLINK){
+
+        return null;
+
+    }
+
+
+    const q =
+        question
+        .toLowerCase()
+        .trim();
+
+
+    const data =
+        MY_BLOODLINK;
+
+
+    /* =====================
+       DONOR PROFILE
+    ===================== */
+
+    if(
+        /my blood group|
+         my blood type|
+         what blood group do i have|
+         what is my blood group/x.test(q)
+    ){
+
+        return data.bloodGroup
+
+            ? `Your registered blood group is ${data.bloodGroup}.`
+
+            : "I couldn't find your blood group in your donor profile.";
+
+    }
+
+
+    if(
+        /my address|
+         my location|
+         where am i registered|
+         where is my location/x.test(q)
+    ){
+
+        return data.address
+
+            ? `Your registered location is ${data.address}.`
+
+            : "I couldn't find a saved address in your profile.";
+
+    }
+
+
+    if(
+        /am i available|
+         my availability|
+         available to donate|
+         donor status/x.test(q)
+    ){
+
+        if(
+            data.available === true
+        ){
+
+            return "Your donor status is currently Available.";
+
+        }
+
+
+        if(
+            data.available === false
+        ){
+
+            return "Your donor status is currently Unavailable.";
+
+        }
+
+
+        return "I couldn't find your current availability status.";
+
+    }
+
+
+    /* =====================
+       DONOR MATCHES
+    ===================== */
+
+    if(
+        data.role === "DONOR" &&
+        /how many matches|
+         how many requests|
+         my matches|
+         requests received/x.test(q)
+    ){
+
+        const count =
+            data.matches.length;
+
+
+        return `You currently have ${count} blood request match${count === 1 ? "" : "es"}.`;
+
+    }
+
+
+    if(
+        data.role === "DONOR" &&
+        /which hospital|
+         requesting hospital|
+         hospital needs/x.test(q) &&
+        data.matches.length
+    ){
+
+        const match =
+            data.matches[0];
+
+        const request =
+            match.request || {};
+
+
+        return `Your latest matched request is from ${request.hospital_name || "the hospital"}${match.distance_km != null ? `, approximately ${match.distance_km} km away` : ""}.`;
+
+    }
+
+
+    if(
+        data.role === "DONOR" &&
+        /how far|
+         distance|
+         how many km|
+         near/x.test(q) &&
+        data.matches.length
+    ){
+
+        const distance =
+            data.matches[0]
+                .distance_km;
+
+
+        return distance != null
+
+            ? `Your latest matched hospital is approximately ${distance} km away.`
+
+            : "I don't have a distance value for your latest match.";
+
+    }
+
+
+    if(
+        data.role === "DONOR" &&
+        /how many units|
+         units needed|
+         units required/x.test(q) &&
+        data.matches.length
+    ){
+
+        const request =
+            data.matches[0]
+                .request || {};
+
+
+        return `The latest matched request requires ${request.units_required ?? "an unspecified number"} unit${request.units_required == 1 ? "" : "s"} of ${request.blood_group || data.bloodGroup || "blood"}.`;
+
+    }
+
+
+    if(
+        data.role === "DONOR" &&
+        /blood group requested|
+         what blood.*needed|
+         what group.*needed/x.test(q) &&
+        data.matches.length
+    ){
+
+        const request =
+            data.matches[0]
+                .request || {};
+
+
+        return `The latest matched request is for ${request.blood_group || "an unspecified blood group"} blood.`;
+
+    }
+
+
+    if(
+        data.role === "DONOR" &&
+        /match status|
+         status of my match|
+         accepted.*match|
+         declined.*match|
+         notified/x.test(q) &&
+        data.matches.length
+    ){
+
+        return `Your latest match status is ${data.matches[0].status || "not available"}.`;
+
+    }
+
+
+    if(
+        data.role === "DONOR" &&
+        /request status|
+         is the request open|
+         request still open/x.test(q) &&
+        data.matches.length
+    ){
+
+        const request =
+            data.matches[0]
+                .request || {};
+
+
+        return `The latest request status is ${request.status || "not available"}.`;
+
+    }
+
+
+    if(
+        data.role === "DONOR" &&
+        /urgency|
+         how urgent/x.test(q) &&
+        data.matches.length
+    ){
+
+        const request =
+            data.matches[0]
+                .request || {};
+
+
+        return `The latest matched request has ${request.urgency || "unspecified"} urgency.`;
+
+    }
+
+
+    if(
+        data.role === "DONOR" &&
+        /when.*request|
+         request.*date|
+         created.*request|
+         date.*request/x.test(q) &&
+        data.matches.length
+    ){
+
+        const request =
+            data.matches[0]
+                .request || {};
+
+
+        return `The latest request was created on ${formatBLDate(request.created_at)}.`;
+
+    }
+
+
+    /* =====================
+       REQUESTER
+    ===================== */
+
+    if(
+        data.role === "REQUESTER" &&
+        /how many requests|
+         my requests|
+         requests have i made|
+         number of requests/x.test(q)
+    ){
+
+        const count =
+            data.requests.length;
+
+
+        return `You currently have ${count} blood request${count === 1 ? "" : "s"} in BloodLink.`;
+
+    }
+
+
+    if(
+        data.role === "REQUESTER" &&
+        /active request|
+         active blood request|
+         open request/x.test(q)
+    ){
+
+        const active =
+            data.requests.filter(
+                request =>
+                    [
+                        "OPEN",
+                        "PARTIALLY_FULFILLED"
+                    ].includes(
+                        String(
+                            request.status || ""
+                        ).toUpperCase()
+                    )
+            );
+
+
+        if(!active.length){
+
+            return "You don't currently have an open or partially fulfilled request.";
+
+        }
+
+
+        const request =
+            active[0];
+
+
+        return `Your active request is for ${request.blood_group || "unspecified"} blood at ${request.hospital_name || "the selected hospital"}, for ${request.units_required ?? "an unspecified number"} unit${request.units_required == 1 ? "" : "s"}.`;
+
+    }
+
+
+    if(
+        data.role === "REQUESTER" &&
+        /my requested blood|
+         blood group.*request|
+         what blood.*request/x.test(q)
+    ){
+
+        const request =
+            data.requests[0];
+
+
+        return request
+
+            ? `Your latest blood request is for ${request.blood_group || "an unspecified blood group"}.`
+
+            : "You don't have a blood request recorded yet.";
+
+    }
+
+
+    if(
+        data.role === "REQUESTER" &&
+        /which hospital|
+         my hospital|
+         hospital.*request/x.test(q)
+    ){
+
+        const request =
+            data.requests[0];
+
+
+        return request
+
+            ? `Your latest request is associated with ${request.hospital_name || "the selected hospital"}${request.hospital_address ? `, ${request.hospital_address}` : ""}.`
+
+            : "You don't have a blood request recorded yet.";
+
+    }
+
+
+    if(
+        data.role === "REQUESTER" &&
+        /how many units|
+         units.*request|
+         units required/x.test(q)
+    ){
+
+        const request =
+            data.requests[0];
+
+
+        return request
+
+            ? `Your latest request requires ${request.units_required ?? "an unspecified number"} unit${request.units_required == 1 ? "" : "s"} of blood.`
+
+            : "You don't have a blood request recorded yet.";
+
+    }
+
+
+    if(
+        data.role === "REQUESTER" &&
+        /fulfilled|
+         how many.*fulfilled/x.test(q)
+    ){
+
+        const request =
+            data.requests[0];
+
+
+        return request
+
+            ? `Your latest request has ${request.units_fulfilled ?? 0} unit${request.units_fulfilled == 1 ? "" : "s"} fulfilled out of ${request.units_required ?? "the requested total"}.`
+
+            : "You don't have a blood request recorded yet.";
+
+    }
+
+
+    if(
+        data.role === "REQUESTER" &&
+        /request status|
+         is my request open|
+         status of my request/x.test(q)
+    ){
+
+        const request =
+            data.requests[0];
+
+
+        return request
+
+            ? `Your latest request status is ${request.status || "not available"}.`
+
+            : "You don't have a blood request recorded yet.";
+
+    }
+
+
+    if(
+        data.role === "REQUESTER" &&
+        /urgency|
+         how urgent/x.test(q)
+    ){
+
+        const request =
+            data.requests[0];
+
+
+        return request
+
+            ? `The urgency of your latest request is ${request.urgency || "not specified"}.`
+
+            : "You don't have a blood request recorded yet.";
+
+    }
+
+
+    /* =====================
+       COMMON USER DATA
+    ===================== */
+
+    if(
+        /unread notifications|
+         unread notification|
+         notifications/x.test(q)
+    ){
+
+        const count =
+            data.dashboard.unread_notifications ??
+            data.notifications.filter(
+                notification =>
+                    !notification.is_read
+            ).length;
+
+
+        return `You currently have ${count} unread notification${count === 1 ? "" : "s"}.`;
+
+    }
+
+
+    if(
+        /donation history|
+         my donations|
+         how many times.*donat|
+         donations/x.test(q)
+    ){
+
+        const count =
+            data.donations.length;
+
+
+        return `I found ${count} donation record${count === 1 ? "" : "s"} in your BloodLink history.`;
+
+    }
+
+
+    if(
+        /my dashboard|
+         dashboard stats|
+         my statistics|
+         my stats/x.test(q)
+    ){
+
+        const dashboard =
+            data.dashboard || {};
+
+
+        if(
+            data.role === "DONOR"
+        ){
+
+            const matches =
+                dashboard.total_matches ??
+                data.matches.length;
+
+
+            const notifications =
+                dashboard.unread_notifications ??
+                0;
+
+
+            return `Your BloodLink dashboard shows ${matches} total match${matches === 1 ? "" : "es"} and ${notifications} unread notification${notifications === 1 ? "" : "s"}.`;
+
+        }
+
+
+        const requests =
+            dashboard.total_requests ??
+            data.requests.length;
+
+
+        return `Your BloodLink dashboard shows ${requests} total request${requests === 1 ? "" : "s"}, ${dashboard.active_requests ?? 0} active and ${dashboard.fulfilled_requests ?? 0} fulfilled.`;
+
+    }
+
+
+    return null;
+
+}
+
+
+/* ============================================================
+   5. FAQ MATCHING
+============================================================ */
 
 function findAnswer(text){
 
-    text = text
+    text =
+        text
         .toLowerCase()
-        .replace(/[^a-z0-9\s-]/g," ");
+        .replace(
+            /[^a-z0-9\s-]/g,
+            " "
+        );
+
 
     let best = null;
     let bestScore = 0;
+
 
     FAQ.forEach(item => {
 
         let score = 0;
 
-        const words =
-            item.q
+
+        item.q
             .toLowerCase()
-            .split(/\s+/);
+            .split(/\s+/)
+            .forEach(word => {
 
-        words.forEach(word => {
+                if(
+                    word.length > 3 &&
+                    text.includes(word)
+                ){
 
-            if(
-                word.length > 3 &&
-                text.includes(word)
-            ){
-                score++;
-            }
+                    score++;
 
-        });
+                }
 
-        if(score > bestScore){
+            });
 
-            bestScore = score;
-            best = item;
+
+        if(
+            score > bestScore
+        ){
+
+            bestScore =
+                score;
+
+            best =
+                item;
 
         }
 
     });
+
 
     return best;
 
 }
 
 
-/* =========================
-   MESSAGE
-========================= */
+/* ============================================================
+   6. MESSAGE UI
+============================================================ */
 
-function addMessage(chat,text,type){
+function addMessage(
+    chat,
+    text,
+    type
+){
 
     const row =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     row.className =
         `bla-message ${type}`;
 
+
     const bubble =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     bubble.className =
         "bla-bubble";
 
-    bubble.textContent = text;
 
-    row.appendChild(bubble);
+    bubble.textContent =
+        text;
 
-    chat.appendChild(row);
+
+    row.appendChild(
+        bubble
+    );
+
+
+    chat.appendChild(
+        row
+    );
+
 
     chat.scrollTop =
         chat.scrollHeight;
@@ -658,9 +1498,9 @@ function addMessage(chat,text,type){
 }
 
 
-/* =========================
-   INITIALIZE
-========================= */
+/* ============================================================
+   7. INITIALIZE
+============================================================ */
 
 function init(){
 
@@ -669,14 +1509,23 @@ function init(){
             "bloodlinkAssistant"
         )
     ){
+
         return;
+
     }
 
 
-    /* CSS */
+    loadMyBloodLinkData();
+
+
+    /* =====================
+       CSS
+    ===================== */
 
     const style =
-        document.createElement("style");
+        document.createElement(
+            "style"
+        );
 
 
     style.textContent = `
@@ -691,7 +1540,9 @@ function init(){
 
     z-index:99999;
 
-    font-family:"DM Sans",sans-serif;
+    font-family:
+        "DM Sans",
+        sans-serif;
 
 }
 
@@ -710,7 +1561,8 @@ function init(){
     font-weight:800;
 
     box-shadow:
-        0 10px 30px rgba(0,0,0,.18);
+        0 10px 30px
+        rgba(0,0,0,.18);
 
     cursor:pointer;
 
@@ -740,7 +1592,8 @@ function init(){
     border-radius:20px;
 
     box-shadow:
-        0 18px 55px rgba(0,0,0,.18);
+        0 18px 55px
+        rgba(0,0,0,.18);
 
     overflow:hidden;
 
@@ -772,7 +1625,9 @@ function init(){
 
 .bla-title{
 
-    font-family:"Manrope",sans-serif;
+    font-family:
+        "Manrope",
+        sans-serif;
 
     font-weight:800;
 
@@ -993,13 +1848,20 @@ function init(){
 
 `;
 
-    document.head.appendChild(style);
+    document.head.appendChild(
+        style
+    );
 
 
-    /* HTML */
+    /* =====================
+       HTML
+    ===================== */
 
     const root =
-        document.createElement("div");
+        document.createElement(
+            "div"
+        );
+
 
     root.id =
         "bloodlinkAssistant";
@@ -1034,7 +1896,9 @@ function init(){
             class="bla-close"
             id="blaClose"
         >
+
             ×
+
         </button>
 
     </div>
@@ -1057,8 +1921,9 @@ function init(){
         <input
             id="blaInput"
             class="bla-input"
-            placeholder="Ask anything about donation..."
+            placeholder="Ask anything about BloodLink..."
         >
+
 
         <button
             id="blaSend"
@@ -1096,7 +1961,9 @@ function init(){
 `;
 
 
-    document.body.appendChild(root);
+    document.body.appendChild(
+        root
+    );
 
 
     const panel =
@@ -1104,10 +1971,12 @@ function init(){
             "blaPanel"
         );
 
+
     const chat =
         document.getElementById(
             "blaChat"
         );
+
 
     const input =
         document.getElementById(
@@ -1115,18 +1984,47 @@ function init(){
         );
 
 
+    /* =====================
+       WELCOME
+    ===================== */
+
     addMessage(
 
         chat,
 
-        "Hi! 👋 I'm BloodLink Assistant. I can answer questions about blood donation, blood groups, iron, eligibility, hospital stress, anxiety, burnout, grief and general wellbeing.",
+        "Hi! 👋 I'm BloodLink Assistant. I can answer blood-donation questions, wellbeing questions, and questions about your BloodLink dashboard.",
 
         "bot"
 
     );
 
 
-    /* QUICK QUESTIONS */
+    /* =====================
+       QUICK QUESTIONS
+    ===================== */
+
+    const QUICK = [
+
+        "Why should I donate blood?",
+
+        "Which blood group can I donate to?",
+
+        "Does donating blood cause iron loss?",
+
+        "Am I eligible to donate?",
+
+        "What is burnout?",
+
+        "How do I deal with anxiety?",
+
+        "What are my notifications?",
+
+        "What is my blood group?",
+
+        "What is my current status?"
+
+    ];
+
 
     const quick =
         document.getElementById(
@@ -1134,35 +2032,58 @@ function init(){
         );
 
 
-    QUICK.forEach(question => {
+    QUICK.forEach(
+        question => {
 
-        const button =
-            document.createElement(
-                "button"
+            const button =
+                document.createElement(
+                    "button"
+                );
+
+
+            button.className =
+                "bla-chip";
+
+
+            button.textContent =
+                question;
+
+
+            button.onclick =
+                () => {
+
+                    sendMessage(
+                        question
+                    );
+
+                };
+
+
+            quick.appendChild(
+                button
             );
 
-        button.className =
-            "bla-chip";
-
-        button.textContent =
-            question;
-
-        button.onclick =
-            () => sendMessage(question);
-
-        quick.appendChild(button);
-
-    });
+        }
+    );
 
 
-    /* SEND */
+    /* =====================
+       SEND MESSAGE
+    ===================== */
 
-    function sendMessage(question){
+    function sendMessage(
+        question
+    ){
 
         question =
             question.trim();
 
-        if(!question) return;
+
+        if(!question){
+
+            return;
+
+        }
 
 
         addMessage(
@@ -1172,52 +2093,87 @@ function init(){
         );
 
 
-        const result =
-            findAnswer(question);
+        /*
+         * FIRST:
+         * Check personal BloodLink data.
+         */
+
+        let resultText =
+            dashboardAnswer(
+                question
+            );
 
 
-        setTimeout(() => {
+        /*
+         * SECOND:
+         * Check normal FAQ.
+         */
+
+        if(!resultText){
+
+            const result =
+                findAnswer(
+                    question
+                );
+
 
             if(result){
 
-                addMessage(
-                    chat,
-                    result.a,
-                    "bot"
-                );
-
-            }
-            else{
-
-                addMessage(
-
-                    chat,
-
-                    "I can help with common questions about blood donation, blood groups, iron, eligibility, hospital stress, anxiety, burnout, grief and recovery. For personal medical advice, please speak with a qualified healthcare professional.",
-
-                    "bot"
-
-                );
+                resultText =
+                    result.a;
 
             }
 
-        },150);
+        }
 
 
-        input.value = "";
+        /*
+         * FALLBACK
+         */
+
+        if(!resultText){
+
+            resultText =
+                "I can help with blood donation, blood groups, iron, eligibility, hospital stress, anxiety, burnout, grief, recovery and your personal BloodLink dashboard. Try asking something like \"What is my blood group?\" or \"How many matches do I have?\"";
+
+        }
+
+
+        setTimeout(
+            () => {
+
+                addMessage(
+                    chat,
+                    resultText,
+                    "bot"
+                );
+
+            },
+            150
+        );
+
+
+        input.value =
+            "";
 
     }
 
 
-    /* OPEN */
+    /* =====================
+       OPEN
+    ===================== */
 
     document
-        .getElementById("blaToggle")
-        .onclick = () => {
+        .getElementById(
+            "blaToggle"
+        )
+        .onclick =
+        () => {
 
             panel.classList.toggle(
                 "open"
             );
+
 
             if(
                 panel.classList.contains(
@@ -1232,11 +2188,16 @@ function init(){
         };
 
 
-    /* CLOSE */
+    /* =====================
+       CLOSE
+    ===================== */
 
     document
-        .getElementById("blaClose")
-        .onclick = () => {
+        .getElementById(
+            "blaClose"
+        )
+        .onclick =
+        () => {
 
             panel.classList.remove(
                 "open"
@@ -1245,11 +2206,16 @@ function init(){
         };
 
 
-    /* SEND BUTTON */
+    /* =====================
+       SEND BUTTON
+    ===================== */
 
     document
-        .getElementById("blaSend")
-        .onclick = () => {
+        .getElementById(
+            "blaSend"
+        )
+        .onclick =
+        () => {
 
             sendMessage(
                 input.value
@@ -1258,14 +2224,17 @@ function init(){
         };
 
 
-    /* ENTER */
+    /* =====================
+       ENTER KEY
+    ===================== */
 
     input.addEventListener(
         "keydown",
         event => {
 
             if(
-                event.key === "Enter"
+                event.key ===
+                "Enter"
             ){
 
                 event.preventDefault();
@@ -1282,12 +2251,13 @@ function init(){
 }
 
 
-/* =========================
+/* ============================================================
    START
-========================= */
+============================================================ */
 
 if(
-    document.readyState === "loading"
+    document.readyState ===
+    "loading"
 ){
 
     document.addEventListener(
