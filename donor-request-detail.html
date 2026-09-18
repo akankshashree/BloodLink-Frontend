@@ -1,1623 +1,2497 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Donor Dashboard | BloodLink</title>
 
-<title>Request Details | BloodLink</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
 
-<link
-href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@600;700;800&display=swap"
-rel="stylesheet">
 
-<link
-href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-rel="stylesheet">
-
-<link
-href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-rel="stylesheet">
+<script>
+(function(){
+    const saved = localStorage.getItem("bloodlink_theme");
+    const theme = saved === "dark" ? "dark" : "light";
+    document.documentElement.setAttribute("data-theme", theme);
+})();
+</script>
 
 <script src="/static/js/api.js"></script>
 
-
 <style>
+:root {
+    --red:#c81d25;
+    --red-dark:#a9151d;
+    --soft-red:#fff1f2;
+    --dark:#171717;
+    --muted:#6b7280;
+    --border:#eeeeee;
+    --background:#f8f8f8;
+    --green:#16803c;
+    --soft-green:#ecfdf3;
+}
+
+* { box-sizing:border-box; }
+
+
+
+body {
+    margin:0;
+    background:var(--background);
+    color:var(--dark);
+    font-family:"DM Sans",sans-serif;
+}
+
+h1,h2,h3,h4,h5 {
+    font-family:"Manrope",sans-serif;
+}
+
+.navbar {
+    background:white;
+    border-bottom:1px solid var(--border);
+    padding:14px 0;
+}
+
+.brand {
+    display:flex;
+    align-items:center;
+    gap:10px;
+    text-decoration:none;
+    color:var(--dark);
+    font-family:"Manrope",sans-serif;
+    font-size:1.4rem;
+    font-weight:800;
+}
+
+.brand-icon {
+    width:42px;
+    height:42px;
+    border-radius:11px;
+    background:var(--red);
+    position:relative;
+    flex-shrink:0;
+    box-shadow:0 5px 15px rgba(200,29,37,.20);
+}
+
+.brand-icon::before {
+    content:"";
+    position:absolute;
+    width:9px;
+    height:27px;
+    background:white;
+    border-radius:3px;
+    left:16.5px;
+    top:7.5px;
+}
+
+.brand-icon::after {
+    content:"";
+    position:absolute;
+    width:27px;
+    height:9px;
+    background:white;
+    border-radius:3px;
+    left:7.5px;
+    top:16.5px;
+}
+
+.nav-link-custom {
+    color:#555;
+    text-decoration:none;
+    font-weight:600;
+    font-size:.9rem;
+}
+
+.nav-link-custom:hover {
+    color:var(--red);
+}
+
+.dashboard {
+    padding:45px 0 70px;
+}
+
+.welcome-card {
+    background:linear-gradient(120deg,#9f1239,#c81d25 55%,#e33b44);
+    border-radius:25px;
+    color:white;
+    padding:42px;
+    position:relative;
+    overflow:hidden;
+    box-shadow:0 15px 40px rgba(200,29,37,.16);
+    margin-bottom:30px;
+}
+
+.welcome-card::after {
+    content:"+";
+    position:absolute;
+    right:55px;
+    bottom:-55px;
+    font-size:15rem;
+    font-weight:800;
+    line-height:1;
+    opacity:.08;
+    transform:rotate(-12deg);
+}
+
+.welcome-eyebrow {
+    text-transform:uppercase;
+    letter-spacing:1.5px;
+    font-size:.75rem;
+    font-weight:800;
+    color:#ffd9dc;
+}
+
+.welcome-card h1 {
+    font-size:2.8rem;
+    font-weight:800;
+    margin:7px 0 10px;
+}
+
+.welcome-card p {
+    color:#ffe8e9;
+    max-width:650px;
+    line-height:1.7;
+    margin-bottom:25px;
+}
+
+.profile-pill {
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    background:rgba(255,255,255,.15);
+    border:1px solid rgba(255,255,255,.2);
+    padding:9px 15px;
+    border-radius:50px;
+    font-weight:700;
+}
+
+.blood-pill {
+    display:inline-flex;
+    align-items:center;
+    background:white;
+    color:var(--red);
+    padding:10px 16px;
+    border-radius:50px;
+    font-weight:800;
+    margin-left:8px;
+}
+
+.primary-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:white;
+    color:var(--red);
+    border-radius:10px;
+    padding:12px 18px;
+    text-decoration:none;
+    font-weight:800;
+    margin-top:18px;
+    margin-right:8px;
+}
+
+.primary-btn:hover {
+    color:var(--red-dark);
+    transform:translateY(-1px);
+}
+
+.secondary-btn {
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:transparent;
+    color:white;
+    border:1px solid rgba(255,255,255,.5);
+    border-radius:10px;
+    padding:11px 18px;
+    text-decoration:none;
+    font-weight:800;
+    margin-top:18px;
+}
+
+.secondary-btn:hover {
+    color:white;
+    background:rgba(255,255,255,.08);
+}
+
+.stat-card {
+    background:white;
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:23px;
+    height:100%;
+    transition:.2s;
+}
+
+.stat-card:hover {
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.05);
+}
+
+.stat-icon {
+    width:44px;
+    height:44px;
+    border-radius:12px;
+    background:var(--soft-red);
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.15rem;
+    margin-bottom:15px;
+}
+
+.stat-number {
+    font-family:"Manrope",sans-serif;
+    font-size:1.9rem;
+    font-weight:800;
+}
+
+.stat-label {
+    color:var(--muted);
+    font-size:.85rem;
+    margin-top:2px;
+}
+
+.section-title {
+    font-size:1.45rem;
+    font-weight:800;
+    margin-bottom:5px;
+}
+
+.section-subtitle {
+    color:var(--muted);
+    font-size:.9rem;
+    margin-bottom:25px;
+}
+
+.status-card {
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:28px;
+    height:100%;
+}
+
+.status-header {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:22px;
+}
+
+.status-badge {
+    display:inline-flex;
+    align-items:center;
+    gap:6px;
+    padding:7px 11px;
+    border-radius:50px;
+    font-size:.75rem;
+    font-weight:800;
+}
+
+.status-ready {
+    background:var(--soft-green);
+    color:var(--green);
+}
+
+.status-pending {
+    background:#fff7ed;
+    color:#c2410c;
+}
+
+.status-neutral {
+    background:#f4f4f5;
+    color:#666;
+}
+
+.status-row {
+    display:flex;
+    align-items:center;
+    gap:13px;
+    padding:13px 0;
+    border-bottom:1px solid #f0f0f0;
+}
+
+.status-row:last-child {
+    border-bottom:none;
+}
+
+.status-row-icon {
+    width:36px;
+    height:36px;
+    border-radius:10px;
+    background:#f7f7f7;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    color:#666;
+}
+
+.status-row strong {
+    display:block;
+    font-size:.9rem;
+}
+
+.status-row small {
+    color:var(--muted);
+}
+
+.action-card {
+    display:flex;
+    align-items:center;
+    gap:15px;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:16px;
+    padding:18px;
+    color:var(--dark);
+    text-decoration:none;
+    transition:.2s;
+}
+
+.action-card:hover {
+    border-color:#f0a0a4;
+    color:var(--red);
+    transform:translateY(-2px);
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+.action-icon {
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    background:var(--soft-red);
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.15rem;
+    flex-shrink:0;
+}
+
+.action-card strong {
+    display:block;
+    font-size:.9rem;
+}
+
+.action-card small {
+    color:var(--muted);
+}
+
+.action-arrow {
+    margin-left:auto;
+    color:#aaa;
+}
+
+.info-card {
+    background:#181818;
+    color:white;
+    border-radius:20px;
+    padding:30px;
+    height:100%;
+}
+
+.info-card h4 {
+    font-weight:800;
+}
+
+.info-card p {
+    color:#bdbdbd;
+    line-height:1.7;
+}
+
+footer {
+    border-top:1px solid var(--border);
+    background:white;
+    padding:25px 0;
+    color:#888;
+    font-size:.85rem;
+}
+
+@media(max-width:767px) {
+    .dashboard { padding:25px 0 50px; }
+
+    .welcome-card { padding:30px 25px; }
+
+    .welcome-card h1 { font-size:2.15rem; }
+
+    .welcome-card::after { font-size:8rem; }
+
+    .blood-pill {
+        margin-left:0;
+        margin-top:8px;
+    }
+}
+
+/* =========================
+   BLOODLINK DARK MODE
+========================= */
 
 :root{
---red:#c81d25;
---red-dark:#a9151d;
---soft-red:#fff1f2;
---dark:#171717;
---muted:#6b7280;
---border:#eeeeee;
---background:#f8f8f8;
---green:#16803c;
---soft-green:#ecfdf3
+    --card:#ffffff;
+    --surface:#ffffff;
+    --text:#171717;
+    --text-soft:#555555;
+    --line:#eeeeee;
+    --input:#ffffff;
 }
 
-*{
-box-sizing:border-box
+html[data-theme="dark"]{
+    --background:#0f1115;
+    --dark:#f5f5f5;
+    --muted:#aeb4bf;
+    --border:#292d35;
+    --card:#171a20;
+    --surface:#1c2027;
+    --text:#f5f5f5;
+    --text-soft:#c5cad3;
+    --input:#14171c;
+    --soft-red:#35171b;
+    --soft-green:#10281b;
+    --soft-orange:#2b2115;
+    --soft-blue:#142039;
 }
 
-body{
-margin:0;
-background:var(--background);
-color:var(--dark);
-font-family:"DM Sans",sans-serif
+html[data-theme="dark"] body{
+    background:var(--background);
+    color:var(--text);
 }
 
-h1,h2,h3,h4,h5{
-font-family:"Manrope",sans-serif
+html[data-theme="dark"] .navbar,
+html[data-theme="dark"] footer,
+html[data-theme="dark"] .stat-card,
+html[data-theme="dark"] .status-card,
+html[data-theme="dark"] .action-card,
+html[data-theme="dark"] .status-panel,
+html[data-theme="dark"] .help-card{
+    background:var(--card);
+    border-color:var(--border);
+    color:var(--text);
 }
 
-
-/* NAVBAR */
-
-.navbar{
-background:white;
-border-bottom:1px solid var(--border);
-padding:14px 0
+html[data-theme="dark"] .brand,
+html[data-theme="dark"] .nav-link-custom,
+html[data-theme="dark"] .logout-btn,
+html[data-theme="dark"] .action-card{
+    color:var(--text);
 }
 
-.brand{
-display:flex;
-align-items:center;
-gap:10px;
-text-decoration:none;
-color:var(--dark);
-font-family:"Manrope";
-font-size:1.4rem;
-font-weight:800
+html[data-theme="dark"] .nav-link-custom:hover,
+html[data-theme="dark"] .logout-btn:hover,
+html[data-theme="dark"] .action-card:hover{
+    color:#ff6870;
 }
 
-.brand-icon{
-width:42px;
-height:42px;
-border-radius:11px;
-background:var(--red);
-position:relative;
-display:inline-block
+html[data-theme="dark"] .nav-btn{
+    background:var(--surface);
+    border-color:var(--border);
+    color:var(--text);
 }
 
-.brand-icon:before{
-content:"";
-position:absolute;
-width:9px;
-height:27px;
-background:white;
-border-radius:3px;
-left:16.5px;
-top:7.5px
+html[data-theme="dark"] .nav-btn:hover{
+    border-color:var(--red);
+    color:#ff7a80;
 }
 
-.brand-icon:after{
-content:"";
-position:absolute;
-width:27px;
-height:9px;
-background:white;
-border-radius:3px;
-left:7.5px;
-top:16.5px
+html[data-theme="dark"] .section-subtitle,
+html[data-theme="dark"] .stat-label,
+html[data-theme="dark"] .action-card p,
+html[data-theme="dark"] .action-card small,
+html[data-theme="dark"] .help-item small,
+html[data-theme="dark"] .status-row small{
+    color:var(--muted) !important;
 }
 
-.nav-link-custom{
-color:#555;
-text-decoration:none;
-font-weight:600;
-font-size:.9rem
+html[data-theme="dark"] .status-row,
+html[data-theme="dark"] .help-item,
+html[data-theme="dark"] .border-top{
+    border-color:var(--border) !important;
 }
 
-.nav-link-custom:hover{
-color:var(--red)
+html[data-theme="dark"] .status-row-icon,
+html[data-theme="dark"] .help-icon,
+html[data-theme="dark"] .flow-item{
+    background:#232730;
+    color:#c9ced7;
 }
 
-
-/* PAGE */
-
-.page{
-padding:42px 0 70px
+html[data-theme="dark"] .flow-item.active{
+    background:var(--soft-red);
+    color:#ff7a80;
 }
 
-.back-link{
-color:#666;
-text-decoration:none;
-font-size:.82rem;
-font-weight:700
+html[data-theme="dark"] .bg-light{
+    background:#232730 !important;
 }
 
-.back-link:hover{
-color:var(--red)
+html[data-theme="dark"] .text-muted{
+    color:var(--muted) !important;
 }
 
-.header-card,
-.section-card{
-background:white;
-border:1px solid var(--border);
-border-radius:20px;
-padding:27px
+html[data-theme="dark"] .btn-light{
+    background:#232730 !important;
+    border-color:#363b45 !important;
+    color:#f5f5f5 !important;
 }
 
-.header-card{
-border-radius:22px
+html[data-theme="dark"] .btn-light:hover{
+    background:#2b3039 !important;
 }
 
-
-/* HEADER */
-
-.blood-circle{
-width:70px;
-height:70px;
-border-radius:19px;
-background:var(--soft-red);
-color:var(--red);
-display:flex;
-align-items:center;
-justify-content:center;
-font-family:"Manrope";
-font-size:1.1rem;
-font-weight:800;
-flex-shrink:0
+html[data-theme="dark"] .info-card,
+html[data-theme="dark"] .privacy-card{
+    background:#090a0c;
 }
 
-.request-title{
-font-size:1.7rem;
-font-weight:800;
-margin-bottom:3px
+html[data-theme="dark"] footer{
+    color:#9da3ae;
 }
 
-.muted{
-color:var(--muted)
+html[data-theme="dark"] .notification-item{
+    background:#1c2027 !important;
+    border-color:#2d323b !important;
 }
 
-
-/* BADGES */
-
-.status,
-.urgency,
-.match-status{
-display:inline-flex;
-align-items:center;
-gap:5px;
-border-radius:50px;
-font-weight:800
+html[data-theme="dark"] .notification-item.unread{
+    background:#2a171a !important;
+    border-color:#5b252b !important;
 }
 
-.status{
-padding:7px 11px;
-font-size:.7rem
+html[data-theme="dark"] .notification-item p,
+html[data-theme="dark"] .notification-item small{
+    color:#c7ccd5 !important;
 }
 
-.status-open{
-background:#fff7ed;
-color:#c2410c
+/* Theme toggle */
+.theme-toggle{
+    border:1px solid #e5e5e5;
+    background:white;
+    color:#444;
+    border-radius:10px;
+    padding:9px 12px;
+    display:inline-flex;
+    align-items:center;
+    gap:7px;
+    font-weight:700;
+    font-size:.85rem;
+    cursor:pointer;
+    transition:.2s;
 }
 
-.status-partial{
-background:#eff6ff;
-color:#1d4ed8
+.theme-toggle:hover{
+    border-color:var(--red);
+    color:var(--red);
 }
 
-.status-fulfilled{
-background:var(--soft-green);
-color:var(--green)
+html[data-theme="dark"] .theme-toggle{
+    background:#1c2027;
+    border-color:#343943;
+    color:#f5f5f5;
 }
 
-.status-other{
-background:#f4f4f5;
-color:#71717a
+html[data-theme="dark"] .theme-toggle:hover{
+    color:#ff7a80;
+    border-color:#c81d25;
 }
 
-.urgency{
-padding:7px 11px;
-font-size:.7rem
-}
-
-.critical{
-background:#fee2e2;
-color:#b91c1c
-}
-
-.high{
-background:#ffedd5;
-color:#c2410c
-}
-
-.medium{
-background:#fef3c7;
-color:#92400e
-}
-
-.low{
-background:#f3f4f6;
-color:#4b5563
+@media(max-width:575px){
+    .theme-label{display:none;}
+    .theme-toggle{padding:9px 10px;}
 }
 
 
-/* INFORMATION */
-
-.section-title{
-font-size:1.1rem;
-font-weight:800
+/* =========================
+   COMMUNITY REVIEWS
+========================= */
+.reviews-section{
+    margin-top:0;
 }
 
-.section-subtitle{
-color:var(--muted);
-font-size:.8rem
+.reviews-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:22px;
 }
 
-.info-row{
-display:flex;
-gap:14px;
-padding:14px 0;
-border-bottom:1px solid #f1f1f1
+.reviews-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:18px;
 }
 
-.info-row:last-child{
-border-bottom:none
+.review-card{
+    background:var(--card, #fff);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+    transition:.2s;
 }
 
-.info-icon{
-width:38px;
-height:38px;
-border-radius:10px;
-background:#f7f7f7;
-display:flex;
-align-items:center;
-justify-content:center;
-color:var(--red);
-flex-shrink:0
+.review-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
 }
 
-.info-label{
-color:#888;
-font-size:.7rem;
-text-transform:uppercase;
-letter-spacing:.6px;
-font-weight:800
+.review-top{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    margin-bottom:15px;
 }
 
-.info-value{
-font-weight:700;
-font-size:.88rem;
-margin-top:2px
+.review-avatar{
+    width:43px;
+    height:43px;
+    border-radius:50%;
+    background:var(--soft-red);
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:"Manrope",sans-serif;
+    font-weight:800;
+}
+
+.review-name{
+    font-weight:800;
+    font-size:.9rem;
+}
+
+.review-role{
+    color:var(--muted);
+    font-size:.75rem;
+    margin-top:2px;
+}
+
+.review-stars{
+    color:#f59e0b;
+    letter-spacing:1px;
+    font-size:.9rem;
+    margin-bottom:12px;
+}
+
+.review-text{
+    color:var(--text-soft, #555);
+    line-height:1.65;
+    font-size:.88rem;
+    margin:0;
+}
+
+.review-date{
+    display:block;
+    color:var(--muted);
+    font-size:.72rem;
+    margin-top:15px;
+}
+
+.review-btn{
+    border:0;
+    background:var(--red);
+    color:white;
+    border-radius:10px;
+    padding:11px 16px;
+    font-weight:800;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.review-btn:hover{
+    background:var(--red-dark);
+    transform:translateY(-1px);
+}
+
+.review-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.55);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    padding:20px;
+    z-index:2000;
+}
+
+.review-modal.show{
+    display:flex;
+}
+
+.review-dialog{
+    width:min(500px,100%);
+    background:var(--card,#fff);
+    color:var(--text,#171717);
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:26px;
+    box-shadow:0 25px 70px rgba(0,0,0,.25);
+}
+
+.review-dialog-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:20px;
+}
+
+.review-close{
+    border:0;
+    background:transparent;
+    color:var(--muted);
+    font-size:1.4rem;
+    cursor:pointer;
+}
+
+.review-form-label{
+    display:block;
+    font-weight:700;
+    font-size:.84rem;
+    margin-bottom:7px;
+}
+
+.review-input,
+.review-textarea{
+    width:100%;
+    border:1px solid var(--border);
+    background:var(--input,#fff);
+    color:var(--text,#171717);
+    border-radius:10px;
+    padding:11px 12px;
+    outline:none;
+    font-family:"DM Sans",sans-serif;
+}
+
+.review-input:focus,
+.review-textarea:focus{
+    border-color:var(--red);
+    box-shadow:0 0 0 3px rgba(200,29,37,.10);
+}
+
+.review-textarea{
+    min-height:110px;
+    resize:vertical;
+}
+
+.rating-select{
+    display:flex;
+    gap:5px;
+    margin-bottom:18px;
+}
+
+.rating-star{
+    border:0;
+    background:transparent;
+    color:#c8c8c8;
+    font-size:1.55rem;
+    cursor:pointer;
+    padding:0;
+}
+
+.rating-star.active{
+    color:#f59e0b;
+}
+
+.review-form-error{
+    color:#c81d25;
+    font-size:.8rem;
+    min-height:20px;
+}
+
+@media(max-width:900px){
+    .reviews-grid{
+        grid-template-columns:1fr 1fr;
+    }
+}
+
+@media(max-width:600px){
+    .reviews-grid{
+        grid-template-columns:1fr;
+    }
 }
 
 
-/* MATCH */
-
-.match-box{
-border:1px solid #eee;
-border-radius:16px;
-padding:20px;
-margin-top:18px
+/* =========================
+   BLOODLINK LEARN
+========================= */
+.learn-section{
+    margin-top:50px;
 }
 
-.match-box.notified{
-background:#fffdfa;
-border-color:#f4dfc8
+.learn-head{
+    margin-bottom:22px;
 }
 
-.match-box.accepted{
-background:#fbfffc;
-border-color:#b7e4c7
+.learn-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:16px;
 }
 
-.match-box.declined{
-background:#fffafa;
-border-color:#f2cccc
+.learn-card{
+    display:block;
+    text-decoration:none;
+    color:var(--text,#171717);
+    background:var(--card,#fff);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:21px;
+    min-height:175px;
+    transition:.2s;
 }
 
-.match-status{
-font-size:.68rem;
-padding:6px 9px
+.learn-card:hover{
+    color:var(--text,#171717);
+    transform:translateY(-4px);
+    border-color:#f0a0a4;
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
 }
 
-.notified-status{
-background:#fff7ed;
-color:#c2410c
+.learn-icon{
+    width:45px;
+    height:45px;
+    border-radius:12px;
+    background:var(--soft-red);
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.15rem;
+    margin-bottom:15px;
 }
 
-.accepted-status{
-background:var(--soft-green);
-color:var(--green)
+.learn-card h5{
+    font-weight:800;
+    font-size:1rem;
+    margin-bottom:7px;
 }
 
-.declined-status{
-background:#fef2f2;
-color:#b91c1c
+.learn-card p{
+    color:var(--muted);
+    font-size:.82rem;
+    line-height:1.55;
+    margin:0 0 13px;
 }
 
-
-/* ACTION BUTTONS */
-
-.action-btn{
-border-radius:10px;
-padding:11px 22px;
-font-size:.8rem;
-font-weight:800
+.learn-link{
+    color:var(--red);
+    font-size:.8rem;
+    font-weight:800;
 }
 
-.accept-btn{
-background:var(--red);
-border:1px solid var(--red);
-color:white
+.learn-feature{
+    grid-column:span 2;
+    min-height:190px;
+    background:linear-gradient(135deg,#fff1f2,#fff);
 }
 
-.accept-btn:hover{
-background:var(--red-dark);
-color:white
+.learn-feature .learn-icon{
+    background:#fff;
 }
 
-.decline-btn{
-background:white;
-border:1px solid #ddd;
-color:#333
+html[data-theme="dark"] .learn-card{
+    background:var(--card);
+    color:var(--text);
+    border-color:var(--border);
 }
 
-.decline-btn:hover{
-border-color:#d33;
-color:#b91c1c
+html[data-theme="dark"] .learn-card:hover{
+    color:var(--text);
+    border-color:#7d3036;
 }
 
-
-/* PRIVACY */
-
-.privacy-box{
-background:#181818;
-color:white;
-border-radius:18px;
-padding:23px
+html[data-theme="dark"] .learn-feature{
+    background:linear-gradient(135deg,#32171b,#171a20);
 }
 
-.privacy-box h5{
-font-weight:800
+html[data-theme="dark"] .learn-feature .learn-icon{
+    background:#35171b;
 }
 
-.privacy-box p{
-color:#bbb;
-font-size:.8rem;
-line-height:1.7;
-margin:0
+@media(max-width:1100px){
+    .learn-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 
-
-/* INFO CARD */
-
-.info-card{
-background:#181818;
-color:white;
-border-radius:20px;
-padding:27px
-}
-
-.info-card h4{
-font-weight:800
-}
-
-.info-card p{
-color:#bbb;
-font-size:.84rem;
-line-height:1.7
-}
-
-.info-point{
-display:flex;
-gap:10px;
-margin-top:18px
-}
-
-.info-point i{
-color:#ff6870
-}
-
-.info-point span{
-color:#ddd;
-font-size:.8rem
+@media(max-width:600px){
+    .learn-grid{
+        grid-template-columns:1fr;
+    }
+    .learn-feature{
+        grid-column:span 1;
+    }
 }
 
 
-/* MESSAGE */
+/* =========================
+   ENHANCED BLOODLINK SECTIONS
+========================= */
 
-.message{
-margin-top:18px
+.enhanced-container{
+    width:100%;
+    max-width:1440px;
+    margin-left:auto;
+    margin-right:auto;
+    padding-left:28px;
+    padding-right:28px;
 }
 
+.enhanced-section{
+    margin-top:44px;
+    margin-bottom:44px;
+}
 
-/* MOBILE */
+.enhanced-panel{
+    background:var(--card,#fff);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:28px;
+    box-shadow:0 5px 22px rgba(0,0,0,.025);
+}
+
+.enhanced-section-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:20px;
+    flex-wrap:wrap;
+    margin-bottom:20px;
+}
+
+.enhanced-section-head h2{
+    margin:0 0 4px;
+}
+
+.enhanced-section-head p{
+    margin:0;
+    color:var(--muted);
+    font-size:.9rem;
+}
+
+.enhanced-link{
+    color:var(--red);
+    text-decoration:none;
+    font-weight:700;
+    white-space:nowrap;
+}
+
+.enhanced-link:hover{
+    color:var(--red-dark);
+}
+
+/* Notifications */
+.notification-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px;
+}
+
+.notification-item{
+    background:var(--surface,#fff);
+    border:1px solid var(--border)!important;
+    border-radius:16px!important;
+    padding:20px!important;
+    min-height:138px;
+    transition:.2s;
+}
+
+.notification-item:hover{
+    transform:translateY(-2px);
+    box-shadow:0 8px 22px rgba(0,0,0,.05);
+}
+
+.notification-item.unread{
+    background:var(--soft-red);
+    border-color:#f2c7ca!important;
+}
+
+.notification-item .stat-icon{
+    flex:0 0 45px;
+}
+
+/* Reviews */
+.reviews-section.enhanced-section{
+    margin-top:44px;
+}
+
+.reviews-panel{
+    background:linear-gradient(135deg,#fff7f8,#fffafa);
+    border:1px solid #f3dfe1;
+    border-radius:22px;
+    padding:28px;
+}
+
+.reviews-grid{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:18px;
+}
+
+.review-card{
+    background:var(--card,#fff);
+    border:1px solid var(--border);
+    border-radius:18px;
+    padding:22px;
+    min-height:205px;
+    box-shadow:0 4px 15px rgba(0,0,0,.025);
+}
+
+.review-card:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+
+.review-top{
+    margin-bottom:13px;
+}
+
+.review-text{
+    min-height:58px;
+}
+
+.review-btn{
+    border:0;
+    background:var(--red);
+    color:white;
+    border-radius:10px;
+    padding:11px 17px;
+    font-weight:800;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+
+.review-btn:hover{
+    background:var(--red-dark);
+}
+
+/* Learn */
+.learn-section.enhanced-section{
+    margin-top:44px;
+}
+
+.learn-panel{
+    background:var(--card,#fff);
+    border:1px solid var(--border);
+    border-radius:22px;
+    padding:28px;
+}
+
+.learn-grid{
+    display:grid;
+    grid-template-columns:repeat(6,minmax(0,1fr));
+    gap:14px;
+}
+
+.learn-card{
+    display:block;
+    text-decoration:none;
+    color:var(--text,#171717);
+    background:var(--surface,#fff);
+    border:1px solid var(--border);
+    border-radius:15px;
+    padding:18px;
+    min-height:152px;
+    transition:.2s;
+}
+
+.learn-card:hover{
+    color:var(--text,#171717);
+    transform:translateY(-3px);
+    border-color:#efb4b8;
+    box-shadow:0 8px 20px rgba(0,0,0,.05);
+}
+
+.learn-icon{
+    width:42px;
+    height:42px;
+    border-radius:12px;
+    background:var(--soft-red);
+    color:var(--red);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:1.1rem;
+    margin-bottom:13px;
+}
+
+.learn-card h5{
+    font-size:.9rem;
+    font-weight:800;
+    margin-bottom:6px;
+}
+
+.learn-card p{
+    color:var(--muted);
+    font-size:.76rem;
+    line-height:1.45;
+    margin:0 0 9px;
+}
+
+.learn-link{
+    color:var(--red);
+    font-size:.76rem;
+    font-weight:800;
+}
+
+.learn-feature{
+    grid-column:auto;
+    min-height:152px;
+    background:var(--surface,#fff);
+}
+
+/* Dark mode */
+html[data-theme="dark"] .enhanced-panel,
+html[data-theme="dark"] .learn-panel{
+    background:var(--card);
+    border-color:var(--border);
+}
+
+html[data-theme="dark"] .reviews-panel{
+    background:linear-gradient(135deg,#281518,#171a20);
+    border-color:#49272b;
+}
+
+html[data-theme="dark"] .notification-item,
+html[data-theme="dark"] .review-card,
+html[data-theme="dark"] .learn-card{
+    background:var(--surface);
+    border-color:var(--border)!important;
+}
+
+html[data-theme="dark"] .notification-item.unread{
+    background:#30191d;
+    border-color:#633137!important;
+}
+
+@media(max-width:1100px){
+    .notification-grid,
+    .reviews-grid{
+        grid-template-columns:repeat(2,minmax(0,1fr));
+    }
+
+    .learn-grid{
+        grid-template-columns:repeat(3,minmax(0,1fr));
+    }
+}
 
 @media(max-width:767px){
+    .enhanced-container{
+        padding-left:18px;
+        padding-right:18px;
+    }
 
-.page{
-padding:28px 0 50px
+    .enhanced-panel,
+    .reviews-panel,
+    .learn-panel{
+        padding:20px;
+        border-radius:18px;
+    }
+
+    .notification-grid,
+    .reviews-grid,
+    .learn-grid{
+        grid-template-columns:1fr;
+    }
+
+    .enhanced-section{
+        margin-top:32px;
+        margin-bottom:32px;
+    }
 }
 
-.header-card,
-.section-card{
-padding:21px
+
+/* =========================
+   BLOODLINK NAVBAR REFINEMENT
+========================= */
+
+.bloodlink-navbar{
+    background:var(--card,#fff);
+    border-bottom:1px solid var(--border);
+    padding:14px 0;
+    box-shadow:0 1px 0 rgba(0,0,0,.025);
 }
 
-.request-title{
-font-size:1.35rem
+.bloodlink-navbar > .container{
+    max-width:1440px;
 }
 
+.bloodlink-nav-inner{
+    width:100%;
+    min-height:48px;
+    display:flex;
+    align-items:center;
+}
+
+.bloodlink-nav-spacer{
+    flex:1 1 auto;
+}
+
+.bloodlink-nav-actions{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+    gap:14px;
+    margin-left:24px;
+}
+
+.bloodlink-navbar .theme-toggle,
+.bloodlink-navbar .nav-btn,
+.bloodlink-navbar .logout-btn{
+    height:44px;
+    margin:0;
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    white-space:nowrap;
+}
+
+.bloodlink-navbar .theme-toggle{
+    min-width:100px;
+    padding:9px 15px;
+}
+
+.bloodlink-navbar .nav-btn{
+    min-width:56px;
+    padding:9px 14px;
+    position:relative;
+}
+
+.bloodlink-navbar .logout-btn{
+    min-width:96px;
+    padding:9px 15px;
+    gap:8px;
+    border:1px solid #e5e5e5;
+    border-radius:10px;
+    color:#555;
+}
+
+.bloodlink-navbar .logout-btn:hover{
+    border-color:#f0a0a4;
+    color:var(--red);
+}
+
+.bloodlink-navbar .notification-badge{
+    top:-6px;
+    right:-6px;
+}
+
+html[data-theme="dark"] .bloodlink-navbar .logout-btn{
+    background:var(--surface);
+    border-color:var(--border);
+    color:var(--text);
+}
+
+html[data-theme="dark"] .bloodlink-navbar .logout-btn:hover{
+    color:#ff7a80;
+    border-color:#7d3036;
+}
+
+@media(max-width:767px){
+    .bloodlink-navbar{
+        padding:11px 0;
+    }
+
+    .bloodlink-nav-actions{
+        gap:8px;
+        margin-left:12px;
+    }
+
+    .bloodlink-navbar .theme-toggle{
+        min-width:44px;
+        padding:9px 10px;
+    }
+
+    .bloodlink-navbar .nav-btn{
+        min-width:44px;
+        padding:9px 10px;
+    }
+
+    .bloodlink-navbar .logout-btn{
+        min-width:44px;
+        padding:9px 10px;
+    }
+
+    .bloodlink-navbar .logout-btn span{
+        display:none;
+    }
+}
+
+
+/* =========================================================
+   BLOODLINK ASSISTANT — DARK MODE FIX
+   The assistant is injected dynamically, so these rules
+   intentionally live on the dashboard and override its
+   inline/default light theme when dark mode is active.
+========================================================= */
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-panel{
+    background:#171a20 !important;
+    color:#f5f5f5 !important;
+    border-color:#343943 !important;
+    box-shadow:0 18px 55px rgba(0,0,0,.45) !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-header{
+    background:#0b0d10 !important;
+    color:#ffffff !important;
+    border-bottom:1px solid #2b3038 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-title{
+    color:#ffffff !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-subtitle{
+    color:#aeb4bf !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-close{
+    color:#c5cad3 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-chat{
+    background:#101216 !important;
+    color:#f5f5f5 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-message.bot .bla-bubble{
+    background:#1f232b !important;
+    color:#f1f3f5 !important;
+    border-color:#343943 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-message.user .bla-bubble{
+    background:#c81d25 !important;
+    color:#ffffff !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-quick{
+    background:#171a20 !important;
+    border-top-color:#343943 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-chip{
+    background:#20242c !important;
+    color:#e9ecf1 !important;
+    border-color:#3a404b !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-chip:hover{
+    background:#2a3039 !important;
+    border-color:#e04b52 !important;
+    color:#ff7a80 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-input-row{
+    background:#171a20 !important;
+    border-top:1px solid #343943 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-input{
+    background:#101216 !important;
+    color:#f5f5f5 !important;
+    border-color:#3a404b !important;
+    caret-color:#ffffff !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-input::placeholder{
+    color:#8f96a3 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-input:focus{
+    background:#14171c !important;
+    color:#ffffff !important;
+    border-color:#c81d25 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-send{
+    background:#c81d25 !important;
+    color:#ffffff !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-note{
+    background:#171a20 !important;
+    color:#8f96a3 !important;
+}
+
+/* Keep the floating button readable in both themes */
+#bloodlinkAssistant .bla-toggle{
+    background:#c81d25 !important;
+    color:#ffffff !important;
+}
+
+#bloodlinkAssistant .bla-toggle:hover{
+    background:#a9151d !important;
 }
 
 </style>
-
 </head>
-
 
 <body>
 
+<nav class="navbar sticky-top bloodlink-navbar">
+<div class="container">
+    <div class="bloodlink-nav-inner">
 
-<!-- NAVBAR -->
+        <a href="/donor-dashboard.html" class="brand">
+            <span class="brand-icon"></span>
+            <span>Blood<span style="color:var(--red)">Link</span></span>
+        </a>
 
-<nav class="navbar sticky-top">
+        <div class="bloodlink-nav-spacer"></div>
 
-<div class="container d-flex justify-content-between align-items-center">
+        <div class="bloodlink-nav-actions">
 
-<a href="/donor-dashboard.html" class="brand">
+            <button type="button"
+                    id="themeToggle"
+                    class="theme-toggle"
+                    aria-label="Toggle dark mode"
+                    title="Toggle dark mode">
+                <i class="bi bi-moon-stars-fill" id="themeIcon"></i>
+                <span class="theme-label" id="themeLabel">Dark</span>
+            </button>
 
-<span class="brand-icon"></span>
+            <a href="/notifications.html"
+               class="nav-btn notification-btn"
+               title="Notifications"
+               aria-label="Notifications">
+                <i class="bi bi-bell"></i>
+                <span id="notificationBadge"
+                      class="notification-badge"
+                      style="display:none">0</span>
+            </a>
 
-<span>
-Blood<span style="color:var(--red)">Link</span>
-</span>
+            <a href="#"
+               id="logoutLink"
+               class="logout-btn">
+                <i class="bi bi-box-arrow-right"></i>
+                <span>Logout</span>
+            </a>
 
-</a>
-
-
-<div class="d-flex gap-3">
-
-<a
-href="/matches.html"
-class="nav-link-custom">
-
-<i class="bi bi-diagram-3 me-1"></i>
-Matches
-
-</a>
-
-<a
-href="/notifications.html"
-class="nav-link-custom">
-
-<i class="bi bi-bell me-1"></i>
-Notifications
-
-</a>
-
-<a
-href="#"
-id="logoutLink"
-class="nav-link-custom">
-
-Logout
-
-</a>
-
+        </div>
+    </div>
 </div>
-
-</div>
-
 </nav>
 
-
-<main class="page">
-
+<main class="dashboard">
 <div class="container">
 
+<div class="welcome-card">
 
-<a
-href="/matches.html"
-class="back-link">
-
-<i class="bi bi-arrow-left me-1"></i>
-
-Back to Matches
-
-</a>
-
-
-<div
-id="loading"
-class="text-center py-5 text-muted">
-
-Loading request...
-
+<div class="welcome-eyebrow">
+DONOR DASHBOARD
 </div>
 
+<h1>
+Ready to help save a life?
+</h1>
 
-<div
-id="content"
-style="display:none">
-
-
-<!-- HEADER -->
-
-<div class="header-card mt-3 mb-4">
-
-
-<div class="d-flex justify-content-between align-items-start gap-4 flex-wrap">
-
-
-<div class="d-flex gap-3">
-
-
-<div
-class="blood-circle"
-id="bloodGroup">
-
-—
-
-</div>
-
+<p>
+Your blood can make a real difference. BloodLink matches you with relevant requests based on your blood group, location and availability.
+</p>
 
 <div>
-
-<div
-class="request-title"
-id="hospitalName">
-
-Hospital
-
-</div>
-
-
-<div class="muted small">
-
-Request #
-
-<span id="requestId"></span>
-
-·
-
-<span id="createdAt"></span>
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="d-flex gap-2 flex-wrap">
-
-<span
-id="statusBadge"
-class="status">
-
+<span class="profile-pill">
+<i class="bi bi-person-fill"></i>
+<span id="username">Donor</span>
 </span>
 
-<span
-id="urgencyBadge"
-class="urgency">
-
+<span class="blood-pill" id="bloodGroup">
+— 
 </span>
+</div>
+
+<div>
+<a href="/donor-profile.html" class="primary-btn">
+<i class="bi bi-person-vcard"></i>
+Update Donor Profile
+</a>
+
+<a href="/matches.html" class="secondary-btn">
+<i class="bi bi-heart-pulse"></i>
+View Blood Matches
+</a>
+</div>
 
 </div>
 
+<div id="errorMessage"
+     class="alert alert-danger mb-4"
+     style="display:none"></div>
 
+<div class="row g-4 mb-5">
+
+<div class="col-md-3">
+<div class="stat-card">
+<div class="stat-icon">
+<i class="bi bi-hourglass-split"></i>
+</div>
+<div class="stat-number" id="pendingMatches">0</div>
+<div class="stat-label">Pending matches</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="stat-card">
+<div class="stat-icon">
+<i class="bi bi-people"></i>
+</div>
+<div class="stat-number" id="totalMatches">0</div>
+<div class="stat-label">Total matches</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="stat-card">
+<div class="stat-icon">
+<i class="bi bi-check-circle"></i>
+</div>
+<div class="stat-number" id="acceptedMatches">0</div>
+<div class="stat-label">Accepted</div>
+</div>
+</div>
+
+<div class="col-md-3">
+<div class="stat-card">
+<div class="stat-icon">
+<i class="bi bi-bell"></i>
+</div>
+<div class="stat-number" id="unreadNotifications">0</div>
+<div class="stat-label">Unread notifications</div>
+</div>
 </div>
 
 </div>
 
+<h2 class="section-title">Your donor profile</h2>
+
+<p class="section-subtitle">
+Keep your information current so BloodLink can match you correctly.
+</p>
 
 <div class="row g-4">
 
-
-<!-- LEFT -->
-
 <div class="col-lg-7">
 
+<div class="status-card">
 
-<div class="section-card">
-
-
-<div class="section-title">
-
-Request information
-
-</div>
-
-
-<div class="section-subtitle">
-
-Details of the blood request.
-
-</div>
-
-
-<div class="info-row">
-
-<div class="info-icon">
-
-<i class="bi bi-droplet-fill"></i>
-
-</div>
-
+<div class="status-header">
 
 <div>
-
-<div class="info-label">
-
-Blood group
-
+<h4 class="mb-1">Your donor status</h4>
+<small class="text-muted">Current matching profile</small>
 </div>
 
-<div
-class="info-value"
-id="infoBlood">
-
-—
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="info-row">
-
-<div class="info-icon">
-
-<i class="bi bi-bar-chart-fill"></i>
-
-</div>
-
-
-<div>
-
-<div class="info-label">
-
-Requirement
-
-</div>
-
-<div
-class="info-value"
-id="requirement">
-
-—
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="info-row">
-
-<div class="info-icon">
-
-<i class="bi bi-hospital-fill"></i>
-
-</div>
-
-
-<div>
-
-<div class="info-label">
-
-Hospital
-
-</div>
-
-<div
-class="info-value"
-id="infoHospital">
-
-—
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="info-row">
-
-<div class="info-icon">
-
-<i class="bi bi-geo-alt-fill"></i>
-
-</div>
-
-
-<div>
-
-<div class="info-label">
-
-Address
-
-</div>
-
-<div
-class="info-value"
-id="address">
-
-—
-
-</div>
-
-</div>
-
-</div>
-
-
-<div class="info-row">
-
-<div class="info-icon">
-
-<i class="bi bi-bullseye"></i>
-
-</div>
-
-
-<div>
-
-<div class="info-label">
-
-Donor search radius
-
-</div>
-
-<div
-class="info-value"
-id="radius">
-
-—
-
-</div>
-
-</div>
-
-</div>
-
-
-<div
-class="info-row"
-id="expiryRow">
-
-<div class="info-icon">
-
-<i class="bi bi-clock-fill"></i>
-
-</div>
-
-
-<div>
-
-<div class="info-label">
-
-Expires
-
-</div>
-
-<div
-class="info-value"
-id="expires">
-
-—
-
-</div>
-
-</div>
-
-</div>
-
-
-<div
-id="descriptionBox"
-style="
-display:none;
-border-top:1px solid #f1f1f1;
-margin-top:10px;
-padding-top:18px;
-">
-
-<div class="info-label mb-2">
-
-Additional information
-
-</div>
-
-
-<div
-id="description"
-style="
-font-size:.84rem;
-color:#555;
-line-height:1.7
-">
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<!-- MATCH STATUS -->
-
-<div
-id="matchBox"
-class="match-box">
-
-
-<div class="d-flex justify-content-between align-items-center gap-3">
-
-
-<div>
-
-<div class="section-title">
-
-Your match
-
-</div>
-
-<div
-class="section-subtitle">
-
-Your response to this blood request.
-
-</div>
-
-</div>
-
-
-<span
-id="matchStatus"
-class="match-status">
-
+<span id="statusBadge"
+      class="status-badge status-neutral">
+Loading
 </span>
 
 </div>
 
+<div id="profileStatus">
 
-<div
-id="distance"
-class="muted mt-3"
-style="font-size:.82rem">
+<div class="status-row">
+<div class="status-row-icon">
+<i class="bi bi-arrow-repeat"></i>
+</div>
+
+<div>
+<strong>Loading profile...</strong>
+<small>Please wait</small>
+</div>
+</div>
 
 </div>
 
-
-<div
-id="actionButtons"
-class="d-flex gap-2 mt-4">
-
 </div>
 
-
 </div>
-
-
-</div>
-
-
-<!-- RIGHT -->
 
 <div class="col-lg-5">
 
-
 <div class="info-card">
 
-
-<div
-style="
-color:#ff6870;
-text-transform:uppercase;
-letter-spacing:1.4px;
-font-size:.72rem;
-font-weight:800
-">
-
-MATCH DETAILS
-
+<div class="welcome-eyebrow">
+QUICK ACTIONS
 </div>
 
-
-<h4 class="mt-2">
-
-Why you received this request.
-
-</h4>
-
+<h4 class="mt-2">Ready to help?</h4>
 
 <p>
-
-BloodLink matched this request with your donor
-profile based on the matching criteria.
-
+Review matched blood requests and keep your donor information updated.
 </p>
 
+<div class="d-grid gap-2 mt-4">
 
-<div class="info-point">
-
-<i class="bi bi-droplet-fill"></i>
-
-<span>
-
-Your blood group is compatible with this request.
-
-</span>
-
+<a href="/matches.html" class="action-card">
+<div class="action-icon">
+<i class="bi bi-droplet-half"></i>
 </div>
 
-
-<div class="info-point">
-
-<i class="bi bi-geo-alt-fill"></i>
-
-<span>
-
-The hospital is within your donor search radius.
-
-</span>
-
+<div>
+<strong>View Blood Matches</strong>
+<small>Review requests matched to you.</small>
 </div>
 
+<i class="bi bi-arrow-right action-arrow"></i>
+</a>
 
-<div class="info-point">
-
+<a href="/donation-history.html" class="action-card">
+<div class="action-icon">
 <i class="bi bi-clock-history"></i>
+</div>
 
-<span>
+<div>
+<strong>Donation History</strong>
+<small>View your previous donations.</small>
+</div>
 
-Donation eligibility is checked before matching.
+<i class="bi bi-arrow-right action-arrow"></i>
+</a>
 
-</span>
+<a href="/notifications.html" class="action-card">
+<div class="action-icon">
+<i class="bi bi-bell"></i>
+</div>
+
+<div>
+<strong>Notifications</strong>
+<small>Check your latest updates.</small>
+</div>
+
+<i class="bi bi-arrow-right action-arrow"></i>
+</a>
 
 </div>
 
-
-<div class="info-point">
-
-<i class="bi bi-shield-lock-fill"></i>
-
-<span>
-
-Your contact information remains private.
-
-</span>
+</div>
 
 </div>
 
+</div>
 
 </div>
 
+<!-- LEARN BLOOD DONATION -->
+<div class="enhanced-container">
+<section class="learn-section enhanced-section">
+<div class="learn-panel">
+    <div class="learn-head">
+        <div class="welcome-eyebrow" style="color:var(--red);">BLOODLINK LEARN</div>
+        <h2 class="section-title mt-1">Learn before you donate</h2>
+        <p class="section-subtitle mb-0">
+            Simple guides on food, blood groups, eligibility and recovery.
+        </p>
+    </div>
 
-<div class="privacy-box mt-4">
+    <div class="learn-grid">
 
+        <a href="#" class="learn-card learn-feature" data-learn-topic="eat">
+            <div class="learn-icon"><i class="bi bi-egg-fried"></i></div>
+            <h5>What to eat before & after donating</h5>
+            <p>
+                Learn about hydration, balanced meals and iron-rich foods
+                that can support recovery.
+            </p>
+            <span class="learn-link">Read guide <i class="bi bi-arrow-right"></i></span>
+        </a>
 
-<div
-style="
-color:#ff6870;
-font-size:.7rem;
-font-weight:800;
-letter-spacing:1px
-">
+        <a href="#" class="learn-card" data-learn-topic="before">
+            <div class="learn-icon"><i class="bi bi-clipboard2-check"></i></div>
+            <h5>Before donation</h5>
+            <p>What to expect and how to prepare for a donation.</p>
+            <span class="learn-link">Learn more <i class="bi bi-arrow-right"></i></span>
+        </a>
 
-<i class="bi bi-shield-lock-fill me-1"></i>
+        <a href="#" class="learn-card" data-learn-topic="after">
+            <div class="learn-icon"><i class="bi bi-heart-pulse"></i></div>
+            <h5>After donation</h5>
+            <p>Rest, fluids, food and practical recovery guidance.</p>
+            <span class="learn-link">Learn more <i class="bi bi-arrow-right"></i></span>
+        </a>
 
-PRIVACY
+        <a href="#" class="learn-card" data-learn-topic="groups">
+            <div class="learn-icon"><i class="bi bi-droplet-fill"></i></div>
+            <h5>Blood groups</h5>
+            <p>Understand A, B, AB and O blood groups and Rh positive/negative.</p>
+            <span class="learn-link">Explore types <i class="bi bi-arrow-right"></i></span>
+        </a>
 
+        <a href="#" class="learn-card" data-learn-topic="eligibility">
+            <div class="learn-icon"><i class="bi bi-person-check-fill"></i></div>
+            <h5>Can I donate?</h5>
+            <p>General eligibility factors and why donor screening matters.</p>
+            <span class="learn-link">Check basics <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+        <a href="#" class="learn-card" data-learn-topic="iron">
+            <div class="learn-icon"><i class="bi bi-capsule-pill"></i></div>
+            <h5>Iron & blood donation</h5>
+            <p>Why iron matters and which foods are naturally rich in iron.</p>
+            <span class="learn-link">Learn about iron <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+        <a href="#" class="learn-card" data-learn-topic="recovery">
+            <div class="learn-icon"><i class="bi bi-battery-charging"></i></div>
+            <h5>Recovery & hydration</h5>
+            <p>Simple steps to help you feel comfortable after donating.</p>
+            <span class="learn-link">Recovery guide <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+        <a href="#" class="learn-card" data-learn-topic="wellbeing">
+            <div class="learn-icon"><i class="bi bi-emoji-smile"></i></div>
+            <h5>Donor wellbeing</h5>
+            <p>Tips for managing nervousness, stress and donation anxiety.</p>
+            <span class="learn-link">Read more <i class="bi bi-arrow-right"></i></span>
+        </a>
+
+    </div>
+</div>
+</div>
+</section>
+</div>
+
+<!-- COMMUNITY REVIEWS -->
+<div class="enhanced-container">
+<section class="reviews-section enhanced-section">
+<div class="reviews-panel">
+    <div class="enhanced-section-head reviews-head">
+        <div>
+            <h2 class="section-title mb-1">What our community says</h2>
+            <p class="section-subtitle mb-0">
+                Experiences from people using BloodLink.
+            </p>
+        </div>
+        <button type="button" class="review-btn" id="openReviewModal">
+            <i class="bi bi-star-fill"></i>
+            Write a Review
+        </button>
+    </div>
+
+    <div class="reviews-grid" id="reviewsGrid"></div>
+</section>
 </div>
 
 
-<h5 class="mt-2">
-
-Your contact details are protected.
-
-</h5>
-
-
-<p>
-
-Your registered phone number is not shared with
-the requester while this match is waiting.
-Accept the request only if you are willing to donate.
-
-</p>
-
-
+<!-- LEARN GUIDE MODAL -->
+<div class="review-modal" id="learnModal" role="dialog" aria-modal="true" aria-labelledby="learnModalTitle">
+    <div class="review-dialog">
+        <div class="review-dialog-header">
+            <div>
+                <div class="welcome-eyebrow" style="color:var(--red);">BLOODLINK LEARN</div>
+                <h4 id="learnModalTitle" class="mb-0 mt-1">Donation guide</h4>
+            </div>
+            <button type="button" class="review-close" id="closeLearnModal" aria-label="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <div id="learnModalBody" class="review-text"></div>
+        <div class="mt-3 p-3 rounded-3 bg-light">
+            <small class="text-muted">
+                General educational information only. Donor eligibility and medical advice
+                should come from the blood donation service or qualified healthcare professional.
+            </small>
+        </div>
+    </div>
 </div>
 
+<!-- REVIEW MODAL -->
+<div class="review-modal" id="reviewModal" role="dialog" aria-modal="true" aria-labelledby="reviewModalTitle">
+    <div class="review-dialog">
+        <div class="review-dialog-header">
+            <div>
+                <h4 id="reviewModalTitle" class="mb-1">Share your experience</h4>
+                <small class="text-muted">Tell the BloodLink community what you think.</small>
+            </div>
+            <button type="button" class="review-close" id="closeReviewModal" aria-label="Close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
 
-</div>
+        <form id="reviewForm">
+            <div class="mb-3">
+                <label class="review-form-label" for="reviewName">Name</label>
+                <input class="review-input" id="reviewName" maxlength="60" placeholder="Your name" required>
+            </div>
 
+            <div class="mb-3">
+                <label class="review-form-label">Rating</label>
+                <div class="rating-select" id="ratingSelect" aria-label="Choose rating">
+                    <button type="button" class="rating-star" data-rating="1">★</button>
+                    <button type="button" class="rating-star" data-rating="2">★</button>
+                    <button type="button" class="rating-star" data-rating="3">★</button>
+                    <button type="button" class="rating-star" data-rating="4">★</button>
+                    <button type="button" class="rating-star" data-rating="5">★</button>
+                </div>
+                <input type="hidden" id="reviewRating" value="5">
+            </div>
 
-</div>
+            <div class="mb-2">
+                <label class="review-form-label" for="reviewText">Review</label>
+                <textarea class="review-textarea" id="reviewText" maxlength="500"
+                    placeholder="Write your experience..." required></textarea>
+            </div>
 
+            <div class="review-form-error" id="reviewFormError"></div>
 
-</div>
-
-
-<div
-id="errorMessage"
-class="alert alert-danger mt-4"
-style="display:none">
-
-</div>
-
-
+            <button type="submit" class="review-btn w-100 justify-content-center">
+                <i class="bi bi-send-fill"></i>
+                Submit Review
+            </button>
+        </form>
+    </div>
 </div>
 
 </main>
 
+<footer>
+<div class="container text-center">
+BloodLink — Connecting donors with people who need them.
+</div>
+</footer>
 
 <script>
-
 const user = requireAuth("DONOR");
 
+if (user) {
 
-if(user){
+    const usernameEl = document.getElementById("username");
 
-
-/* =========================
-   LOGOUT
-========================= */
-
-document
-.getElementById("logoutLink")
-.onclick = async e => {
-
-e.preventDefault();
-
-await logoutUser();
-
-window.location.href = "/";
-
-};
+    if (usernameEl) {
+        usernameEl.textContent = user.username || user.first_name || "Donor";
+    }
 
 
-/* =========================
-   URL
-========================= */
+    /* =========================
+       LOGOUT
+    ========================= */
 
-const params =
-new URLSearchParams(location.search);
+    const logoutLink =
+        document.getElementById("logoutLink");
 
-const requestId =
-params.get("id");
+    if (logoutLink) {
 
-const matchId =
-params.get("match_id");
+        logoutLink.onclick = async function(e) {
+
+            e.preventDefault();
+
+            try {
+
+                await logoutUser();
+
+            } catch (error) {
+
+                console.error(
+                    "Logout error:",
+                    error
+                );
+
+            }
+
+            /*
+             * Always clear the local session,
+             * even if the backend logout request fails.
+             */
+
+            localStorage.removeItem("bloodlink_token");
+            localStorage.removeItem("bloodlink_user");
+
+            window.location.href = "/";
+
+        };
+
+    }
 
 
-/* =========================
-   LOAD
-========================= */
+    /* =========================
+       LOAD DONOR DASHBOARD
+    ========================= */
 
-async function loadRequest(){
+    (async function() {
 
-if(!requestId || !matchId){
+        try {
 
-showError(
-"Invalid blood request or match."
-);
+            const d =
+                await getDashboard();
 
-return;
+
+            document.getElementById(
+                "pendingMatches"
+            ).textContent =
+                d.pending_matches ?? 0;
+
+
+            document.getElementById(
+                "totalMatches"
+            ).textContent =
+                d.total_matches ?? 0;
+
+
+            document.getElementById(
+                "acceptedMatches"
+            ).textContent =
+                d.accepted_matches ?? 0;
+
+
+            document.getElementById(
+                "unreadNotifications"
+            ).textContent =
+                d.unread_notifications ?? 0;
+
+
+            if (d.unread_notifications) {
+
+                const notifBadge =
+                    document.getElementById("notificationBadge");
+
+                if (notifBadge) {
+                    notifBadge.textContent =
+                        `(${d.unread_notifications})`;
+                }
+
+            } else {
+
+                const notifBadge =
+                    document.getElementById("notificationBadge");
+
+                if (notifBadge) {
+                    notifBadge.textContent = "";
+                }
+
+            }
+
+
+            const statusBadge =
+                document.getElementById(
+                    "statusBadge"
+                );
+
+
+            const profileStatus =
+                document.getElementById(
+                    "profileStatus"
+                );
+
+
+            if (d.donor_profile) {
+
+                const profile =
+                    d.donor_profile;
+
+
+                const available =
+                    profile.is_available;
+
+
+                document.getElementById(
+                    "bloodGroup"
+                ).textContent =
+                    profile.blood_group || "—";
+
+
+                statusBadge.textContent =
+                    available
+                        ? "Available"
+                        : "Unavailable";
+
+
+                statusBadge.className =
+                    available
+                        ? "status-badge status-ready"
+                        : "status-badge status-neutral";
+
+
+                profileStatus.innerHTML = `
+
+                    <div class="status-row">
+
+                        <div class="status-row-icon">
+                            <i class="bi bi-droplet-fill"></i>
+                        </div>
+
+                        <div>
+                            <strong>Blood group</strong>
+                            <small>
+                                ${profile.blood_group || "Not set"}
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <div class="status-row-icon">
+                            <i class="bi bi-geo-alt-fill"></i>
+                        </div>
+
+                        <div>
+                            <strong>Location</strong>
+                            <small>
+                                ${profile.address || "Location saved"}
+                            </small>
+                        </div>
+
+                    </div>
+
+
+                    <div class="status-row">
+
+                        <div class="status-row-icon">
+                            <i class="bi bi-check-circle"></i>
+                        </div>
+
+                        <div>
+                            <strong>Availability</strong>
+
+                            <small>
+                                ${
+                                    available
+                                    ? "Ready to receive blood requests"
+                                    : "Currently unavailable"
+                                }
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            } else {
+
+                document.getElementById(
+                    "bloodGroup"
+                ).textContent =
+                    "Setup required";
+
+
+                statusBadge.textContent =
+                    "Setup required";
+
+
+                statusBadge.className =
+                    "status-badge status-pending";
+
+
+                profileStatus.innerHTML = `
+
+                    <div class="status-row">
+
+                        <div class="status-row-icon">
+                            <i class="bi bi-exclamation-circle"></i>
+                        </div>
+
+                        <div>
+
+                            <strong>
+                                Donor profile not completed
+                            </strong>
+
+                            <small>
+                                Complete your profile to receive blood matches.
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            }
+
+        } catch (e) {
+
+            console.error(
+                "Donor dashboard error:",
+                e
+            );
+
+            if (
+                typeof showMessage ===
+                "function"
+            ) {
+
+                showMessage(
+                    "errorMessage",
+                    e.message
+                );
+
+            }
+
+        }
+
+    })();
 
 }
 
+/* =========================
+   DARK MODE
+========================= */
+(function(){
+    const toggle = document.getElementById("themeToggle");
+    const icon = document.getElementById("themeIcon");
+    const label = document.getElementById("themeLabel");
 
-try{
+    function applyTheme(theme){
+        document.documentElement.setAttribute("data-theme", theme);
+        localStorage.setItem("bloodlink_theme", theme);
 
+        if(icon){
+            icon.className = theme === "dark"
+                ? "bi bi-sun-fill"
+                : "bi bi-moon-stars-fill";
+        }
 
-/*
- * We use the donor's matches endpoint.
- *
- * This avoids exposing the requester-only
- * request detail endpoint to donors.
- */
+        if(label){
+            label.textContent = theme === "dark" ? "Light" : "Dark";
+        }
 
-const data = await getMatches();
+        if(toggle){
+            toggle.setAttribute(
+                "aria-label",
+                theme === "dark" ? "Switch to light mode" : "Switch to dark mode"
+            );
+        }
+    }
 
+    applyTheme(
+        localStorage.getItem("bloodlink_theme") === "dark"
+            ? "dark"
+            : "light"
+    );
 
-const matches = Array.isArray(data)
-? data
-: (data.matches || data.results || []);
-
-
-const match = matches.find(
-item => String(item.id) === String(matchId)
-);
-
-
-if(!match){
-
-showError(
-"This blood match could not be found."
-);
-
-return;
-
-}
-
-
-const r = match.request || {};
+    if(toggle){
+        toggle.addEventListener("click", function(){
+            const current = document.documentElement.getAttribute("data-theme");
+            applyTheme(current === "dark" ? "light" : "dark");
+        });
+    }
+})();
 
 
 /* =========================
-   HEADER
+   LEARN GUIDES
 ========================= */
+(function(){
+    const modal = document.getElementById("learnModal");
+    const title = document.getElementById("learnModalTitle");
+    const body = document.getElementById("learnModalBody");
+    const close = document.getElementById("closeLearnModal");
 
-document
-.getElementById("bloodGroup")
-.textContent =
-r.blood_group || "—";
+    const guides = {
+        eat:{
+            title:"What to eat before & after donating",
+            html:`
+                <p><strong>Before donation:</strong> Have a normal, balanced meal and drink enough fluids. Avoid arriving dehydrated.</p>
+                <p><strong>Good choices:</strong> leafy greens, beans/lentils, eggs, lean meat, fish, whole grains, fruits and other balanced foods. Iron-rich foods can be especially useful because iron is needed to make haemoglobin.</p>
+                <p><strong>After donation:</strong> Have fluids and a snack/meal, and follow the instructions given by the donation centre.</p>
+            `
+        },
+        before:{
+            title:"Before donation",
+            html:`
+                <p>Eat a healthy meal, stay hydrated and follow the donor centre's eligibility instructions. Bring any information or identification the centre asks for.</p>
+                <p>Screening is important because eligibility can depend on factors such as age, weight, health, medicines and recent activities or travel.</p>
+            `
+        },
+        after:{
+            title:"After donation",
+            html:`
+                <p>Take a short rest, have refreshments and drink fluids. Avoid strenuous activity for the period recommended by your donation centre.</p>
+                <p>If you feel unwell or have symptoms that concern you, contact the donation service or a healthcare professional.</p>
+            `
+        },
+        groups:{
+            title:"Understanding blood groups",
+            html:`
+                <p>The main ABO blood groups are <strong>A, B, AB and O</strong>. Each can also be Rh-positive or Rh-negative, giving eight common blood types: A+, A−, B+, B−, AB+, AB−, O+ and O−.</p>
+                <p>Compatibility depends on the type of transfusion. Hospitals use blood typing and crossmatching before transfusion.</p>
+            `
+        },
+        eligibility:{
+            title:"Can I donate?",
+            html:`
+                <p>Donation eligibility is determined by the blood donation service after screening. Requirements can vary by country and donation centre.</p>
+                <p>Health, age, weight, haemoglobin, medicines, recent illness and other factors may affect eligibility. BloodLink does not replace donor screening.</p>
+            `
+        },
+        iron:{
+            title:"Iron & blood donation",
+            html:`
+                <p>Iron is needed to make haemoglobin, which carries oxygen in red blood cells. Blood donation can reduce the body's iron stores.</p>
+                <p>Iron-containing foods include beans and lentils, leafy green vegetables, meat, seafood, eggs and fortified foods. If you are concerned about iron deficiency, speak with a healthcare professional rather than starting supplements on your own.</p>
+            `
+        },
+        recovery:{
+            title:"Recovery & hydration",
+            html:`
+                <p>Most donors can return to normal activities according to the guidance of their donation centre. Rest briefly after donating and replace fluids.</p>
+                <p>Listen to your body. If you become dizzy or feel unwell, sit or lie down and seek help from the donation staff.</p>
+            `
+        },
+        wellbeing:{
+            title:"Donor wellbeing",
+            html:`
+                <p>Feeling nervous before donating is common. Take slow breaths, tell staff if you feel anxious and give yourself enough time to rest.</p>
+                <p>If stress or anxiety is persistent or interfering with daily life, consider speaking with a qualified mental-health professional.</p>
+            `
+        }
+    };
 
+    document.querySelectorAll("[data-learn-topic]").forEach(function(card){
+        card.addEventListener("click", function(e){
+            e.preventDefault();
+            const guide = guides[card.dataset.learnTopic];
+            if(!guide) return;
+            title.textContent = guide.title;
+            body.innerHTML = guide.html;
+            modal.classList.add("show");
+        });
+    });
 
-document
-.getElementById("requestId")
-.textContent =
-r.id || requestId;
+    function closeModal(){
+        modal.classList.remove("show");
+    }
 
+    if(close) close.addEventListener("click", closeModal);
 
-document
-.getElementById("hospitalName")
-.textContent =
-r.hospital_name || "Blood Request";
+    if(modal){
+        modal.addEventListener("click", function(e){
+            if(e.target === modal) closeModal();
+        });
+    }
 
-
-document
-.getElementById("createdAt")
-.textContent =
-r.created_at
-? new Date(r.created_at).toLocaleString()
-: "";
+    document.addEventListener("keydown", function(e){
+        if(e.key === "Escape" && modal.classList.contains("show")){
+            closeModal();
+        }
+    });
+})();
 
 
 /* =========================
-   REQUEST INFO
+   COMMUNITY REVIEWS
+   Demo/local version for now
 ========================= */
 
-document
-.getElementById("infoBlood")
-.textContent =
-r.blood_group || "—";
-
-
-document
-.getElementById("requirement")
-.textContent =
-`${r.units_fulfilled || 0} / ${
-r.units_required || 0
-} units fulfilled`;
-
-
-document
-.getElementById("infoHospital")
-.textContent =
-r.hospital_name || "—";
-
-
-document
-.getElementById("address")
-.textContent =
-r.hospital_address || "—";
-
-
-document
-.getElementById("radius")
-.textContent =
-`${r.radius_km ?? "—"} km`;
-
-
-/* =========================
-   EXPIRY
-========================= */
-
-if(r.expires_at){
-
-document
-.getElementById("expires")
-.textContent =
-new Date(
-r.expires_at
-).toLocaleString();
-
-}else{
-
-document
-.getElementById("expiryRow")
-.style.display = "none";
-
-}
-
-
-/* =========================
-   DESCRIPTION
-========================= */
-
-if(r.description){
-
-document
-.getElementById("descriptionBox")
-.style.display = "block";
-
-document
-.getElementById("description")
-.textContent =
-r.description;
-
-}
-
-
-/* =========================
-   REQUEST STATUS
-========================= */
-
-setRequestStatus(
-r.status
-);
-
-setUrgency(
-r.urgency
-);
-
-
-/* =========================
-   MATCH
-========================= */
-
-renderMatch(
-match
-);
-
-
-/* =========================
-   SHOW
-========================= */
-
-document
-.getElementById("loading")
-.style.display = "none";
-
-document
-.getElementById("content")
-.style.display = "block";
-
-
-}catch(error){
-
-showError(
-error.message ||
-"Unable to load request details."
-);
-
-}
-
-}
-
-
-/* =========================
-   REQUEST STATUS
-========================= */
-
-function setRequestStatus(status){
-
-status =
-(status || "OPEN")
-.toUpperCase();
-
-
-const el =
-document.getElementById(
-"statusBadge"
-);
-
-
-el.textContent =
-status.replaceAll(
-"_",
-" "
-);
-
-
-if(status === "OPEN"){
-
-el.className =
-"status status-open";
-
-}else if(
-status === "PARTIALLY_FULFILLED"
-){
-
-el.className =
-"status status-partial";
-
-}else if(
-status === "FULFILLED"
-){
-
-el.className =
-"status status-fulfilled";
-
-}else{
-
-el.className =
-"status status-other";
-
-}
-
-}
-
-
-/* =========================
-   URGENCY
-========================= */
-
-function setUrgency(urgency){
-
-urgency =
-(urgency || "LOW")
-.toUpperCase();
-
-
-const el =
-document.getElementById(
-"urgencyBadge"
-);
-
-
-el.textContent =
-urgency;
-
-
-el.className =
-`urgency ${urgency.toLowerCase()}`;
-
-}
-
-
-/* =========================
-   MATCH
-========================= */
-
-function renderMatch(match){
-
-const status =
-(match.status || "PENDING")
-.toUpperCase();
-
-
-const box =
-document.getElementById(
-"matchBox"
-);
-
-
-const statusEl =
-document.getElementById(
-"matchStatus"
-);
-
-
-const distanceEl =
-document.getElementById(
-"distance"
-);
-
-
-const buttons =
-document.getElementById(
-"actionButtons"
-);
-
-
-box.className =
-"match-box";
-
-
-if(status === "NOTIFIED"){
-
-box.classList.add("notified");
-
-statusEl.className =
-"match-status notified-status";
-
-statusEl.textContent =
-"NOTIFIED";
-
-}else if(status === "ACCEPTED"){
-
-box.classList.add("accepted");
-
-statusEl.className =
-"match-status accepted-status";
-
-statusEl.innerHTML =
-'<i class="bi bi-check-circle-fill"></i> ACCEPTED';
-
-}else if(status === "DECLINED"){
-
-box.classList.add("declined");
-
-statusEl.className =
-"match-status declined-status";
-
-statusEl.textContent =
-"DECLINED";
-
-}else{
-
-statusEl.className =
-"match-status";
-
-statusEl.textContent =
-status;
-
-}
-
-
-distanceEl.innerHTML =
-`<i class="bi bi-geo-alt-fill me-1"></i>
-${match.distance_km ?? "—"} km away`;
-
-
-/* =========================
-   ACTIONS
-========================= */
-
-buttons.innerHTML = "";
-
-
-if(status === "NOTIFIED"){
-
-buttons.innerHTML = `
-
-<button
-class="btn action-btn decline-btn"
-id="declineBtn">
-
-<i class="bi bi-x-circle me-1"></i>
-
-Decline
-
-</button>
-
-
-<button
-class="btn action-btn accept-btn"
-id="acceptBtn">
-
-<i class="bi bi-check-circle me-1"></i>
-
-Accept Request
-
-</button>
-
-`;
-
-
-document
-.getElementById("acceptBtn")
-.onclick = async () => {
-
-await respondToMatch(
-match.id,
-"accept"
-);
-
-};
-
-
-document
-.getElementById("declineBtn")
-.onclick = async () => {
-
-await respondToMatch(
-match.id,
-"decline"
-);
-
-};
-
-}
-
-}
-
-
-/* =========================
-   ACCEPT / DECLINE
-========================= */
-
-async function respondToMatch(
-id,
-action
-){
-
-const buttons =
-document.getElementById(
-"actionButtons"
-);
-
-buttons.innerHTML =
-`<span class="text-muted small">
-Processing...
-</span>`;
-
-
-try{
-
-
-if(action === "accept"){
-
-await acceptMatch(id);
-
-}else{
-
-await declineMatch(id);
-
-}
-
-
-/*
- * Reload match data so the
- * status and request information
- * update immediately.
- */
-
-await loadRequest();
-
-
-}catch(error){
-
-showError(
-error.message ||
-"Unable to update match."
-);
-
-}
-
-}
-
-
-/* =========================
-   ERROR
-========================= */
-
-function showError(message){
-
-document
-.getElementById("loading")
-.style.display = "none";
-
-
-const el =
-document.getElementById(
-"errorMessage"
-);
-
-el.textContent =
-message;
-
-el.style.display =
-"block";
-
-}
-
-
-/* =========================
-   START
-========================= */
-
-loadRequest();
-
-}
+(function(){
+
+    const defaultReviews = [
+        {
+            name:"Rahul",
+            role:"Blood Donor",
+            rating:5,
+            text:"The matching process made it much easier to find a relevant blood request without sending messages everywhere."
+        },
+        {
+            name:"Ananya",
+            role:"Requester",
+            rating:5,
+            text:"I liked how the request stayed focused and the donor's contact details were protected until acceptance."
+        },
+        {
+            name:"Arjun",
+            role:"Blood Donor",
+            rating:4,
+            text:"The dashboard is simple to use and I can quickly see my matches and notifications."
+        },
+        {
+            name:"Meera",
+            role:"Requester",
+            rating:5,
+            text:"BloodLink makes the whole process feel much more organized during a stressful situation."
+        },
+        {
+            name:"Vishal",
+            role:"Blood Donor",
+            rating:5,
+            text:"The location-based matching is a useful feature because it shows which requests are actually nearby."
+        }
+    ];
+
+    function getReviews(){
+        try{
+            const saved = JSON.parse(localStorage.getItem("bloodlink_reviews") || "null");
+            return Array.isArray(saved) && saved.length ? saved : defaultReviews;
+        }catch(e){
+            return defaultReviews;
+        }
+    }
+
+    function initials(name){
+        return String(name || "U")
+            .trim()
+            .split(/\s+/)
+            .slice(0,2)
+            .map(function(part){ return part.charAt(0).toUpperCase(); })
+            .join("") || "U";
+    }
+
+    function stars(rating){
+        const value = Math.max(1, Math.min(5, Number(rating) || 5));
+        return "★".repeat(value) + "☆".repeat(5-value);
+    }
+
+    function safe(value){
+        return String(value ?? "").replace(/[&<>"']/g, function(c){
+            return {
+                "&":"&amp;",
+                "<":"&lt;",
+                ">":"&gt;",
+                '"':"&quot;",
+                "'":"&#039;"
+            }[c];
+        });
+    }
+
+    function renderReviews(){
+        const grid = document.getElementById("reviewsGrid");
+        if(!grid) return;
+
+        const reviews = getReviews();
+
+        grid.innerHTML = reviews.slice(0,6).map(function(review){
+            return `
+                <article class="review-card">
+                    <div class="review-top">
+                        <div class="review-avatar">${safe(initials(review.name))}</div>
+                        <div>
+                            <div class="review-name">${safe(review.name)}</div>
+                            <div class="review-role">${safe(review.role || "BloodLink user")}</div>
+                        </div>
+                    </div>
+                    <div class="review-stars" aria-label="${Number(review.rating)||5} out of 5 stars">
+                        ${stars(review.rating)}
+                    </div>
+                    <p class="review-text">“${safe(review.text)}”</p>
+                    ${review.date ? `<span class="review-date">${safe(review.date)}</span>` : ""}
+                </article>
+            `;
+        }).join("");
+    }
+
+    const modal = document.getElementById("reviewModal");
+    const openBtn = document.getElementById("openReviewModal");
+    const closeBtn = document.getElementById("closeReviewModal");
+    const form = document.getElementById("reviewForm");
+    const ratingInput = document.getElementById("reviewRating");
+    const ratingButtons = document.querySelectorAll(".rating-star");
+
+    function setRating(value){
+        value = Number(value) || 5;
+        ratingInput.value = value;
+
+        ratingButtons.forEach(function(button){
+            button.classList.toggle(
+                "active",
+                Number(button.dataset.rating) <= value
+            );
+        });
+    }
+
+    setRating(5);
+
+    if(openBtn){
+        openBtn.addEventListener("click", function(){
+            modal.classList.add("show");
+            document.getElementById("reviewName").focus();
+        });
+    }
+
+    function closeModal(){
+        modal.classList.remove("show");
+    }
+
+    if(closeBtn) closeBtn.addEventListener("click", closeModal);
+
+    if(modal){
+        modal.addEventListener("click", function(e){
+            if(e.target === modal) closeModal();
+        });
+    }
+
+    document.addEventListener("keydown", function(e){
+        if(e.key === "Escape" && modal.classList.contains("show")){
+            closeModal();
+        }
+    });
+
+    ratingButtons.forEach(function(button){
+        button.addEventListener("click", function(){
+            setRating(button.dataset.rating);
+        });
+    });
+
+    if(form){
+        form.addEventListener("submit", function(e){
+            e.preventDefault();
+
+            const name = document.getElementById("reviewName").value.trim();
+            const text = document.getElementById("reviewText").value.trim();
+            const rating = Number(ratingInput.value);
+            const error = document.getElementById("reviewFormError");
+
+            if(!name || !text || rating < 1){
+                error.textContent = "Please complete your name, rating and review.";
+                return;
+            }
+
+            error.textContent = "";
+
+            const reviews = getReviews();
+
+            reviews.unshift({
+                name:name,
+                role:"BloodLink User",
+                rating:rating,
+                text:text,
+                date:new Date().toLocaleDateString([], {
+                    day:"numeric",
+                    month:"short",
+                    year:"numeric"
+                })
+            });
+
+            localStorage.setItem("bloodlink_reviews", JSON.stringify(reviews.slice(0,20)));
+
+            renderReviews();
+            form.reset();
+            setRating(5);
+            closeModal();
+        });
+    }
+
+    renderReviews();
+
+})();
 
 </script>
 
+
+<script>
+(function(){
+    const badge = document.getElementById("notificationBadge");
+    if (badge) {
+        badge.setAttribute("aria-live", "polite");
+    }
+})();
+</script>
+
+<!-- BloodLink Assistant -->
+<script src="/static/js/bloodlink-assistant.js"></script>
 
 </body>
 </html>

@@ -1432,6 +1432,114 @@ html[data-theme="dark"] .bloodlink-navbar .logout-btn:hover{
     }
 }
 
+
+/* =========================================================
+   BLOODLINK ASSISTANT — DARK MODE FIX
+   The assistant is injected dynamically, so these rules
+   intentionally live on the dashboard and override its
+   inline/default light theme when dark mode is active.
+========================================================= */
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-panel{
+    background:#171a20 !important;
+    color:#f5f5f5 !important;
+    border-color:#343943 !important;
+    box-shadow:0 18px 55px rgba(0,0,0,.45) !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-header{
+    background:#0b0d10 !important;
+    color:#ffffff !important;
+    border-bottom:1px solid #2b3038 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-title{
+    color:#ffffff !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-subtitle{
+    color:#aeb4bf !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-close{
+    color:#c5cad3 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-chat{
+    background:#101216 !important;
+    color:#f5f5f5 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-message.bot .bla-bubble{
+    background:#1f232b !important;
+    color:#f1f3f5 !important;
+    border-color:#343943 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-message.user .bla-bubble{
+    background:#c81d25 !important;
+    color:#ffffff !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-quick{
+    background:#171a20 !important;
+    border-top-color:#343943 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-chip{
+    background:#20242c !important;
+    color:#e9ecf1 !important;
+    border-color:#3a404b !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-chip:hover{
+    background:#2a3039 !important;
+    border-color:#e04b52 !important;
+    color:#ff7a80 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-input-row{
+    background:#171a20 !important;
+    border-top:1px solid #343943 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-input{
+    background:#101216 !important;
+    color:#f5f5f5 !important;
+    border-color:#3a404b !important;
+    caret-color:#ffffff !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-input::placeholder{
+    color:#8f96a3 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-input:focus{
+    background:#14171c !important;
+    color:#ffffff !important;
+    border-color:#c81d25 !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-send{
+    background:#c81d25 !important;
+    color:#ffffff !important;
+}
+
+html[data-theme="dark"] #bloodlinkAssistant .bla-note{
+    background:#171a20 !important;
+    color:#8f96a3 !important;
+}
+
+/* Keep the floating button readable in both themes */
+#bloodlinkAssistant .bla-toggle{
+    background:#c81d25 !important;
+    color:#ffffff !important;
+}
+
+#bloodlinkAssistant .bla-toggle:hover{
+    background:#a9151d !important;
+}
+
 </style>
 </head>
 
